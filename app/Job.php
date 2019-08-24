@@ -14,4 +14,13 @@ class Job extends Model
     public function jobMeta() {
         return $this->hasMany('App\JobMeta');
     }
+
+    /**
+     * Define and get job's user
+     *
+     * @return mixed
+     */
+    public function jobUser() {
+        return $this->belongsTo('App\User');
+    }
 }

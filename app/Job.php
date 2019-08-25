@@ -11,7 +11,7 @@ class Job extends Model
      *
      * @return mixed
      */
-    public function jobMeta() {
+    public function meta() {
         return $this->hasMany('App\JobMeta');
     }
 
@@ -20,7 +20,7 @@ class Job extends Model
      *
      * @return mixed
      */
-    public function jobUser() {
+    public function user() {
         return $this->belongsTo('App\User');
     }
 }

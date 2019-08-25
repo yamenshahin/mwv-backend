@@ -13,7 +13,7 @@ class JobMeta extends Model
      *
      * @return mixed
      */
-    public function metaJob() {
+    public function job() {
         return $this->belongsTo('App\Job');
     }
 }

@@ -13,8 +13,8 @@ class JobController extends Controller
     /**
      * Insert new Job with job metas
      *
-     * @param Request $request
-     * @return void
+     * @param JobCreateRequest $request
+     * @return JSON
      */
     public function store(JobCreateRequest $request)
     {

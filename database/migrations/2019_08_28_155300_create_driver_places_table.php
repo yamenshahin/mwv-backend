@@ -20,6 +20,19 @@ class CreateDriverPlacesTable extends Migration
             $table->float('lat', 10, 6);
             $table->float('lng', 10, 6);
             $table->unsignedSmallInteger('distance');
+            $table->unsignedBigInteger('stars');
+            $table->unsignedBigInteger('votes');
+            $table->float('price_small_van_weekday');
+            $table->float('price_small_van_weekend');
+            $table->float('price_mid_van_weekday');
+            $table->float('price_mid_van_weekend');
+            $table->float('price_large_van_weekday');
+            $table->float('price_large_van_weekend');
+            $table->float('price_giant_van_weekday');
+            $table->float('price_giant_van_weekend');
+            $table->float('price_stop');
+            $table->float('price_mile');
+            $table->float('price_step');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');

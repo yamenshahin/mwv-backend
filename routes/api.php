@@ -10,3 +10,8 @@ Route::post('/logout', 'AuthController@logout');
 Route::group(['prefix' => 'jobs'],function() {
     Route::post('/', 'JobController@store')->middleware('auth:api');
 });
+
+//Driver Places
+Route::group(['prefix' => 'places'],function() {
+    Route::get('/', 'DriverPlaceController@search');
+});

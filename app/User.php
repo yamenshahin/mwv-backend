@@ -68,4 +68,13 @@ class User extends Authenticatable implements JWTSubject
     public function job() {
         return $this->hasMany('App\Job');
     }
+
+    /**
+     * Define and get user's driver place
+     *
+     * @return mixed
+     */
+    public function driverPlace() {
+        return $this->hasOne('App\DriverPlace');
+    }
 }

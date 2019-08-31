@@ -8,6 +8,8 @@ use App\Http\Requests\DriverPlaceRequest;
 class DriverPlaceController extends Controller
 {
     public function search(DriverPlaceRequest $request)
+
+    
     {
         return [
             'message' => 'Work DriverPlaceController'

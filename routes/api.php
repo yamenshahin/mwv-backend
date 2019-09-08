@@ -13,5 +13,5 @@ Route::group(['prefix' => 'jobs'],function() {
 
 //Driver Places
 Route::group(['prefix' => 'places'],function() {
-    Route::get('/', 'DriverPlaceController@search');
+    Route::post('/', 'DriverPlaceController@search');
 });

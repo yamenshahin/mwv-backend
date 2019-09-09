@@ -69,7 +69,7 @@ class CreateDriverPlacesTable extends Migration
             
             $table->float('price_stop');
             $table->float('price_mile');
-            $table->float('price_step');
+            $table->float('price_stairs');
             $table->float('miles_driven');
             $table->unsignedBigInteger('jobs_booked');
             $table->timestamps();

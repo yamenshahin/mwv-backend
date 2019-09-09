@@ -17,7 +17,7 @@ class CreateJobMetasTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('job_id');
             $table->string('key');
-            $table->string('value');
+            $table->string('value')->nullable();
             $table->timestamps();
 
             $table->foreign('job_id')->references('id')->on('jobs');

@@ -21,7 +21,8 @@ class DriverPlaceController extends Controller
         //Haversine formula https://en.wikipedia.org/wiki/Haversine_formula
         //http://www.movable-type.co.uk/scripts/latlong.html
         //https://developers.google.com/maps/solutions/store-locator/clothing-store-locator
-        $haversineFormula= '*, (`distance` - (3959 * acos(cos(radians('.$request->collectionLat.')) * cos(radians(lat)) * cos(radians(lng) - radians('.$request->collectionLng.')) + sin(radians('.$request->collectionLat.')) * sin(radians(lat))))) AS center_distance';
+        
+        $haversineFormula= '*, (`distance` - (3959 * acos(cos(radians('.$request->collection['lat'].')) * cos(radians(lat)) * cos(radians(lng) - radians('.$request->collection['lng'].')) + sin(radians('.$request->collection['lat'].')) * sin(radians(lat))))) AS center_distance';
         
         //Get the Van Size, Weekday, Helpers, db columns name for specific (day, van size and number of helpers)
         $vanSizeWeekdayHelpersOption = $this->vanSizeWeekdayHelpersOption($request);
@@ -35,17 +36,10 @@ class DriverPlaceController extends Controller
 
         return DriverPlaceResource::collection($driverPlace)->additional([
             'job_meta' => [
-                'collectionPostcode' => $request->collectionPostcode,
-                'collectionStreetAddress' => $request->collectionStreetAddress,
-                'collectionCity' => $request->collectionCity,
-                'collectionLat' => $request->collectionLat,
-                'collectionLng' => $request->collectionLng,
-                'collectionStairs' => $request->collectionStairs,
-                'deliveryPostcode' => $request->deliveryPostcode,
-                'deliveryStreetAddress' => $request->deliveryStreetAddress,
-                'deliveryLat' => $request->deliveryLat,
-                'deliveryLng' => $request->deliveryLng,
-                'deliveryStairs' => $request->deliveryStairs,
+                'id' => null,
+                'collection' => $request->collection,
+                'delivery' => $request->delivery,
+                'waypoints' => $request->waypoints,
                 'customerInfoName' => $request->customerInfoName,
                 'customerInfoEmail' => $request->customerInfoEmail,
                 'customerInfoPhone' => $request->customerInfoPhone,
@@ -55,7 +49,8 @@ class DriverPlaceController extends Controller
                 'notification' => $request->notification,
                 'travelTime' => $request->travelTime,
                 'totalTime' => $request->totalTime,
-                'weekDay' => $request->weekDay
+                'weekDay' => $request->weekDay,
+                'booked' => 'No'
             ],
         ]);
     }

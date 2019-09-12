@@ -24,18 +24,8 @@ class DriverPlaceSearchRequest extends FormRequest
     public function rules()
     {
         return [
-            'collectionPostcode' => 'required',
-            'collectionStreetAddress' => 'required',
-            'collectionCity' => 'required',
-            'collectionLat' => 'required',
-            'collectionLng' => 'required',
-            'collectionStairs' => 'required',
-            'deliveryPostcode' => 'required',
-            'deliveryStreetAddress' => 'required',
-            'deliveryCity' => 'required',
-            'deliveryLat' => 'required',
-            'deliveryLng' => 'required',
-            'deliveryStairs' => 'required',
+            'collection' => 'required',
+            'delivery' => 'required',
             'customerInfoName' => 'required',
             'customerInfoEmail' => 'required',
             'customerInfoPhone' => 'required',

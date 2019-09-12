@@ -151,7 +151,6 @@ class DriverPlaceController extends Controller
                 }
             }
         }
-
         return $vanSizeWeekdayHelpersOption;
     }
 }

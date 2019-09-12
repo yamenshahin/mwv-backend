@@ -26,11 +26,12 @@ class DriverPlaceSearchRequest extends FormRequest
         return [
             'collection.address' => 'required',
             'delivery.address' => 'required',
+            'vanSize' => 'required',
             'movingDate' => 'required',
             'helpersRequired' => 'required',
             'description' => 'required',
             'customerInfoName' => 'required',
-            'customerInfoEmail' => 'email',
+            'customerInfoEmail' => 'required|email',
             'customerInfoPhone' => 'required',
             'notification' => 'required',
             'loadingUnloadingTime' => 'required',
@@ -38,7 +39,8 @@ class DriverPlaceSearchRequest extends FormRequest
             'totalTime' => 'required',
             'milesDriven' => 'required',
             'stairsTime' => 'required',
-            'estimatedTotalTime' => 'required'
+            'estimatedTotalTime' => 'required',
+            'weekDay' => 'required'
         ];
     }
 }

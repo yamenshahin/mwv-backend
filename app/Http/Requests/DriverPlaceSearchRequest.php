@@ -24,17 +24,21 @@ class DriverPlaceSearchRequest extends FormRequest
     public function rules()
     {
         return [
-            'collection' => 'required',
-            'delivery' => 'required',
-            'customerInfoName' => 'required',
-            'customerInfoEmail' => 'required',
-            'customerInfoPhone' => 'required',
-            'vanSize' => 'required',
-            'helpersRequired' => 'required',
+            'collection.address' => 'required',
+            'delivery.address' => 'required',
             'movingDate' => 'required',
+            'helpersRequired' => 'required',
+            'description' => 'required',
+            'customerInfoName' => 'required',
+            'customerInfoEmail' => 'email',
+            'customerInfoPhone' => 'required',
+            'notification' => 'required',
+            'loadingUnloadingTime' => 'required',
             'travelTime' => 'required',
             'totalTime' => 'required',
-            'notification' => 'required'
+            'milesDriven' => 'required',
+            'stairsTime' => 'required',
+            'estimatedTotalTime' => 'required'
         ];
     }
 }

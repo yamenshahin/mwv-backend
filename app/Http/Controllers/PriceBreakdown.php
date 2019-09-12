@@ -25,7 +25,7 @@ class PriceBreakdown extends Controller
         $estimatedDistancePrice = $this->request->estimatedDistance * $this->place->price_mile;
         $totalTimePrice = $this->request->totalTime * $vanSizeWeekdayPrice;
         $additionalTimePrice = $vanSizeWeekdayPrice / 2;
-        $stairsPrice = ($this->request->collectionStairs + $this->request->deliveryStairs) * $this->place->price_step;
+        $stairsPrice = ($this->request->collection['stairs'] + $this->request->delivery['stairs']) * $this->place->price_stairs;
 
         $subtotal = $estimatedDistancePrice + $totalTimePrice + $stairsPrice;
         $fee = $subtotal * 0.07;

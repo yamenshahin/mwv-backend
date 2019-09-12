@@ -36,6 +36,7 @@ class DriverPlaceController extends Controller
 
         return DriverPlaceResource::collection($driverPlace)->additional([
             'job_meta' => [
+                'id' => null,
                 'collection' => $request->collection,
                 'delivery' => $request->delivery,
                 'waypoints' => $request->waypoints,
@@ -48,7 +49,8 @@ class DriverPlaceController extends Controller
                 'notification' => $request->notification,
                 'travelTime' => $request->travelTime,
                 'totalTime' => $request->totalTime,
-                'weekDay' => $request->weekDay
+                'weekDay' => $request->weekDay,
+                'booked' => 'No'
             ],
         ]);
     }

@@ -32,13 +32,13 @@ class PriceBreakdown extends Controller
         $total = $subtotal + $fee;
 
         return [
-            'estimatedDistancePrice' => $estimatedDistancePrice,
-            'totalTimePrice' => $totalTimePrice,
-            'additionalTimePrice' => $additionalTimePrice,
-            'stairsPrice' => $stairsPrice,
-            'subtotal' => $subtotal,
-            'fee' => $fee,
-            'total' => $total
+            'estimatedDistancePrice' => round($estimatedDistancePrice,2),
+            'totalTimePrice' => round($totalTimePrice,2),
+            'additionalTimePrice' => round($additionalTimePrice,2),
+            'stairsPrice' => round($stairsPrice,2),
+            'subtotal' => round($subtotal,2),
+            'fee' => round($fee,2),
+            'total' => round($total,2)
         ];
     }
 

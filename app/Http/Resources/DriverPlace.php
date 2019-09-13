@@ -34,6 +34,7 @@ class DriverPlace extends JsonResource
                 'jobsBooked' => $this->jobs_booked,
                 
                 'score' => $score,
+                'votes' => $this->votes,
                 
                 'price' => $priceBreakdownDetails
             ];

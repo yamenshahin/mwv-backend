@@ -50,7 +50,7 @@ class DriverPlaceController extends Controller
                 'loadingUnloadingTime' => $request->loadingUnloadingTime,
                 'travelTime' => $request->travelTime,
                 'totalTime' => $request->totalTime,
-                'milesDriven' => $request->milesDriven,
+                'milesDriven' => round($request->milesDriven,2),
                 'stairsTime' => $request->stairsTime,
                 'estimatedTotalTime' => $request->estimatedTotalTime,
                 'booked' => 'No'

@@ -22,7 +22,7 @@ class PriceBreakdown extends Controller
     public function priceBreakdown()
     {
         $vanSizeWeekdayPrice = $this->vanSizeWeekdayPrice();
-        $estimatedDistancePrice = $this->request->estimatedDistance * $this->place->price_mile;
+        $estimatedDistancePrice = $this->request->milesDriven * $this->place->price_mile;
         $totalTimePrice = $this->request->totalTime * $vanSizeWeekdayPrice;
         $additionalTimePrice = $vanSizeWeekdayPrice / 2;
         $stairsPrice = ($this->request->collection['stairs'] + $this->request->delivery['stairs']) * $this->place->price_stairs;
@@ -32,13 +32,14 @@ class PriceBreakdown extends Controller
         $total = $subtotal + $fee;
 
         return [
-            'estimatedDistancePrice' => $estimatedDistancePrice,
-            'totalTimePrice' => $totalTimePrice,
-            'additionalTimePrice' => $additionalTimePrice,
-            'stairsPrice' => $stairsPrice,
-            'subtotal' => $subtotal,
-            'fee' => $fee,
-            'total' => $total
+            'milePrice' => $this->place->price_mile,
+            'estimatedDistancePrice' => round($estimatedDistancePrice,2),
+            'totalTimePrice' => round($totalTimePrice,2),
+            'additionalTimePrice' => round($additionalTimePrice,2),
+            'stairsPrice' => round($stairsPrice,2),
+            'subtotal' => round($subtotal,2),
+            'fee' => round($fee,2),
+            'total' => round($total,2)
         ];
     }
 

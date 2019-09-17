@@ -40,16 +40,19 @@ class DriverPlaceController extends Controller
                 'collection' => $request->collection,
                 'delivery' => $request->delivery,
                 'waypoints' => $request->waypoints,
+                'movingDate' => $request->movingDate,
+                'helpersRequired' => $request->helpersRequired,
+                'description' => $request->description,
                 'customerInfoName' => $request->customerInfoName,
                 'customerInfoEmail' => $request->customerInfoEmail,
                 'customerInfoPhone' => $request->customerInfoPhone,
-                'vanSize' => $request->vanSize,
-                'helpersRequired' => $request->helpersRequired,
-                'movingDate' => $request->movingDate,
                 'notification' => $request->notification,
+                'loadingUnloadingTime' => $request->loadingUnloadingTime,
                 'travelTime' => $request->travelTime,
                 'totalTime' => $request->totalTime,
-                'weekDay' => $request->weekDay,
+                'milesDriven' => round($request->milesDriven,2),
+                'stairsTime' => $request->stairsTime,
+                'estimatedTotalTime' => $request->estimatedTotalTime,
                 'booked' => 'No'
             ],
         ]);
@@ -148,7 +151,6 @@ class DriverPlaceController extends Controller
                 }
             }
         }
-
         return $vanSizeWeekdayHelpersOption;
     }
 }

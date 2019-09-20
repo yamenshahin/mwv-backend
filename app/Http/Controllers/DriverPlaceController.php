@@ -69,7 +69,7 @@ class DriverPlaceController extends Controller
     public function vanSizeWeekdayHelpersOption($request) 
     {
         $vanSizeWeekdayHelpersOption = '';
-        if($request->weekDay == 'weekday') {
+        if($request->weekDay != 0) {
             if ($request->vanSize == 1) {
                 if ($request->helpersRequired == 0) {
                     $vanSizeWeekdayHelpersOption = 'price_small_van_weekday';
@@ -111,7 +111,7 @@ class DriverPlaceController extends Controller
                     $vanSizeWeekdayHelpersOption = 'price_giant_van_weekday3';
                 }
             } 
-        } elseif ($request->weekDay == 'weekend') {
+        } else {
             if ($request->vanSize == 1) {
                 if ($request->helpersRequired == 0) {
                     $vanSizeWeekdayHelpersOption = 'price_small_van_weekend';

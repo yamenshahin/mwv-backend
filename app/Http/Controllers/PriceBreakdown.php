@@ -51,7 +51,7 @@ class PriceBreakdown extends Controller
     public function vanSizeWeekdayPrice() 
     {
         $vanSizeWeekdayPrice = 0.00;
-        if($this->request->weekDay == 'weekday') {
+        if($this->request->weekDay != 0) {
             if ($this->request->vanSize == 1) {
                 if ($this->request->helpersRequired == 0) {
                     $vanSizeWeekdayPrice = $this->place->price_small_van_weekday;
@@ -93,7 +93,7 @@ class PriceBreakdown extends Controller
                     $vanSizeWeekdayPrice = $this->place->price_giant_van_weekday3;
                 }
             } 
-        } elseif ($this->request->weekDay == 'weekend') {
+        } else {
             if ($this->request->vanSize == 1) {
                 if ($this->request->helpersRequired == 0) {
                     $vanSizeWeekdayPrice = $this->place->price_small_van_weekend;

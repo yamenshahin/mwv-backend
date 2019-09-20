@@ -7,7 +7,7 @@ use App\Http\Resources\User as UserResource;
 use App\User;
 use App\Http\Controllers\PriceBreakdown;
 
-class DriverPlace extends JsonResource
+class DriverPlaceSearch extends JsonResource
 {
     /**
      * Transform the resource into an array.

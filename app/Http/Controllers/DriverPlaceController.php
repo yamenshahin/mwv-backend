@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\DriverPlaceSearchRequest;
+use App\Http\Requests\DriverPlaceRequest;
 Use App\DriverPlace;
 use Illuminate\Support\Facades\DB;
-use App\Http\Resources\DriverPlace as DriverPlaceResource;
+use App\Http\Resources\DriverPlaceSearch as DriverPlaceSearchResource;
+use App\Http\Resources\DriverPlacePrice as DriverPlacePriceResource;
+use App\Http\Resources\DriverPlaceLocation as DriverPlaceLocationResource;
 
 class DriverPlaceController extends Controller
 {
@@ -34,7 +37,7 @@ class DriverPlaceController extends Controller
         ->get();
         
 
-        return DriverPlaceResource::collection($driverPlace)->additional([
+        return DriverPlaceSearchResource::collection($driverPlace)->additional([
             'job_meta' => [
                 'id' => null,
                 'collection' => $request->collection,
@@ -153,4 +156,206 @@ class DriverPlaceController extends Controller
         }
         return $vanSizeWeekdayHelpersOption;
     }
+
+    /**
+     * Insert Prices info for places of driver 
+     *
+     * @param DriverPlaceRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+
+    public function createOrUpdatePrice(DriverPlaceRequest $request) {
+        
+        $existingDriverPlace =  $this->read($request);
+        
+        if(!$existingDriverPlace) {
+            $driverPlace = new driverPlace;
+            $driverPlace->user()->associate($request->user());
+
+        
+            $driverPlace->price_small_van_weekday = $request->priceSmallVanWeekday;
+            $driverPlace->price_small_van_weekday1 = $request->priceSmallVanWeekday1; 
+            $driverPlace->price_small_van_weekday2 = $request->priceSmallVanWeekday2; 
+            $driverPlace->price_small_van_weekday3 = $request->priceSmallVanWeekday3; 
+
+            $driverPlace->price_small_van_weekend = $request->priceSmallVanWeekend;
+            $driverPlace->price_small_van_weekend1 = $request->priceSmallVanWeekend1; 
+            $driverPlace->price_small_van_weekend2 = $request->priceSmallVanWeekend2; 
+            $driverPlace->price_small_van_weekend3 = $request->priceSmallVanWeekend3;  
+
+
+
+            $driverPlace->price_mid_van_weekday = $request->priceMidVanWeekday;
+            $driverPlace->price_mid_van_weekday1 = $request->priceMidVanWeekday1; 
+            $driverPlace->price_mid_van_weekday2 = $request->priceMidVanWeekday2; 
+            $driverPlace->price_mid_van_weekday3 = $request->priceMidVanWeekday3; 
+
+            $driverPlace->price_mid_van_weekend = $request->priceMidVanWeekend;
+            $driverPlace->price_mid_van_weekend1 = $request->priceMidVanWeekend1; 
+            $driverPlace->price_mid_van_weekend2 = $request->priceMidVanWeekend2; 
+            $driverPlace->price_mid_van_weekend3 = $request->priceMidVanWeekend3;  
+
+            $driverPlace->price_large_van_weekday = $request->priceLargeVanWeekday;
+            $driverPlace->price_large_van_weekday1 = $request->priceLargeVanWeekday1; 
+            $driverPlace->price_large_van_weekday2 = $request->priceLargeVanWeekday2; 
+            $driverPlace->price_large_van_weekday3 = $request->priceLargeVanWeekday3; 
+
+            $driverPlace->price_large_van_weekend = $request->priceLargeVanWeekend;
+            $driverPlace->price_large_van_weekend1 = $request->priceLargeVanWeekend1; 
+            $driverPlace->price_large_van_weekend2 = $request->priceLargeVanWeekend2; 
+            $driverPlace->price_large_van_weekend3 = $request->priceLargeVanWeekend3; 
+
+            $driverPlace->price_giant_van_weekday = $request->priceGiantVanWeekday;
+            $driverPlace->price_giant_van_weekday1 = $request->priceGiantVanWeekday1; 
+            $driverPlace->price_giant_van_weekday2 = $request->priceGiantVanWeekday2; 
+            $driverPlace->price_giant_van_weekday3 = $request->priceGiantVanWeekday3; 
+
+            $driverPlace->price_giant_van_weekend = $request->priceGiantVanWeekend;
+            $driverPlace->price_giant_van_weekend1 = $request->priceGiantVanWeekend1; 
+            $driverPlace->price_giant_van_weekend2 = $request->priceGiantVanWeekend2; 
+            $driverPlace->price_giant_van_weekend3 = $request->priceGiantVanWeekend3;
+
+            $driverPlace->price_stop = $request->priceStop;
+            $driverPlace->price_mile = $request->priceMile;
+            $driverPlace->price_stairs = $request->priceStairs;
+            
+
+            $driverPlace->save();
+            
+            return new DriverPlacePriceResource($driverPlace);
+        } else {
+            
+            $existingDriverPlace->price_small_van_weekday = $request->priceSmallVanWeekday;
+            $existingDriverPlace->price_small_van_weekday1 = $request->priceSmallVanWeekday1; 
+            $existingDriverPlace->price_small_van_weekday2 = $request->priceSmallVanWeekday2; 
+            $existingDriverPlace->price_small_van_weekday3 = $request->priceSmallVanWeekday3; 
+
+            $existingDriverPlace->price_small_van_weekend = $request->priceSmallVanWeekend;
+            $existingDriverPlace->price_small_van_weekend1 = $request->priceSmallVanWeekend1; 
+            $existingDriverPlace->price_small_van_weekend2 = $request->priceSmallVanWeekend2; 
+            $existingDriverPlace->price_small_van_weekend3 = $request->priceSmallVanWeekend3;  
+
+
+
+            $existingDriverPlace->price_mid_van_weekday = $request->priceMidVanWeekday;
+            $existingDriverPlace->price_mid_van_weekday1 = $request->priceMidVanWeekday1; 
+            $existingDriverPlace->price_mid_van_weekday2 = $request->priceMidVanWeekday2; 
+            $existingDriverPlace->price_mid_van_weekday3 = $request->priceMidVanWeekday3; 
+
+            $existingDriverPlace->price_mid_van_weekend = $request->priceMidVanWeekend;
+            $existingDriverPlace->price_mid_van_weekend1 = $request->priceMidVanWeekend1; 
+            $existingDriverPlace->price_mid_van_weekend2 = $request->priceMidVanWeekend2; 
+            $existingDriverPlace->price_mid_van_weekend3 = $request->priceMidVanWeekend3;  
+
+            $existingDriverPlace->price_large_van_weekday = $request->priceLargeVanWeekday;
+            $existingDriverPlace->price_large_van_weekday1 = $request->priceLargeVanWeekday1; 
+            $existingDriverPlace->price_large_van_weekday2 = $request->priceLargeVanWeekday2; 
+            $existingDriverPlace->price_large_van_weekday3 = $request->priceLargeVanWeekday3; 
+
+            $existingDriverPlace->price_large_van_weekend = $request->priceLargeVanWeekend;
+            $existingDriverPlace->price_large_van_weekend1 = $request->priceLargeVanWeekend1; 
+            $existingDriverPlace->price_large_van_weekend2 = $request->priceLargeVanWeekend2; 
+            $existingDriverPlace->price_large_van_weekend3 = $request->priceLargeVanWeekend3; 
+
+            $existingDriverPlace->price_giant_van_weekday = $request->priceGiantVanWeekday;
+            $existingDriverPlace->price_giant_van_weekday1 = $request->priceGiantVanWeekday1; 
+            $existingDriverPlace->price_giant_van_weekday2 = $request->priceGiantVanWeekday2; 
+            $existingDriverPlace->price_giant_van_weekday3 = $request->priceGiantVanWeekday3; 
+
+            $existingDriverPlace->price_giant_van_weekend = $request->priceGiantVanWeekend;
+            $existingDriverPlace->price_giant_van_weekend1 = $request->priceGiantVanWeekend1; 
+            $existingDriverPlace->price_giant_van_weekend2 = $request->priceGiantVanWeekend2; 
+            $existingDriverPlace->price_giant_van_weekend3 = $request->priceGiantVanWeekend3;
+
+            $existingDriverPlace->price_stop = $request->priceStop;
+            $existingDriverPlace->price_mile = $request->priceMile;
+            $existingDriverPlace->price_stairs = $request->priceStairs;
+            
+
+            $existingDriverPlace->save();
+            return new DriverPlacePriceResource($existingDriverPlace);
+        }
+        
+
+    }
+    
+    /**
+     * Read driver place info
+     *
+     * @param DriverPlaceRequest $request
+     * @return JSON
+     */
+    public function read(DriverPlaceRequest $request) {
+        $driverPlace = DriverPlace::select('*')
+        ->where('user_id', '=', $request->user()->id)
+        ->first();
+        return $driverPlace;
+    }
+
+    /**
+     * Get Prices info for driver places
+     *
+     * @param DriverPlaceRequest $request
+     * @return JSON
+     */
+    public function getPrice(DriverPlaceRequest $request) {
+        $driverPlace =  $this->read($request);
+        //If there is no driver place just create a default one
+        if(!$driverPlace) {
+            $driverPlace = new driverPlace;
+            $driverPlace->user()->associate($request->user());
+            $driverPlace->save();
+        }
+        return new DriverPlacePriceResource($driverPlace);
+    }
+
+    /**
+     * Create or update driver location info (e.g. lat, lng)
+     *
+     * @param DriverPlaceRequest $request
+     * @return JSON
+     */
+    public function createOrUpdateLocation(DriverPlaceRequest $request) {
+        $existingDriverPlace =  $this->read($request);
+        
+        if(!$existingDriverPlace) {
+            $driverPlace = new driverPlace;
+            $driverPlace->user()->associate($request->user());
+
+            $driverPlace->address = $request->address;
+            $driverPlace->city = $request->city;
+            $driverPlace->postcode = $request->postcode;
+            $driverPlace->lat = $request->lat;
+            $driverPlace->lng = $request->lng;
+            $driverPlace->distance = $request->distance;
+            
+
+            $driverPlace->save();
+            
+            return new DriverPlaceLocationResource($driverPlace);
+        } else {
+            $existingDriverPlace->address = $request->address;
+            $existingDriverPlace->postcode = $request->postcode;
+            $existingDriverPlace->city = $request->city;
+            $existingDriverPlace->lat = $request->lat;
+            $existingDriverPlace->lng = $request->lng;
+            $existingDriverPlace->distance = $request->distance;
+            
+            $existingDriverPlace->save();
+            return new DriverPlaceLocationResource($existingDriverPlace);
+        }
+    }
+
+    /**
+     * Get Location info for driver places
+     *
+     * @param DriverPlaceRequest $request
+     * @return JSON
+     */
+    public function getLocation(DriverPlaceRequest $request) {
+        $driverPlace =  $this->read($request);
+        return new DriverPlaceLocationResource($driverPlace);
+    }
+
+
 }

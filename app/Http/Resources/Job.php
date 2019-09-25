@@ -20,7 +20,6 @@ class Job extends JsonResource
             'id' => $this->id,
             'created_at' => $this->created_at->diffForHumans(),
             'user' => $this->user,
-            //dd($this->meta),
             'job_metas' => JobMetaResource::collection($this->meta)
         ];
     }

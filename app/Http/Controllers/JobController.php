@@ -6,17 +6,17 @@ use Illuminate\Http\Request;
 use App\Job;
 Use App\JobMeta;
 use App\Http\Resources\Job as JobResource;
-use App\Http\Requests\JobCreateRequest;
+use App\Http\Requests\JobStoreRequest;
 
 class JobController extends Controller
 {
     /**
      * Insert new Job with job metas
      *
-     * @param JobCreateRequest $request
+     * @param JobStoreRequest $request
      * @return JSON
      */
-    public function store(JobCreateRequest $request)
+    public function store(JobStoreRequest $request)
     {
         $job = new Job;
         $job->user()->associate($request->user());
@@ -31,4 +31,20 @@ class JobController extends Controller
 
         return new JobResource($job);
     }
+
+    public function show() 
+    {
+
+    }
+
+    public function edit() 
+    {
+
+    }
+
+    public function destroy() 
+    {
+
+    }
+
 }

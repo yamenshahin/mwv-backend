@@ -18,16 +18,25 @@ class JobController extends Controller
      */
     public function store(JobStoreRequest $request)
     {
+        //$request->driver['user']['id']
         $job = new Job;
-        $job->user()->associate($request->user());
+        $job->user()->associate($request->driver['user']['id']);
 
-        $job_metas = [];
-        foreach($request->job_metas as $job_meta_entry) {
-            array_push($job_metas, new JobMeta(['key' => $job_meta_entry['key'], 'value' => $job_meta_entry['value']]));
+        $job_meta = [];
+        foreach ($request->job_meta as $key => $value) {
+
+            if(in_array($key,['collection', 'delivery', 'waypoints'])) {
+                array_push($job_meta, new JobMeta(['key' => $key, 'value' => json_encode($value)])); 
+            } else {
+                array_push($job_meta, new JobMeta(['key' => $key, 'value' => $value]));
+            }
+
         }
 
+        array_push($job_meta, new JobMeta(['key' => 'customer_id', 'value' => $request->user()->id]));
+        
         $job->save();
-        $job->meta()->saveMany($job_metas);
+        $job->meta()->saveMany($job_meta);
 
         return new JobResource($job);
     }

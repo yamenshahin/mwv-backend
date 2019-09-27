@@ -24,7 +24,7 @@ class JobStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'job_metas' => 'required'
+            'job_meta' => 'required'
         ];
     }
 }

@@ -18,14 +18,7 @@ class DriverPlacePrice extends JsonResource
     {
         //return parent::toArray($request); 
         return [
-            //'placeId' => $this->id,
-            //'user' => UserResource::make(User::find($this->user_id)),
-            //'address' => $this->address,
-            //'lat' => $this->lat,
-            //'lng' => $this->lng,
-            //'distance' => $this->distance,
-            //'stars' => $this->stars,
-            //'votes' => $this->votes,
+            
             
             'priceSmallVanWeekday' => $this->price_small_van_weekday,
             'priceSmallVanWeekday1' => $this->price_small_van_weekday1, 
@@ -71,10 +64,9 @@ class DriverPlacePrice extends JsonResource
 
             'priceStop' => $this->price_stop,
             'priceMile' => $this->price_mile,
-            'priceStairs' => $this->price_stairs,
+            'priceStairs' => $this->price_stairs
             
-            //'milesDriven' => $this->miles_driven,
-            //'jobsBooked' => $this->jobs_booked
+            
         ];
     }
 }

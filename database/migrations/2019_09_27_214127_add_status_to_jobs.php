@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateJobsTable extends Migration
+class AddStatusToJobs extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,8 @@ class CreateJobsTable extends Migration
      */
     public function up()
     {
-        Schema::create('jobs', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('customer_id');
+        Schema::table('jobs', function (Blueprint $table) {
             $table->string('status')->default('unbooked');
-            $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -31,6 +25,8 @@ class CreateJobsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jobs');
+        Schema::table('jobs', function (Blueprint $table) {
+            $table->dropColumn('status');
+        });
     }
 }

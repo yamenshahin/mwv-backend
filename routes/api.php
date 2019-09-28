@@ -6,9 +6,10 @@ Route::post('/login', 'AuthController@login');
 Route::get('/user', 'AuthController@user');
 Route::post('/logout', 'AuthController@logout');
 
-//Job
+//Job Customer
 Route::group(['prefix' => 'jobs'],function() {
-    Route::post('/', 'JobController@store')->middleware('auth:api');
+    Route::post('/store', 'JobController@store')->middleware('auth:api');
+    Route::get('/show', 'JobController@show')->middleware('auth:api');
 });
 
 //Search Places

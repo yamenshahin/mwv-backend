@@ -3,7 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\User as UserResource;
+use App\Http\Resources\UserSimple as UserSimpleResource;
 use App\User;
 use App\Http\Controllers\PriceBreakdown;
 
@@ -29,7 +29,7 @@ class DriverPlaceSearch extends JsonResource
             }
             return [
                 'placeId' => $this->id,
-                'user' => UserResource::make(User::find($this->user_id)),
+                'user' => UserSimpleResource::make(User::find($this->user_id)),
                 'milesDriven' => $this->miles_driven,
                 'jobsBooked' => $this->jobs_booked,
                 

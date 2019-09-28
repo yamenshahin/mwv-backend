@@ -39,7 +39,6 @@ class DriverPlaceController extends Controller
 
         return DriverPlaceSearchResource::collection($driverPlace)->additional([
             'job_meta' => [
-                'id' => null,
                 'collection' => $request->collection,
                 'delivery' => $request->delivery,
                 'waypoints' => $request->waypoints,

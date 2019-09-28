@@ -19,7 +19,7 @@ class JobMeta extends JsonResource
             'id' => $this->id,
             'created_at' => $this->created_at->diffForHumans(),
             'key' =>  $this->key,
-            'value' =>  $this->value
+            'value' =>  json_decode($this->value)
         ];
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Job;
 Use App\JobMeta;
+use Illuminate\Support\Facades\DB;
 use App\Http\Resources\Job as JobResource;
 use App\Http\Requests\JobStoreRequest;
 
@@ -18,10 +19,10 @@ class JobController extends Controller
      */
     public function store(JobStoreRequest $request)
     {
-        //$request->driver['user']['id']
         $job = new Job;
         $job->user()->associate($request->driver['user']['id']);
-
+        $job->customer_id = $request->user()->id;
+        
         $job_meta = [];
         foreach ($request->job_meta as $key => $value) {
 
@@ -30,20 +31,20 @@ class JobController extends Controller
             } else {
                 array_push($job_meta, new JobMeta(['key' => $key, 'value' => $value]));
             }
-
         }
-
-        array_push($job_meta, new JobMeta(['key' => 'customer_id', 'value' => $request->user()->id]));
-        
+                
         $job->save();
         $job->meta()->saveMany($job_meta);
 
         return new JobResource($job);
     }
 
-    public function show() 
+    public function show(Request $request) 
     {
-
+        $customerJobs = Job::select('*')
+        ->where('customer_id', '=', $request->user()->id)
+        ->get();
+        return JobResource::collection($customerJobs);
     }
 
     public function edit() 

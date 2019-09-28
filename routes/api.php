@@ -9,6 +9,7 @@ Route::post('/logout', 'AuthController@logout');
 //Job Customer
 Route::group(['prefix' => 'jobs'],function() {
     Route::post('/store', 'JobController@store')->middleware('auth:api');
+    Route::get('/show', 'JobController@show')->middleware('auth:api');
 });
 
 //Search Places

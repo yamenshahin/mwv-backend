@@ -26,10 +26,10 @@ class AuthController extends Controller
             'phone' => $request->phone
         ]);
         
-        if(!$token = auth()->attempt($request->only('email', 'password'))) {
+        if(!$token = auth()->guard('api')->attempt($request->only('email', 'password'))) {
             return abort(401);
         }
-        return (new UserResource($request->user()))->additional([
+        return (new UserResource($request->user('api')))->additional([
             'meta' => [
                 'token' => $token
             ]
@@ -44,14 +44,14 @@ class AuthController extends Controller
      */
     public function login(UserLoginRequest $request) 
     {
-        if(!$token = auth()->attempt($request->only('email', 'password'))) {
+        if(!$token = auth()->guard('api')->attempt($request->only('email', 'password'))) {
             return response()->json([
                 'error' => [
                     'message' => ['Wrong details']
                 ]
                 ], 422);
         }
-        return (new UserResource($request->user()))->additional([
+        return (new UserResource($request->user('api')))->additional([
             'meta' => [
                 'token' => $token
             ]
@@ -66,14 +66,14 @@ class AuthController extends Controller
      */
     public function user(Request $request) 
     {
-        if(!auth()->check()) {
+        if(!auth()->guard('api')->check()) {
             return response()->json([
                 'error' => [
                     'message' => ['Wrong details']
                 ]
                 ], 401);
         }
-        return new UserResource($request->user());
+        return new UserResource($request->user('api'));
     }
 
 
@@ -84,14 +84,14 @@ class AuthController extends Controller
      */
     public function logout()
     {
-        if(!auth()->check()) {
+        if(!auth()->guard('api')->check()) {
             return response()->json([
                 'error' => [
                     'message' => ['Wrong details']
                 ]
                 ], 401);
         }
-        auth()->logout();
+        auth()->guard('api')->logout();
 
         return response()->json(['message' => 'Successfully logged out']);
     }

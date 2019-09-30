@@ -8,6 +8,41 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+// Vue Routes
+import VueRouter from 'vue-router'
+
+Vue.use(VueRouter)
+
+// Define routes
+let routes = [
+    { path: '/admin/dashboard', component: require('./components/Dashboard.vue').default },
+
+    { path: '/statistics-charts', component: require('./components/StatisticsCharts.vue').default },
+
+    { path: '/jobs', component: require('./components/Jobs.vue').default },
+    
+    // Maps
+    { path: '/drivers-places', component: require('./components/DriversPlaces.vue').default },
+    { path: '/areas-we-cover', component: require('./components/AreasWeCover.vue').default },
+    
+    { path: '/calendar', component: require('./components/Calendar.vue').default },
+
+    // Users
+    { path: '/customers', component: require('./components/Customers.vue').default },
+    { path: '/drivers', component: require('./components/Drivers.vue').default },
+
+    { path: '/admins', component: require('./components/Admins.vue').default },
+
+    { path: '/my-profile', component: require('./components/MyProfile.vue').default },
+]
+
+// Create the router instance and pass the `routes` option
+const router = new VueRouter({
+    mode: 'history',
+    routes, // short for `routes: routes`
+    linkActiveClass: 'active'
+})
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -29,4 +64,5 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 
 const app = new Vue({
     el: '#app',
+    router
 });

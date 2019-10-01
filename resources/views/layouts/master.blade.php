@@ -189,7 +189,7 @@
                         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                             data-accordion="false">
                             <li class="nav-item">
-                                <router-link to="/admin/dashboard" class="nav-link">
+                                <router-link :to="{ name: 'dashboard' }" class="nav-link">
                                     <i class="nav-icon fas fa-tachometer-alt"></i>
                                     <p>Dashboard</p>
                                 </router-link>
@@ -197,13 +197,13 @@
                             <!-- Add icons to the links using the .nav-icon class
                     with font-awesome or any other icon font library -->
                             <li class="nav-item">
-                                <router-link to="/statistics-charts" class="nav-link">
+                                <router-link :to="{ name: 'statistics-charts' }" class="nav-link">
                                     <i class="nav-icon fas fa-chart-line"></i>
                                     <p>Statistics & charts</p>
                                 </router-link>
                             </li>
                             <li class="nav-item">
-                                <router-link tp="/jobs" class="nav-link">
+                                <router-link :to="{ name: 'jobs' }" class="nav-link">
                                     <i class="nav-icon fas fa-truck-loading"></i>
                                     <p>Jobs</p>
                                 </router-link>
@@ -219,13 +219,13 @@
                                 </a>
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <router-link to="/drivers-places" class="nav-link">
+                                        <router-link :to="{ name: 'drivers-places' }" class="nav-link">
                                             <i class="fas fa-map-marked-alt nav-icon"></i>
                                             <p>Drivers places</p>
                                         </router-link>
                                     </li>
                                     <li class="nav-item">
-                                        <router-link to="/areas-we-cover" class="nav-link">
+                                        <router-link :to="{ name: 'areas-we-cover' }" class="nav-link">
                                             <i class="fas fa-drafting-compass nav-icon"></i>
                                             <p>Areas we cover</p>
                                         </router-link>
@@ -233,7 +233,7 @@
                                 </ul>
                             </li>
                             <li class="nav-item">
-                                <router-link to="/calendar" class="nav-link">
+                                <router-link :to="{ name: 'calendar' }" class="nav-link">
                                     <i class="nav-icon fas fa-calendar-alt"></i>
                                     <p>
                                         Calendar
@@ -250,13 +250,13 @@
                                 </a>
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <router-link to="/customers" class="nav-link">
+                                        <router-link :to="{ name: 'customers' }" class="nav-link">
                                             <i class="fas fa-user-tag nav-icon"></i>
                                             <p>Customers</p>
                                         </router-link>
                                     </li>
                                     <li class="nav-item">
-                                        <router-link to="/drivers" class="nav-link">
+                                        <router-link :to="{ name: 'drivers' }" class="nav-link">
                                             <i class="fas fa-people-carry nav-icon"></i>
                                             <p>Drivers</p>
                                         </router-link>
@@ -264,7 +264,7 @@
                                 </ul>
                             </li>
                             <li class="nav-item">
-                                <router-link to="/admins" class="nav-link">
+                                <router-link :to="{ name: 'admins' }" class="nav-link">
                                     <i class="nav-icon fas fa-user-shield"></i>
                                     <p>
                                         Admins
@@ -272,7 +272,7 @@
                                 </router-link>
                             </li>
                             <li class="nav-item">
-                                <router-link to="/my-profile" class="nav-link">
+                                <router-link :to="{ name: 'my-profile' }" class="nav-link">
                                     <i class="nav-icon fas fa-user"></i>
                                     <p>
                                         My profile

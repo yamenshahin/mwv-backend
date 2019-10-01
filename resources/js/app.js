@@ -15,25 +15,25 @@ Vue.use(VueRouter)
 
 // Define routes
 let routes = [
-    { path: '/admin/dashboard', component: require('./components/Dashboard.vue').default },
+    { path: '/admin/dashboard', name: 'dashboard', component: require('./components/Dashboard.vue').default },
 
-    { path: '/statistics-charts', component: require('./components/StatisticsCharts.vue').default },
+    { path: '/admin/statistics-charts', name: 'statistics-charts', component: require('./components/StatisticsCharts.vue').default },
 
-    { path: '/jobs', component: require('./components/Jobs.vue').default },
+    { path: '/admin/jobs', name: 'jobs', component: require('./components/Jobs.vue').default },
     
     // Maps
-    { path: '/drivers-places', component: require('./components/DriversPlaces.vue').default },
-    { path: '/areas-we-cover', component: require('./components/AreasWeCover.vue').default },
+    { path: '/admin/drivers-places', name: 'drivers-places', component: require('./components/DriversPlaces.vue').default },
+    { path: '/admin/areas-we-cover', name: 'areas-we-cover', component: require('./components/AreasWeCover.vue').default },
     
-    { path: '/calendar', component: require('./components/Calendar.vue').default },
+    { path: '/admin/calendar', name: 'calendar', component: require('./components/Calendar.vue').default },
 
     // Users
-    { path: '/customers', component: require('./components/Customers.vue').default },
-    { path: '/drivers', component: require('./components/Drivers.vue').default },
+    { path: '/admin/customers', name: 'customers', component: require('./components/Customers.vue').default },
+    { path: '/admin/drivers', name: 'drivers', component: require('./components/Drivers.vue').default },
 
-    { path: '/admins', component: require('./components/Admins.vue').default },
+    { path: '/admin/admins', name: 'admins', component: require('./components/Admins.vue').default },
 
-    { path: '/my-profile', component: require('./components/MyProfile.vue').default },
+    { path: '/admin/my-profile', name: 'my-profile', component: require('./components/MyProfile.vue').default },
 ]
 
 // Create the router instance and pass the `routes` option

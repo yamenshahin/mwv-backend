@@ -53061,35 +53061,45 @@ Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]); // Define routes
 
 var routes = [{
   path: '/admin/dashboard',
+  name: 'dashboard',
   component: __webpack_require__(/*! ./components/Dashboard.vue */ "./resources/js/components/Dashboard.vue")["default"]
 }, {
-  path: '/statistics-charts',
+  path: '/admin/statistics-charts',
+  name: 'statistics-charts',
   component: __webpack_require__(/*! ./components/StatisticsCharts.vue */ "./resources/js/components/StatisticsCharts.vue")["default"]
 }, {
-  path: '/jobs',
+  path: '/admin/jobs',
+  name: 'jobs',
   component: __webpack_require__(/*! ./components/Jobs.vue */ "./resources/js/components/Jobs.vue")["default"]
 }, // Maps
 {
-  path: '/drivers-places',
+  path: '/admin/drivers-places',
+  name: 'drivers-places',
   component: __webpack_require__(/*! ./components/DriversPlaces.vue */ "./resources/js/components/DriversPlaces.vue")["default"]
 }, {
-  path: '/areas-we-cover',
+  path: '/admin/areas-we-cover',
+  name: 'areas-we-cover',
   component: __webpack_require__(/*! ./components/AreasWeCover.vue */ "./resources/js/components/AreasWeCover.vue")["default"]
 }, {
-  path: '/calendar',
+  path: '/admin/calendar',
+  name: 'calendar',
   component: __webpack_require__(/*! ./components/Calendar.vue */ "./resources/js/components/Calendar.vue")["default"]
 }, // Users
 {
-  path: '/customers',
+  path: '/admin/customers',
+  name: 'customers',
   component: __webpack_require__(/*! ./components/Customers.vue */ "./resources/js/components/Customers.vue")["default"]
 }, {
-  path: '/drivers',
+  path: '/admin/drivers',
+  name: 'drivers',
   component: __webpack_require__(/*! ./components/Drivers.vue */ "./resources/js/components/Drivers.vue")["default"]
 }, {
-  path: '/admins',
+  path: '/admin/admins',
+  name: 'admins',
   component: __webpack_require__(/*! ./components/Admins.vue */ "./resources/js/components/Admins.vue")["default"]
 }, {
-  path: '/my-profile',
+  path: '/admin/my-profile',
+  name: 'my-profile',
   component: __webpack_require__(/*! ./components/MyProfile.vue */ "./resources/js/components/MyProfile.vue")["default"]
 }]; // Create the router instance and pass the `routes` option
 

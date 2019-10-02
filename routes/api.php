@@ -23,3 +23,10 @@ Route::group(['prefix' => 'driver'],function() {
     Route::post('/create-update-location', 'DriverPlaceController@createOrUpdateLocation')->middleware('auth:api');
     Route::get('/get-location', 'DriverPlaceController@getLocation')->middleware('auth:api');
 });
+
+//Admin
+Route::group(['prefix' => 'admin'],function() {
+    Route::apiResources([
+        'user' => 'AdminAPI\UserController'
+    ]);
+});

@@ -194,6 +194,13 @@
                                     <p>Dashboard</p>
                                 </router-link>
                             </li>
+
+                            <li class="nav-item">
+                                <router-link :to="{ name: 'drivers2' }" class="nav-link">
+                                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                                    <p>Drivers 2 test</p>
+                                </router-link>
+                            </li>
                             <!-- Add icons to the links using the .nav-icon class
                     with font-awesome or any other icon font library -->
                             <li class="nav-item">

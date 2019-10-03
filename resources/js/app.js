@@ -13,6 +13,13 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
+//vue-datatables-net
+import VdtnetTable from 'vue-datatables-net'
+
+Vue.component(VdtnetTable.name, VdtnetTable)
+
+
+
 //vForm
 import { 
     Form,
@@ -49,6 +56,8 @@ let routes = [
     { path: '/admin/admins', name: 'admins', component: require('./components/Admins.vue').default },
 
     { path: '/admin/my-profile', name: 'my-profile', component: require('./components/MyProfile.vue').default },
+
+    { path: '/admin/drivers2', name: 'drivers2', component: require('./components/Drivers2.vue').default },
 ]
 
 // Create the router instance and pass the `routes` option

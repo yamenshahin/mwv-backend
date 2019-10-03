@@ -12,6 +12,12 @@ try {
 
     require('bootstrap');
     require('admin-lte');
+    require('admin-lte/plugins/datatables/jquery.dataTables');
+    require('admin-lte/plugins/datatables-buttons/js/dataTables.buttons');
+    require('admin-lte/plugins/datatables-buttons/js/buttons.html5');
+    require('admin-lte/plugins/datatables-buttons/js/buttons.print');
+    require('admin-lte/plugins/datatables-buttons/js/buttons.bootstrap4');
+    require('admin-lte/plugins/datatables-select/js/select.bootstrap4.min');
 } catch (e) {}
 
 /**

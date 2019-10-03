@@ -194,6 +194,12 @@
                                     <p>Dashboard</p>
                                 </router-link>
                             </li>
+                            <li class="nav-item">
+                                <router-link :to="{ name: 'tests' }" class="nav-link">
+                                    <i class="nav-icon fas fa-vials"></i>
+                                    <p>Test</p>
+                                </router-link>
+                            </li>
                             <!-- Add icons to the links using the .nav-icon class
                     with font-awesome or any other icon font library -->
                             <li class="nav-item">

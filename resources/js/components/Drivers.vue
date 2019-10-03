@@ -94,8 +94,7 @@
                             </div>
 
 
-                            <input type="hidden" name="status" :value="status">
-                            <input type="hidden" name="_token" :value="csrf">
+                            <input type="hidden" name="status" v-model="form.status">
                         </div>
 
                         <div class="modal-footer justify-content-between">
@@ -123,8 +122,7 @@
                     email: '',
                     phone: '',
                     status: 'active',
-                    role: 'driver',
-                    csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    role: 'driver'
                 })
             }
         },

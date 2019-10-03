@@ -49,6 +49,8 @@ let routes = [
     { path: '/admin/admins', name: 'admins', component: require('./components/Admins.vue').default },
 
     { path: '/admin/my-profile', name: 'my-profile', component: require('./components/MyProfile.vue').default },
+
+    { path: '/admin/tests', name: 'tests', component: require('./components/Tests.vue').default },
 ]
 
 // Create the router instance and pass the `routes` option
@@ -57,6 +59,22 @@ const router = new VueRouter({
     routes, // short for `routes: routes`
     linkActiveClass: 'active'
 })
+
+// Passport components
+Vue.component(
+    'passport-clients',
+    require('./components/passport/Clients.vue').default
+);
+
+Vue.component(
+    'passport-authorized-clients',
+    require('./components/passport/AuthorizedClients.vue').default
+);
+
+Vue.component(
+    'passport-personal-access-tokens',
+    require('./components/passport/PersonalAccessTokens.vue').default
+);
 
 /**
  * The following block of code may be used to automatically register your

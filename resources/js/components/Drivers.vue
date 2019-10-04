@@ -7,7 +7,7 @@
                         <h3 class="card-title">Drivers</h3>
 
                         <div class="card-tools">
-                            <a class="btn btn-app" data-toggle="modal" data-target="#new-driver-modal">
+                            <a class="btn btn-app" @click.prevent="newUserModal">
                                 <i class="fas fa-user-plus"></i> New Driver
                             </a>
                         </div>
@@ -28,16 +28,16 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="driver in drivers" :key="driver.id">
-                                    <td>{{driver.id}}</td>
-                                    <td>{{driver.name}}</td>
-                                    <td>{{driver.email}}</td>
-                                    <td>{{driver.phone}}</td>
-                                    <td class="text-capitalize">{{driver.role}}</td>
-                                    <td class="text-capitalize">{{driver.status}}</td>
-                                    <td>{{driver.created_at}}</td>
+                                <tr v-for="user in users" :key="user.id">
+                                    <td>{{user.id}}</td>
+                                    <td>{{user.name}}</td>
+                                    <td>{{user.email}}</td>
+                                    <td>{{user.phone}}</td>
+                                    <td class="text-capitalize">{{user.role}}</td>
+                                    <td class="text-capitalize">{{user.status}}</td>
+                                    <td>{{user.created_at}}</td>
                                     <td>
-                                        <a href="#">
+                                        <a href="#" @click.prevent="editUserModal(user)">
                                             <i class="fas fa-user-edit"></i>
                                         </a>
                                     </td>
@@ -52,13 +52,13 @@
         </div>
 
         <!-- .modal -->
-        <div class="modal fade" id="new-driver-modal" style="display: none;" aria-hidden="true">
+        <div class="modal fade" id="userModal" style="display: none;" aria-hidden="true">
             <div class="modal-dialog">
 
                 <div class="modal-content">
-                    <form @submit.prevent="createDriver">
+                    <form @submit.prevent="editmode ? editUser() : newUser()">
                         <div class="modal-header">
-                            <h4 class="modal-title">New Driver</h4>
+                            <h4 class="modal-title"> {{editmode ? 'Edit' : 'New'}} Driver</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
@@ -93,9 +93,29 @@
                                 <has-error :form="form" field="phone"></has-error>
                             </div>
 
+                            <div class="form-group">
+                                <label>Role</label>
+                                <select class="form-control" v-model="form.role" name="role"
+                                    :class="{ 'is-invalid': form.errors.has('role') }">
+                                    <option value="customer">Customer</option>
+                                    <option value="driver">Driver</option>
+                                </select>
+                                <has-error :form="form" field="role"></has-error>
+                            </div>
 
-                            <input type="hidden" name="status" :value="status">
-                            <input type="hidden" name="_token" :value="csrf">
+                            <input v-if="!editmode" type="hidden" name="status" v-model="form.status">
+
+                            <div class="form-group" v-if="editmode">
+                                <label>Status</label>
+                                <select class="form-control" v-model="form.status" name="role"
+                                    :class="{ 'is-invalid': form.errors.has('status') }">
+                                    <option value="active">Active</option>
+                                    <option value="unactive">Unactive</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="banned">Banned</option>
+                                </select>
+                                <has-error :form="form" field="role"></has-error>
+                            </div>
                         </div>
 
                         <div class="modal-footer justify-content-between">
@@ -116,15 +136,16 @@
     export default {
         data() {
             return {
-                drivers: {},
+                editmode: false,
+                users: {},
                 form: new Form({
-                    username: '',
+                    id: '',
+                    name: '',
                     password: '',
                     email: '',
                     phone: '',
                     status: 'active',
-                    role: 'driver',
-                    csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    role: 'driver'
                 })
             }
         },
@@ -135,19 +156,46 @@
             this.getDrivers()
         },
         methods: {
+            newUserModal() {
+                this.editmode =false
+                this.form.clear()
+                this.form.reset()
+                $('#userModal').modal('show')
+            },
+            editUserModal(user) {
+                this.editmode =true
+                this.form.clear()
+                $('#userModal').modal('show')
+                this.form.fill(user)
+            },
             getDrivers(){
                 axios.get('/api/admin/user')
                 .then(
                     ({ data }) => (
-                        this.drivers= data.filter(function(driver) {
-                            return driver.role == 'driver'
+                        this.users= data.filter(function(user) {
+                            return user.role == 'driver'
                         })
                     )
                 )
                 
             },
-            createDriver() {
+            newUser() {
                 this.form.post('/api/admin/user')
+                .then(() => {
+                    this.getDrivers()
+                })
+                .catch(() => {
+
+                })
+            },
+            editUser() {
+                this.form.put('/api/admin/user/'+this.form.id)
+                .then(() => {
+                    this.getDrivers()
+                })
+                .catch(() => {
+
+                })
             }
         }
     }

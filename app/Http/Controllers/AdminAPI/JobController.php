@@ -5,7 +5,8 @@ namespace App\Http\Controllers\AdminAPI;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Job;
-use App\Http\Requests\Admin\CreateUserRequest;
+use App\Http\Resources\AdminAPI\Job as JobResource;
+
 class JobController extends Controller
 {
     /**
@@ -17,7 +18,7 @@ class JobController extends Controller
     {
         $this->middleware('auth:admin-api');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -25,7 +26,9 @@ class JobController extends Controller
      */
     public function index()
     {
-        return Job::all();
+        $jobs = Job::all();
+
+        return JobResource::collection($jobs);
     }
 
     /**
@@ -34,16 +37,9 @@ class JobController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateUserRequest $request)
+    public function store(Request $request)
     {
-        return User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'phone' => $request->phone,
-            'status' => $request->status,
-            'role' => $request->role,
-        ]);
+        //
     }
 
     /**

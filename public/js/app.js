@@ -2651,9 +2651,172 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      editmode: false,
+      jobs: {},
+      form: new Form({
+        id: '',
+        driver: {
+          id: '',
+          name: '',
+          email: '',
+          phone: ''
+        },
+        customer: {
+          id: '',
+          name: '',
+          email: '',
+          phone: ''
+        },
+        job_metas: [{}],
+        status: 'booked'
+      })
+    };
+  },
   mounted: function mounted() {
     console.log('Component mounted.');
+  },
+  created: function created() {
+    this.getJobs();
+  },
+  methods: {
+    newJobModal: function newJobModal() {
+      this.editmode = false;
+      this.form.clear();
+      this.form.reset();
+      $('#jobModal').modal('show');
+    },
+    editJobModal: function editJobModal(job) {
+      this.editmode = true;
+      this.form.clear();
+      $('#jobModal').modal('show');
+      this.form.fill(job);
+    },
+    getJobs: function getJobs() {
+      var _this = this;
+
+      axios.get('/api/admin/job').then(function (_ref) {
+        var data = _ref.data;
+        return _this.jobs = data.data;
+      });
+    },
+    newJob: function newJob() {
+      var _this2 = this;
+
+      this.form.post('/api/admin/job').then(function () {
+        _this2.getJobs();
+      })["catch"](function () {});
+    },
+    editJob: function editJob() {
+      var _this3 = this;
+
+      this.form.put('/api/admin/job/' + this.form.id).then(function () {
+        _this3.getJobs();
+      })["catch"](function () {});
+    }
   }
 });
 
@@ -42346,29 +42509,280 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "container-fluid" }, [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-12 mt-5" }, [
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-header" }, [
+            _c("h3", { staticClass: "card-title" }, [_vm._v("Jobs")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-tools" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "btn btn-app",
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.newJobModal($event)
+                    }
+                  }
+                },
+                [
+                  _c("i", { staticClass: "fas fa-plus-square" }),
+                  _vm._v(" New Job\n                        ")
+                ]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body table-responsive p-0" }, [
+            _c("table", { staticClass: "table table-hover" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.jobs, function(job) {
+                  return _c("tr", { key: job.id }, [
+                    _c("td", [_vm._v(_vm._s(job.id))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(job.driver.name))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(job.driver.email))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(job.driver.phone))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(job.customer.name))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(job.customer.email))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(job.customer.phone))]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-capitalize" }, [
+                      _vm._v(_vm._s(job.status))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(job.created_at))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "a",
+                        {
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.editJobModal(job)
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "fas fa-edit" })]
+                      )
+                    ])
+                  ])
+                }),
+                0
+              )
+            ])
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        staticStyle: { display: "none" },
+        attrs: { id: "jobModal", "aria-hidden": "true" }
+      },
+      [
+        _c("div", { staticClass: "modal-dialog" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _c(
+              "form",
+              {
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    _vm.editmode ? _vm.editJob() : _vm.newJob()
+                  }
+                }
+              },
+              [
+                _c("div", { staticClass: "modal-header" }, [
+                  _c("h4", { staticClass: "modal-title" }, [
+                    _vm._v(" " + _vm._s(_vm.editmode ? "Edit" : "New") + " Job")
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(1)
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-body" }, [
+                  _c(
+                    "div",
+                    { staticClass: "form-group" },
+                    [
+                      _c("label", [_vm._v("Driver Email")]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.driver.email,
+                            expression: "form.driver.email"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid": _vm.form.errors.has("driverEmail")
+                        },
+                        attrs: { type: "email", name: "driverEmail" },
+                        domProps: { value: _vm.form.driver.email },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.form.driver,
+                              "email",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("has-error", {
+                        attrs: { form: _vm.form, field: "driverEmail" }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "form-group" },
+                    [
+                      _c("label", [_vm._v("Customer Email")]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.customer.email,
+                            expression: "form.customer.email"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid": _vm.form.errors.has("customerEmail")
+                        },
+                        attrs: { type: "email", name: "customerEmail" },
+                        domProps: { value: _vm.form.customer.email },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.form.customer,
+                              "email",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("has-error", {
+                        attrs: { form: _vm.form, field: "customerEmail" }
+                      })
+                    ],
+                    1
+                  )
+                ]),
+                _vm._v(" "),
+                _vm._m(2),
+                _vm._v(" "),
+                _c("alert-success", { attrs: { form: _vm.form } }, [
+                  _vm._v("Done")
+                ])
+              ],
+              1
+            )
+          ])
+        ])
+      ]
+    )
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container-fluid" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("Jobs Component")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    I'm an example component.\n                "
-              )
-            ])
-          ])
-        ])
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("ID")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Driver")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Driver Email")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Driver Phone")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Customer")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Customer Email")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Customer Phone")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Status")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Created Date")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Edit")])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-footer justify-content-between" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-default",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("Close")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+        [_vm._v("Save changes")]
+      )
     ])
   }
 ]

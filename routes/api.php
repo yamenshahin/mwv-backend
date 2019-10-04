@@ -28,6 +28,7 @@ Route::group(['prefix' => 'driver'],function() {
 Route::group(['prefix' => 'admin'],function() {
     Route::apiResources([
         'user' => 'AdminAPI\UserController',
-        'admin' => 'AdminAPI\AdminController'
+        'admin' => 'AdminAPI\AdminController',
+        'job' => 'AdminAPI\JobController'
     ]);
 });

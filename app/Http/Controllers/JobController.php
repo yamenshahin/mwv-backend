@@ -32,6 +32,10 @@ class JobController extends Controller
                 array_push($job_meta, new JobMeta(['key' => $key, 'value' => $value]));
             }
         }
+
+        foreach ($request->driver['price'] as $key => $value) {
+            array_push($job_meta, new JobMeta(['key' => $key, 'value' => $value]));
+        }
                 
         $job->save();
         $job->meta()->saveMany($job_meta);

@@ -4,8 +4,8 @@ namespace App\Http\Controllers\AdminAPI;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\User;
-class UserController extends Controller
+use App\Admin;
+class AdminController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -24,7 +24,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return User::all();
+        return Admin::all();
     }
 
     /**
@@ -37,12 +37,11 @@ class UserController extends Controller
     {
         $this->validate($request,[
             'name' => 'required|string|max:191',
-            'email' => 'required|string|max:191|email|unique:users',
+            'email' => 'required|string|max:191|email|unique:admins',
             'password'  => 'required|string|max:191|min:6',
-            'phone'  => 'required|string|max:191|min:6|unique:users'
+            'phone'  => 'required|string|max:191|min:6|unique:admins'
         ]);
-
-        return User::create([
+        return Admin::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
@@ -50,6 +49,7 @@ class UserController extends Controller
             'status' => $request->status,
             'role' => $request->role,
         ]);
+        
     }
 
     /**
@@ -72,17 +72,17 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = User::findOrFail($id);
+        $admin = Admin::findOrFail($id);
 
         $this->validate($request,[
             'name' => 'required|string|max:191',
-            'email' => 'required|string|email|max:191|unique:users,email,'.$user->id,
+            'email' => 'required|string|email|max:191|unique:admins,email,'.$admin->id,
             'password' => 'sometimes|min:6',
-            'phone'  => 'required|string|max:191|min:6|unique:users,phone,'.$user->id
+            'phone'  => 'required|string|max:191|min:6|unique:admins,phone,'.$admin->id
         ]);
 
-        $user->update($request->all());
-        return ['message' => 'Updated the user info'];
+        $admin->update($request->all());
+        return ['message' => 'Updated the admin info'];
     }
 
     /**

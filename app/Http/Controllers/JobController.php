@@ -51,6 +51,87 @@ class JobController extends Controller
         return JobResource::collection($customerJobs);
     }
 
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getCurrent($id)
+    {
+        $job = Job::select('*')
+        ->where('id', '=', $id )
+        ->first();
+        return new JobResource($job);
+    }
+
+    /**
+     * Get total price.
+     *
+     * @param  int  $id
+     * @return float
+     */
+    public function getTotal($id)
+    {
+        $job = getCurrent($id);
+        foreach ($job->job_metas as $job_meta) {
+            if ($job_meta.key ==='total') {
+                return $job_meta.value; 
+            }
+        }
+        return 0.00;
+    }
+
+    /**
+     * Get Description.
+     *
+     * @param  int  $id
+     * @return float
+     */
+    public function getDescription($id)
+    {
+        $job = getCurrent($id);
+        foreach ($job->job_metas as $job_meta) {
+            if ($job_meta.key ==='description') {
+                return $job_meta.value; 
+            }
+        }
+        return '';
+    }
+
+    /**
+     * Get Meta.
+     *
+     * @param  int  $id
+     * @return float
+     */
+    public function getMeta($id)
+    {
+        $job = getCurrent($id);
+        if($job->job_metas) {
+            return $job->job_metas;
+        }
+        return '';
+    }
+
+    /**
+     * Set Job Status.
+     *
+     * @param int $id
+     * @param string $status
+     * @return void
+     */
+    public static function setStatus($id, $status) 
+    {
+        $job = Job::select('*')
+        ->where('id', '=', $id )
+        ->first();
+        $job->status = $status;
+        $job->save();
+
+    }
+
     public function edit() 
     {
 

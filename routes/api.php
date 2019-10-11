@@ -26,6 +26,12 @@ Route::group(['prefix' => 'driver'],function() {
     Route::get('/get-location', 'DriverPlaceController@getLocation')->middleware('auth:api');
 });
 
+//User's files
+Route::group(['prefix' => 'files'],function() {
+    Route::apiResources([
+        'user-file' => 'UserFileController'
+    ]);
+});
 //Admin
 Route::group(['prefix' => 'admin'],function() {
     Route::apiResources([

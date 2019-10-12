@@ -45,11 +45,10 @@ class UserFileController extends Controller
         $userFile->user()->associate(auth()->user()->id);
         
         $path = $request->file->store(
-            'public/user-files/'. date('Y').'/'.date('m'). $request->key
+            'public/user-files'. $request->key. '/' . date('Y').'/'.date('m')
         );
-        dd($path);
+        $userFile->url = str_replace('public', '', $path);
         $userFile->key = $request->key;
-        $userFile->url = $path;
 
         $userFile->save();
 
@@ -90,6 +89,10 @@ class UserFileController extends Controller
             ['key', '=', $key],
         ])
         ->first();
+        $path = $request->file->store(
+            'public/user-files'. $request->key. '/' . date('Y').'/'.date('m')
+        );
+        $userFile->url = str_replace('public', '', $path);
 
         $userFile->save();
 

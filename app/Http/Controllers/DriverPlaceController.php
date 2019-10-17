@@ -43,6 +43,7 @@ class DriverPlaceController extends Controller
                 'delivery' => $request->delivery,
                 'waypoints' => $request->waypoints,
                 'movingDate' => $request->movingDate,
+                'vanSize' => $request->vanSize,
                 'helpersRequired' => $request->helpersRequired,
                 'description' => $request->description,
                 'customerInfoName' => $request->customerInfoName,

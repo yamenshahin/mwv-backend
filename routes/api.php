@@ -40,3 +40,7 @@ Route::group(['prefix' => 'admin'],function() {
         'job' => 'AdminAPI\JobController'
     ]);
 });
+//Email
+Route::group(['prefix' => 'email'],function() {
+    Route::post('/send', 'EmailController@send');
+});

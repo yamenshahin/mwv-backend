@@ -47,6 +47,7 @@ class JobController extends Controller
     {
         $customerJobs = Job::select('*')
         ->where('customer_id', '=', $request->user()->id)
+        ->orderBy('id', 'desc')
         ->get();
         return JobResource::collection($customerJobs);
     }

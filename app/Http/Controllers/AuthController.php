@@ -19,12 +19,23 @@ class AuthController extends Controller
      */
     public function register(UserRegisterRequest $request) 
     {
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'phone' => $request->phone
-        ]);
+        if($request->role) {
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => bcrypt($request->password),
+                'phone' => $request->phone,
+                'role' => $request->role
+            ]);
+        } else {
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => bcrypt($request->password),
+                'phone' => $request->phone
+            ]);
+        }
+        
         
         if(!$token = auth()->guard('api')->attempt($request->only('email', 'password'))) {
             return abort(401);

@@ -6,6 +6,9 @@ Route::post('/login', 'AuthController@login');
 Route::get('/user', 'AuthController@user');
 Route::post('/logout', 'AuthController@logout');
 
+//User
+Route::post('/set-role', 'AuthController@setRole')->middleware('auth:api');
+
 //Job Customer
 Route::group(['prefix' => 'jobs'],function() {
     Route::post('/store', 'JobController@store')->middleware('auth:api');

@@ -16,6 +16,7 @@ class CreateDriverPlacesTable extends Migration
         Schema::create('driver_places', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
+            $table->string('level')->default('none');
             $table->string('address')->default('Trafalgar Square, Charing Cross, London WC2N 5DU, UK')->nullable();
             $table->string('city')->default('London')->nullable();
             $table->string('postcode')->default('WC2N 5DU')->nullable();

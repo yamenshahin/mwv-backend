@@ -106,4 +106,14 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'Successfully logged out']);
     }
+    public function setRole(Request $request)
+    {
+        $user = User::select('*')
+        ->where('id', '=', $request->user('api')->id )
+        ->first();
+        $user->role = $request->role;
+        $user->save();
+
+        return new UserResource($user);
+    }
 }

@@ -70,8 +70,13 @@ class UserFileController extends Controller
             ['key', '=', $key],
         ])
         ->first();
-
-        return new UserFileResource($userFile);
+        if($userFile) {
+            return new UserFileResource($userFile);
+        }
+        return response()->json([
+            'data' => ['url' => '' ]           
+            ], 200);
+        
     }
 
     /**

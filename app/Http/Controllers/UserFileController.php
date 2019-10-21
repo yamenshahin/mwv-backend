@@ -88,12 +88,19 @@ class UserFileController extends Controller
      */
     public function update(Request $request, $key)
     {
+        
         $userFile = UserFile::select('*')
         ->where([
             ['user_id', '=', auth()->user()->id],
             ['key', '=', $key],
         ])
         ->first();
+        // If no user file create new one
+        if(!$userFile) {
+            $request->key = $key;
+            return $this->store($request);
+        }
+
         $path = $request->file->store(
             'public/user-files'. $request->key. '/' . date('Y').'/'.date('m')
         );

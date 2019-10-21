@@ -9,6 +9,7 @@ Use App\DriverPlace;
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\DriverPlaceSearch as DriverPlaceSearchResource;
 use App\Http\Resources\DriverPlacePrice as DriverPlacePriceResource;
+use App\Http\Resources\DriverPlaceLegal as DriverPlaceLegalResource;
 use App\Http\Resources\DriverPlaceLocation as DriverPlaceLocationResource;
 
 class DriverPlaceController extends Controller
@@ -218,8 +219,7 @@ class DriverPlaceController extends Controller
             $driverPlace->price_stop = $request->priceStop;
             $driverPlace->price_mile = $request->priceMile;
             $driverPlace->price_stairs = $request->priceStairs;
-            
-
+                        
             $driverPlace->save();
             
             return new DriverPlacePriceResource($driverPlace);
@@ -280,6 +280,45 @@ class DriverPlaceController extends Controller
     }
     
     /**
+     * Insert Prices info for places of driver 
+     *
+     * @param DriverPlaceRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+
+    public function createOrUpdateLegal(DriverPlaceRequest $request) {
+        
+        $existingDriverPlace =  $this->read($request);
+        
+        
+        if(!$existingDriverPlace) {
+            $driverPlace = new driverPlace;
+            $driverPlace->user()->associate($request->user());
+
+        
+            $driverPlace->vehicle_registration = $request->vehicleRegistration;
+            $driverPlace->national_insurance_number = $request->nationalInsuranceNumber;
+            $driverPlace->driving_licence_number = $request->disc;
+            
+            $driverPlace->save();
+            
+            return new DriverPlaceLegalResource($driverPlace);
+        } else {
+            $existingDriverPlace->vehicle_registration = $request->vehicleRegistration;
+            $existingDriverPlace->national_insurance_number = $request->nationalInsuranceNumber;
+            $existingDriverPlace->driving_licence_number = $request->drivingLicenceNumber;
+            $existingDriverPlace->disc = $request->disc;
+            
+
+            $existingDriverPlace->save();
+            
+            return new DriverPlaceLegalResource($existingDriverPlace);
+        }
+        
+
+    }
+    
+    /**
      * Read driver place info
      *
      * @param DriverPlaceRequest $request
@@ -307,6 +346,23 @@ class DriverPlaceController extends Controller
             $driverPlace->save();
         }
         return new DriverPlacePriceResource($driverPlace);
+    }
+
+    /**
+     * Get Legal info for driver places
+     *
+     * @param DriverPlaceRequest $request
+     * @return JSON
+     */
+    public function getLegal(DriverPlaceRequest $request) {
+        $driverPlace =  $this->read($request);
+        //If there is no driver place just create a default one
+        if(!$driverPlace) {
+            $driverPlace = new driverPlace;
+            $driverPlace->user()->associate($request->user());
+            $driverPlace->save();
+        }
+        return new DriverPlaceLegalResource($driverPlace);
     }
 
     /**

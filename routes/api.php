@@ -24,7 +24,9 @@ Route::group(['prefix' => 'places'],function() {
 //Driver
 Route::group(['prefix' => 'driver'],function() {
     Route::post('/create-update-price', 'DriverPlaceController@createOrUpdatePrice')->middleware('auth:api');
+    Route::post('/create-update-legal', 'DriverPlaceController@createOrUpdateLegal')->middleware('auth:api');
     Route::get('/get-price', 'DriverPlaceController@getPrice')->middleware('auth:api');
+    Route::get('/get-legal', 'DriverPlaceController@getLegal')->middleware('auth:api');
     Route::post('/create-update-location', 'DriverPlaceController@createOrUpdateLocation')->middleware('auth:api');
     Route::get('/get-location', 'DriverPlaceController@getLocation')->middleware('auth:api');
     Route::apiResources([

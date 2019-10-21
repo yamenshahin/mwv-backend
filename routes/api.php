@@ -27,6 +27,9 @@ Route::group(['prefix' => 'driver'],function() {
     Route::get('/get-price', 'DriverPlaceController@getPrice')->middleware('auth:api');
     Route::post('/create-update-location', 'DriverPlaceController@createOrUpdateLocation')->middleware('auth:api');
     Route::get('/get-location', 'DriverPlaceController@getLocation')->middleware('auth:api');
+    Route::apiResources([
+        'jobs' => 'DriverJobsController'
+    ]);
 });
 
 //User's files

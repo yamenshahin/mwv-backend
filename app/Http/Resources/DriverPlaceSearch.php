@@ -29,14 +29,18 @@ class DriverPlaceSearch extends JsonResource
             }
             return [
                 'placeId' => $this->id,
+                'disc' => $this->disc,
                 'user' => UserSimpleResource::make(User::find($this->user_id)),
                 'milesDriven' => $this->miles_driven,
                 'jobsBooked' => $this->jobs_booked,
                 
                 'score' => $score,
                 'votes' => $this->votes,
+
+                'total' => $priceBreakdownDetails['total'],
                 
                 'price' => $priceBreakdownDetails
+                
             ];
         }
     }

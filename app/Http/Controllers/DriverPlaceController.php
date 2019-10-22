@@ -11,6 +11,7 @@ use App\Http\Resources\DriverPlaceSearch as DriverPlaceSearchResource;
 use App\Http\Resources\DriverPlacePrice as DriverPlacePriceResource;
 use App\Http\Resources\DriverPlaceLegal as DriverPlaceLegalResource;
 use App\Http\Resources\DriverPlaceLocation as DriverPlaceLocationResource;
+use App\Http\Resources\AllPlaces as AllPlacesResource;
 
 class DriverPlaceController extends Controller
 {
@@ -413,5 +414,15 @@ class DriverPlaceController extends Controller
         return new DriverPlaceLocationResource($driverPlace);
     }
 
+    /**
+     * Get all places lat and lng
+     *
+     * @return JSON
+     */
+    public function getAllPlaces() {
+        $places = DriverPlace::select('*')
+        ->get();
+        return AllPlacesResource::collection($places);
+    }
 
 }

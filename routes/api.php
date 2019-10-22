@@ -20,6 +20,7 @@ Route::group(['prefix' => 'jobs'],function() {
 //Search Places
 Route::group(['prefix' => 'places'],function() {
     Route::post('/', 'DriverPlaceController@search');
+    Route::get('/all', 'DriverPlaceController@getAllPlaces');
 });
 //Driver
 Route::group(['prefix' => 'driver'],function() {

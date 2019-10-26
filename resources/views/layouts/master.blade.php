@@ -9,7 +9,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>Hello Vans</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -169,7 +169,7 @@
                 <!-- Brand Logo -->
                 <a href="/admin" class="brand-link">
                     <img src="/img/logo.png" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-                    <span class="brand-text font-weight-light">{{ config('app.name', 'Laravel') }}</span>
+                    <span class="brand-text font-weight-light">Hello Vans</span>
                 </a>
 
                 <!-- Sidebar -->

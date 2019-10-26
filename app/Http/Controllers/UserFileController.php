@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 Use App\User;
 Use App\UserFile;
 use App\Http\Resources\UserFile as UserFileResource;
+use Illuminate\Support\Facades\Storage;
 
 class UserFileController extends Controller
 {
@@ -41,13 +42,21 @@ class UserFileController extends Controller
      */
     public function store(Request $request)
     {
+        $userFile = UserFile::select('*')
+        ->where([
+            ['user_id', '=', auth()->user()->id],
+            ['key', '=', $request->key],
+        ])
+        ->first();
+        // If  user file update
+        if($userFile) {
+            return $this->update($request, $request->key);
+        }
+
         $userFile = new UserFile;
         $userFile->user()->associate(auth()->user()->id);
         
-        $path = $request->file->store(
-            'public/user-files'. $request->key. '/' . date('Y').'/'.date('m')
-        );
-        $userFile->url = str_replace('public', '', $path);
+        $userFile->url = Storage::disk('s3')->putFile('user-files/'.$request->key.'/'. date('Y').'/'.date('m'), $request->file, 'public');
         $userFile->key = $request->key;
 
         $userFile->save();
@@ -95,16 +104,8 @@ class UserFileController extends Controller
             ['key', '=', $key],
         ])
         ->first();
-        // If no user file create new one
-        if(!$userFile) {
-            $request->key = $key;
-            return $this->store($request);
-        }
-
-        $path = $request->file->store(
-            'public/user-files'. $request->key. '/' . date('Y').'/'.date('m')
-        );
-        $userFile->url = str_replace('public', '', $path);
+        
+        $userFile->url = Storage::disk('s3')->putFile('user-files/'.$key.'/'. date('Y').'/'.date('m'), $request->file, 'public');
 
         $userFile->save();
 

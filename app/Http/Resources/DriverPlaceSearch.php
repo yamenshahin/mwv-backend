@@ -6,7 +6,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\UserSimple as UserSimpleResource;
 use App\User;
 use App\Http\Controllers\PriceBreakdown;
-
+Use App\UserFile;
+use App\Http\Resources\UserFile as UserFileResource;
 class DriverPlaceSearch extends JsonResource
 {
     /**
@@ -31,6 +32,12 @@ class DriverPlaceSearch extends JsonResource
                 'placeId' => $this->id,
                 'disc' => $this->disc,
                 'user' => UserSimpleResource::make(User::find($this->user_id)),
+                'placeFile' => UserFileResource::make( UserFile::select('*')
+                ->where([
+                    ['user_id', '=', $this->user_id],
+                    ['key', '=', 'places'],
+                ])
+                ->first()),
                 'milesDriven' => $this->miles_driven,
                 'jobsBooked' => $this->jobs_booked,
                 

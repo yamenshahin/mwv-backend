@@ -106,14 +106,86 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'Successfully logged out']);
     }
+    /**
+     * Set user role
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function setRole(Request $request)
     {
-        $user = User::select('*')
-        ->where('id', '=', $request->user('api')->id )
-        ->first();
+        $user = auth()->user('api');
         $user->role = $request->role;
         $user->save();
 
+        return new UserResource($user);
+    }
+
+    /**
+     * Update (user's profile)
+     *
+     * @param UserUpdateRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function update(Request $request) 
+    {
+        $user = auth()->user('api');
+        $user->name = $request->name;
+        if($request->password) {
+            if($user->email === $request->email && $user->phone === $request->phone) {
+                $validatedData = $request->validate([
+                    'name' => 'required|string|max:191',
+                    'password'  => 'string|max:191|min:6|confirmed',
+                ]);
+            } elseif($user->email === $request->email) {
+                $validatedData = $request->validate([
+                    'name' => 'required|string|max:191',
+                    'phone'  => 'required|string|max:191|min:6|unique:users',
+                    'password'  => 'string|max:191|min:6|confirmed',
+                ]);
+            } elseif($user->phone === $request->phone) {
+                $validatedData = $request->validate([
+                    'name' => 'required|string|max:191',
+                    'email' => 'required|max:191|email|unique:users',
+                    'password'  => 'string|max:191|min:6|confirmed',
+                ]);
+            } else {
+                $validatedData = $request->validate([
+                    'name' => 'required|string|max:191',
+                    'email' => 'required|max:191|email|unique:users',
+                    'password'  => 'string|max:191|min:6|confirmed',
+                    'phone'  => 'required|string|max:191|min:6|unique:users'
+                ]);
+            }
+        } else  {
+            if($user->email === $request->email && $user->phone === $request->phone) {
+                $validatedData = $request->validate([
+                    'name' => 'required|string|max:191'
+                ]);
+            } elseif($user->email === $request->email) {
+                $validatedData = $request->validate([
+                    'name' => 'required|string|max:191',
+                    'phone'  => 'required|string|max:191|min:6|unique:users'
+                ]);
+            } elseif($user->phone === $request->phone) {
+                $validatedData = $request->validate([
+                    'name' => 'required|string|max:191',
+                    'email' => 'required|max:191|email|unique:users'
+                ]);
+            } else {
+                $validatedData = $request->validate([
+                    'name' => 'required|string|max:191',
+                    'email' => 'required|max:191|email|unique:users',
+                    'phone'  => 'required|string|max:191|min:6|unique:users'
+                ]);
+            }
+        }
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        if($request->password) {
+            $user->password = $request->password;
+        }
+        $user->save();
         return new UserResource($user);
     }
 }

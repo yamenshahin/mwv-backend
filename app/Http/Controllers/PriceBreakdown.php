@@ -22,14 +22,23 @@ class PriceBreakdown extends Controller
     public function priceBreakdown()
     {
         $vanSizeWeekdayPrice = $this->vanSizeWeekdayPrice();
-        $estimatedDistancePrice = $this->request->milesDriven * $this->place->price_mile;
-        $totalTimePrice = $this->request->totalTime * $vanSizeWeekdayPrice;
+
+        $estimatedDistancePrice = ($this->request->milesDriven * $this->place->price_mile) 
+        + 
+        ($this->request->milesDriven * $this->place->price_mile)  * 0.07;
+
+        $totalTimePrice = ($this->request->totalTime * $vanSizeWeekdayPrice)
+        +
+        ($this->request->totalTime * $vanSizeWeekdayPrice)  * 0.07;
+
         $additionalTimePrice = $vanSizeWeekdayPrice / 2;
-        $stairsPrice = ($this->request->collection['stairs'] + $this->request->delivery['stairs']) * $this->place->price_stairs;
+
+        $stairsPrice = (($this->request->collection['stairs'] + $this->request->delivery['stairs']) * $this->place->price_stairs) 
+        +
+        (($this->request->collection['stairs'] + $this->request->delivery['stairs']) * $this->place->price_stairs) * 0.07;
 
         $subtotal = $estimatedDistancePrice + $totalTimePrice + $stairsPrice;
-        $fee = $subtotal * 0.07;
-        $total = $subtotal + $fee;
+        $total = $subtotal;
 
         return [
             'milePrice' => $this->place->price_mile,
@@ -38,7 +47,6 @@ class PriceBreakdown extends Controller
             'additionalTimePrice' => round($additionalTimePrice,2),
             'stairsPrice' => round($stairsPrice,2),
             'subtotal' => round($subtotal,2),
-            'fee' => round($fee,2),
             'total' => round($total,2)
         ];
     }

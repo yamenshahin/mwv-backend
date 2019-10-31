@@ -195,11 +195,12 @@
                                 </router-link>
                             </li>
                             <li class="nav-item">
-                                <router-link :to="{ name: 'tests' }" class="nav-link">
-                                    <i class="nav-icon fas fa-vials"></i>
-                                    <p>Test</p>
+                                <router-link :to="{ name: 'global-settings' }" class="nav-link">
+                                    <i class="nav-icon fas fa-cogs"></i>
+                                    <p>Global settings</p>
                                 </router-link>
                             </li>
+                            
                             <!-- Add icons to the links using the .nav-icon class
                     with font-awesome or any other icon font library -->
                             <li class="nav-item">
@@ -285,7 +286,20 @@
                                     </p>
                                 </router-link>
                             </li>
-
+                            <li class="nav-item">
+                                <router-link :to="{ name: 'metas' }" class="nav-link">
+                                    <i class="nav-icon fas fa-terminal"></i>
+                                    <p>
+                                        Metas
+                                    </p>
+                                </router-link>
+                            </li>
+                            <li class="nav-item">
+                                <router-link :to="{ name: 'tests' }" class="nav-link">
+                                    <i class="nav-icon fas fa-vials"></i>
+                                    <p>Test</p>
+                                </router-link>
+                            </li>    
 
                         </ul>
                     </nav>

@@ -50,7 +50,8 @@ Route::group(['prefix' => 'admin'],function() {
     Route::apiResources([
         'user' => 'AdminAPI\UserController',
         'admin' => 'AdminAPI\AdminController',
-        'job' => 'AdminAPI\JobController'
+        'job' => 'AdminAPI\JobController',
+        'meta' => 'AdminAPI\MetaController'
     ]);
 });
 //Email

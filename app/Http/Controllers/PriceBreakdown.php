@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Meta;
 
 class PriceBreakdown extends Controller
 {
@@ -21,21 +22,25 @@ class PriceBreakdown extends Controller
      */
     public function priceBreakdown()
     {
+        $default_fee = $meta = Meta::select('*')
+        ->where('key', '=', 'defaultFee')
+        ->first();
+
         $vanSizeWeekdayPrice = $this->vanSizeWeekdayPrice();
 
         $estimatedDistancePrice = ($this->request->milesDriven * $this->place->price_mile) 
         + 
-        ($this->request->milesDriven * $this->place->price_mile)  * 0.07;
+        ($this->request->milesDriven * $this->place->price_mile)  * $default_fee->value/100;
 
         $totalTimePrice = ($this->request->totalTime * $vanSizeWeekdayPrice)
         +
-        ($this->request->totalTime * $vanSizeWeekdayPrice)  * 0.07;
+        ($this->request->totalTime * $vanSizeWeekdayPrice)  * $default_fee->value/100;
 
         $additionalTimePrice = $vanSizeWeekdayPrice / 2;
 
         $stairsPrice = (($this->request->collection['stairs'] + $this->request->delivery['stairs']) * $this->place->price_stairs) 
         +
-        (($this->request->collection['stairs'] + $this->request->delivery['stairs']) * $this->place->price_stairs) * 0.07;
+        (($this->request->collection['stairs'] + $this->request->delivery['stairs']) * $this->place->price_stairs) * $default_fee->value/100;
 
         $subtotal = $estimatedDistancePrice + $totalTimePrice + $stairsPrice;
         $total = $subtotal;

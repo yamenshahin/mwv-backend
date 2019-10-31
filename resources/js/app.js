@@ -30,7 +30,10 @@ Vue.component(AlertSuccess.name, AlertSuccess)
 
 // Define routes
 let routes = [
+    // Admin Power
     { path: '/admin/dashboard', name: 'dashboard', component: require('./components/Dashboard.vue').default },
+
+    { path: '/admin/global-settings', name: 'global-settings', component: require('./components/GlobalSettings.vue').default },
 
     { path: '/admin/statistics-charts', name: 'statistics-charts', component: require('./components/StatisticsCharts.vue').default },
 
@@ -50,6 +53,8 @@ let routes = [
 
     { path: '/admin/my-profile', name: 'my-profile', component: require('./components/MyProfile.vue').default },
 
+    //Dev
+    { path: '/admin/metas', name: 'metas', component: require('./components/Metas.vue').default },
     { path: '/admin/tests', name: 'tests', component: require('./components/Tests.vue').default },
 ]
 
@@ -99,3 +104,5 @@ const app = new Vue({
     el: '#app',
     router
 });
+
+require('./filters');

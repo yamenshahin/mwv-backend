@@ -3,10 +3,8 @@
 
 {{ $data->message }}
 
-@component('mail::button', ['url' => 'http://google.com'])
+@component('mail::button', ['url' => config('app.url')])
 Button Text
 @endcomponent
 
-Thanks,<br>
-{{ $data->signature }}
 @endcomponent

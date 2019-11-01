@@ -13,4 +13,6 @@ Subject: {{ $data->subject }}
 
 {{ $data->message }}
 
+Thanks,<br>
+{{ $data->signature }}
 @endcomponent

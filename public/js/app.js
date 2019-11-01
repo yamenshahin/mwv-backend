@@ -2258,10 +2258,65 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      editmode: false,
+      editMode: false,
+      senderEmail: 'info@hellovans.com',
+      signature: 'Hello Vans Team',
       users: {},
       form: new Form({
         id: '',
@@ -2271,6 +2326,15 @@ __webpack_require__.r(__webpack_exports__);
         phone: '',
         status: 'active',
         role: 'customer'
+      }),
+      emailForm: new Form({
+        id: '',
+        name: '',
+        email: '',
+        message: '',
+        subject: '',
+        senderEmail: 'info@hellovans.com',
+        signature: ''
       })
     };
   },
@@ -2281,14 +2345,25 @@ __webpack_require__.r(__webpack_exports__);
     this.getUsers();
   },
   methods: {
+    sendEmailModal: function sendEmailModal(user) {
+      this.form.clear();
+      this.form.reset();
+      $('#senEmailModal').modal('show');
+      this.emailForm.fill(user);
+      this.emailForm.senderEmail = this.senderEmail;
+      this.emailForm.signature = this.signature;
+    },
+    sendEmail: function sendEmail() {
+      this.emailForm.post('/api/admin/email/send').then(function () {})["catch"](function () {});
+    },
     newUserModal: function newUserModal() {
-      this.editmode = false;
+      this.editMode = false;
       this.form.clear();
       this.form.reset();
       $('#userModal').modal('show');
     },
     editUserModal: function editUserModal(user) {
-      this.editmode = true;
+      this.editMode = true;
       this.form.clear();
       $('#userModal').modal('show');
       this.form.fill(user);
@@ -41720,6 +41795,22 @@ var render = function() {
                           }
                         },
                         [_c("i", { staticClass: "fas fa-user-edit" })]
+                      ),
+                      _vm._v(
+                        "\n                                    |\n                                    "
+                      ),
+                      _c(
+                        "a",
+                        {
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.sendEmailModal(user)
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "fas fa-envelope" })]
                       )
                     ])
                   ])
@@ -41737,6 +41828,235 @@ var render = function() {
       {
         staticClass: "modal fade",
         staticStyle: { display: "none" },
+        attrs: { id: "senEmailModal", "aria-hidden": "true" }
+      },
+      [
+        _c("div", { staticClass: "modal-dialog" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _c(
+              "form",
+              {
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.sendEmail($event)
+                  }
+                }
+              },
+              [
+                _c("div", { staticClass: "modal-header" }, [
+                  _c("h4", { staticClass: "modal-title" }, [
+                    _vm._v(
+                      "Send Email to " +
+                        _vm._s(_vm.emailForm.name) +
+                        " | " +
+                        _vm._s(_vm.emailForm.email)
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(1)
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "modal-body" },
+                  [
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("label", [_vm._v("Sender Email")]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.emailForm.senderEmail,
+                              expression: "emailForm.senderEmail"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("senderEmail")
+                          },
+                          attrs: { type: "email", name: "senderEmail" },
+                          domProps: { value: _vm.emailForm.senderEmail },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.emailForm,
+                                "senderEmail",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.emailForm, field: "senderEmail" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("label", [_vm._v("Subject")]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.emailForm.subject,
+                              expression: "emailForm.subject"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("subject")
+                          },
+                          attrs: { type: "text", name: "subject" },
+                          domProps: { value: _vm.emailForm.subject },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.emailForm,
+                                "subject",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.emailForm, field: "subject" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("label", [_vm._v("Message")]),
+                        _vm._v(" "),
+                        _c("textarea", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.emailForm.message,
+                              expression: "emailForm.message"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("message")
+                          },
+                          attrs: {
+                            type: "textarea",
+                            name: "message",
+                            rows: "3"
+                          },
+                          domProps: { value: _vm.emailForm.message },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.emailForm,
+                                "message",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.emailForm, field: "message" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("label", [_vm._v("Signature")]),
+                        _vm._v(" "),
+                        _c("textarea", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.emailForm.signature,
+                              expression: "emailForm.signature"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("signature")
+                          },
+                          attrs: {
+                            type: "textarea",
+                            name: "signature",
+                            rows: "3"
+                          },
+                          domProps: { value: _vm.emailForm.signature },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.emailForm,
+                                "signature",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.emailForm, field: "signature" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _vm._m(2),
+                    _vm._v(" "),
+                    _c("alert-success", { attrs: { form: _vm.emailForm } }, [
+                      _vm._v("Done")
+                    ])
+                  ],
+                  1
+                )
+              ]
+            )
+          ])
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        staticStyle: { display: "none" },
         attrs: { id: "userModal", "aria-hidden": "true" }
       },
       [
@@ -41748,7 +42068,7 @@ var render = function() {
                 on: {
                   submit: function($event) {
                     $event.preventDefault()
-                    _vm.editmode ? _vm.editUser() : _vm.newUser()
+                    _vm.editMode ? _vm.editUser() : _vm.newUser()
                   }
                 }
               },
@@ -41756,11 +42076,11 @@ var render = function() {
                 _c("div", { staticClass: "modal-header" }, [
                   _c("h4", { staticClass: "modal-title" }, [
                     _vm._v(
-                      " " + _vm._s(_vm.editmode ? "Edit" : "New") + " User"
+                      " " + _vm._s(_vm.editMode ? "Edit" : "New") + " User"
                     )
                   ]),
                   _vm._v(" "),
-                  _vm._m(1)
+                  _vm._m(3)
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "modal-body" }, [
@@ -41968,7 +42288,7 @@ var render = function() {
                     1
                   ),
                   _vm._v(" "),
-                  !_vm.editmode
+                  !_vm.editMode
                     ? _c("input", {
                         directives: [
                           {
@@ -41991,7 +42311,7 @@ var render = function() {
                       })
                     : _vm._e(),
                   _vm._v(" "),
-                  _vm.editmode
+                  _vm.editMode
                     ? _c(
                         "div",
                         { staticClass: "form-group" },
@@ -42063,7 +42383,7 @@ var render = function() {
                     : _vm._e()
                 ]),
                 _vm._v(" "),
-                _vm._m(2),
+                _vm._m(4),
                 _vm._v(" "),
                 _c("alert-success", { attrs: { form: _vm.form } }, [
                   _vm._v("Done")
@@ -42098,8 +42418,46 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Join Date")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Edit")])
+        _c("th", [_vm._v("Action")])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-footer justify-content-between" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-default",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("Close")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+        [_vm._v("Send")]
+      )
     ])
   },
   function() {

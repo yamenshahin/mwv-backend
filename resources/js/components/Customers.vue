@@ -24,7 +24,7 @@
                                     <th>Role</th>
                                     <th>Status</th>
                                     <th>Join Date</th>
-                                    <th>Edit</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -40,6 +40,10 @@
                                         <a href="#" @click.prevent="editUserModal(user)">
                                             <i class="fas fa-user-edit"></i>
                                         </a>
+                                        |
+                                        <a href="#" @click.prevent="sendEmailModal(user)">
+                                            <i class="fas fa-envelope"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -52,13 +56,62 @@
         </div>
 
         <!-- .modal -->
+        <div class="modal fade" id="senEmailModal" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form @submit.prevent="sendEmail">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Send Email to {{emailForm.name}} | {{emailForm.email}}</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>Sender Email</label>
+                                <input v-model="emailForm.senderEmail" type="email" name="senderEmail" class="form-control"
+                                    :class="{ 'is-invalid': form.errors.has('senderEmail') }">
+                                <has-error :form="emailForm" field="senderEmail"></has-error>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Subject</label>
+                                <input v-model="emailForm.subject" type="text" name="subject" class="form-control"
+                                    :class="{ 'is-invalid': form.errors.has('subject') }">
+                                <has-error :form="emailForm" field="subject"></has-error>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Message</label>
+                                <textarea v-model="emailForm.message" type="textarea" name="message" class="form-control"
+                                    :class="{ 'is-invalid': form.errors.has('message') }" rows="3"></textarea>
+                                <has-error :form="emailForm" field="message"></has-error>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Signature</label>
+                                <textarea v-model="emailForm.signature" type="textarea" name="signature" class="form-control"
+                                    :class="{ 'is-invalid': form.errors.has('signature') }" rows="3"></textarea>
+                                <has-error :form="emailForm" field="signature"></has-error>
+                            </div>
+                            
+                            <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Send</button>
+                            </div>
+                            <alert-success :form="emailForm">Done</alert-success>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div> 
         <div class="modal fade" id="userModal" style="display: none;" aria-hidden="true">
             <div class="modal-dialog">
 
                 <div class="modal-content">
-                    <form @submit.prevent="editmode ? editUser() : newUser()">
+                    <form @submit.prevent="editMode ? editUser() : newUser()">
                         <div class="modal-header">
-                            <h4 class="modal-title"> {{editmode ? 'Edit' : 'New'}} User</h4>
+                            <h4 class="modal-title"> {{editMode ? 'Edit' : 'New'}} User</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
@@ -103,9 +156,9 @@
                                 <has-error :form="form" field="role"></has-error>
                             </div>
 
-                            <input v-if="!editmode" type="hidden" name="status" v-model="form.status">
+                            <input v-if="!editMode" type="hidden" name="status" v-model="form.status">
 
-                            <div class="form-group" v-if="editmode">
+                            <div class="form-group" v-if="editMode">
                                 <label>Status</label>
                                 <select class="form-control" v-model="form.status" name="role"
                                     :class="{ 'is-invalid': form.errors.has('status') }">
@@ -136,7 +189,9 @@
     export default {
         data() {
             return {
-                editmode: false,
+                editMode: false,
+                senderEmail: 'info@hellovans.com',
+                signature: 'Hello Vans Team',
                 users: {},
                 form: new Form({
                     id: '',
@@ -146,7 +201,16 @@
                     phone: '',
                     status: 'active',
                     role: 'customer'
-                })
+                }),
+                emailForm: new Form({
+                    id: '',
+                    name: '',
+                    email: '',
+                    message: '',
+                    subject: '',
+                    senderEmail: 'info@hellovans.com',
+                    signature:''
+                }),
             }
         },
         mounted() {
@@ -156,14 +220,32 @@
             this.getUsers()
         },
         methods: {
+            sendEmailModal(user) {
+                this.form.clear()
+                this.form.reset()
+                $('#senEmailModal').modal('show')
+                this.emailForm.fill(user)
+                this.emailForm.senderEmail = this.senderEmail;
+                this.emailForm.signature = this.signature;
+            },
+            sendEmail( ){
+                this.emailForm.post('/api/admin/email/send')
+                .then(() => {
+                    
+                })
+                .catch(() => {
+
+                })
+            },
+
             newUserModal() {
-                this.editmode =false
+                this.editMode =false
                 this.form.clear()
                 this.form.reset()
                 $('#userModal').modal('show')
             },
             editUserModal(user) {
-                this.editmode =true
+                this.editMode =true
                 this.form.clear()
                 $('#userModal').modal('show')
                 this.form.fill(user)

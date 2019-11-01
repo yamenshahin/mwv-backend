@@ -54,7 +54,12 @@ Route::group(['prefix' => 'admin'],function() {
         'meta' => 'AdminAPI\MetaController'
     ]);
 });
-//Email
-Route::group(['prefix' => 'email'],function() {
-    Route::post('/send', 'EmailController@send');
+//Admin email
+Route::group(['prefix' => 'admin/email'],function() {
+    Route::post('/send', 'AdminAPI\EmailContactUserController@send');
+});
+//User email
+Route::group(['prefix' => 'user/email'],function() {
+    Route::post('/send', 'EmailContactUsController@send');
+    Route::post('/send-quote', 'EmailSavedQuoteController@sendQuote');
 });

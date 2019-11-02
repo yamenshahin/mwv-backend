@@ -33,7 +33,12 @@ class CheckoutController extends Controller
 
             ]);
             // save this info to your database
-            JobController::setStatus($request->id, 'booked');   
+            JobController::setStatus($request->id, 'booked');
+            
+            // If new user
+            if($request->customerEmail)  {
+                JobController::setCustomer($request->id, $request->customerEmail);
+            }
             // SUCCESSFUL
             return 'success';
         } catch (CardErrorException $e) {

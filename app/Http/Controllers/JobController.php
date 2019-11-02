@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
 use App\Job;
 Use App\JobMeta;
 use Illuminate\Support\Facades\DB;
@@ -21,7 +22,12 @@ class JobController extends Controller
     {
         $job = new Job;
         $job->user()->associate($request->driver['user']['id']);
-        $job->customer_id = $request->user()->id;
+
+        if($request->user()) {
+            $job->customer_id = $request->user()->id;
+        } else {
+            $job->customer_id = 0;
+        }
         
         $job_meta = [];
         foreach ($request->job_meta as $key => $value) {
@@ -129,6 +135,27 @@ class JobController extends Controller
         ->where('id', '=', $id )
         ->first();
         $job->status = $status;
+        $job->save();
+
+    }
+
+    /**
+     * Set Job Customer ID.
+     *
+     * @param int $id
+     * @param string $custoemrEmail
+     * @return void
+     */
+    public static function setCustomer($id, $customerEmail) 
+    {
+        $customer = User::select('*')
+        ->where('email', '=', $customerEmail )
+        ->first();
+        
+        $job = Job::select('*')
+        ->where('id', '=', $id )
+        ->first();
+        $job->customer_id = $customer->id;
         $job->save();
 
     }

@@ -8,13 +8,13 @@ use Cartalyst\Stripe\Laravel\Facades\Stripe;
 
 class CheckoutController extends Controller
 {
-     /**
-     * Check out validation the turn job status to booked
+    /**
+     * Checkout (with Credit) validation the turn job status to booked
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function checkout(Request $request) {
+    public function checkoutCredit(Request $request) {
         $this->validate($request,[
             'stripeToken' => 'required',
             'id' => 'required',
@@ -34,7 +34,8 @@ class CheckoutController extends Controller
             ]);
             // save this info to your database
             JobController::setStatus($request->id, 'booked');
-            
+            JobController::setMeta($request->id, 'paymentMethod', 'credit'); 
+
             // If new user
             if($request->customerEmail)  {
                 JobController::setCustomer($request->id, $request->customerEmail);
@@ -49,6 +50,30 @@ class CheckoutController extends Controller
                 ]
                 ], 422);
         }
+
+    }
+
+    /**
+     * Checkout (with Cash) validation the turn job status to booked
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function checkoutCash(Request $request) {
+        $this->validate($request,[
+            'id' => 'required',
+        ]);
+
+        // save this info to your database
+        JobController::setStatus($request->id, 'booked'); 
+        JobController::setMeta($request->id, 'paymentMethod', 'cash'); 
+        
+        // If new user
+        if($request->customerEmail)  {
+            JobController::setCustomer($request->id, $request->customerEmail);
+        }
+        // SUCCESSFUL
+        return 'success';
 
     }
 }

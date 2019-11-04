@@ -22,7 +22,7 @@ class PriceBreakdown extends Controller
      */
     public function priceBreakdown()
     {
-        $default_fee = $meta = Meta::select('*')
+        $default_fee = Meta::select('*')
         ->where('key', '=', 'defaultFee')
         ->first();
 

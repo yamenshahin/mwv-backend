@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Job;
 Use App\JobMeta;
+use App\Meta;
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\Job as JobResource;
 use App\Http\Requests\JobStoreRequest;
@@ -13,12 +14,57 @@ use App\Http\Requests\JobStoreRequest;
 class JobController extends Controller
 {
     /**
-     * Insert new Job with job metas
+     * Insert new Job with job metas (authenticated/logged in user)
      *
      * @param JobStoreRequest $request
      * @return JSON
      */
-    public function store(JobStoreRequest $request)
+    public function storeAuthenticated(JobStoreRequest $request)
+    {
+        $job = new Job;
+        $job->user()->associate($request->driver['user']['id']);
+
+        if($request->user()) {
+            $job->customer_id = $request->user()->id;
+        } else {
+            $job->customer_id = 0;
+        }
+        
+        $job_meta = [];
+        foreach ($request->job_meta as $key => $value) {
+
+            if(in_array($key,['collection', 'delivery', 'waypoints'])) {
+                array_push($job_meta, new JobMeta(['key' => $key, 'value' => json_encode($value)])); 
+            } else {
+                array_push($job_meta, new JobMeta(['key' => $key, 'value' => $value]));
+            }
+        }
+
+        
+        foreach ($request->driver['price'] as $key => $value) {
+            array_push($job_meta, new JobMeta(['key' => $key, 'value' => $value]));
+        }
+        
+        //get current fee
+        $default_fee = Meta::select('*')
+        ->where('key', '=', 'defaultFee')
+        ->first();
+        
+        array_push($job_meta, new JobMeta(['key' => 'fee', 'value' => $default_fee->value]));
+
+        $job->save();
+        $job->meta()->saveMany($job_meta);
+
+        return new JobResource($job);
+    }
+
+    /**
+     * Insert new Job with job metas (authenticated/logged in user)
+     *
+     * @param JobStoreRequest $request
+     * @return JSON
+     */
+    public function storeUnauthenticated(JobStoreRequest $request)
     {
         $job = new Job;
         $job->user()->associate($request->driver['user']['id']);
@@ -42,7 +88,14 @@ class JobController extends Controller
         foreach ($request->driver['price'] as $key => $value) {
             array_push($job_meta, new JobMeta(['key' => $key, 'value' => $value]));
         }
-                
+        
+        //get current fee
+        $default_fee = Meta::select('*')
+        ->where('key', '=', 'defaultFee')
+        ->first();
+        
+        array_push($job_meta, new JobMeta(['key' => 'fee', 'value' => $default_fee->value]));
+
         $job->save();
         $job->meta()->saveMany($job_meta);
 
@@ -119,6 +172,31 @@ class JobController extends Controller
         if($job->job_metas) {
             return $job->job_metas;
         }
+        return '';
+    }
+
+    /**
+     * Set Meta.
+     *
+     * @param  int  $id
+     * @param  string  $key
+     * @param  string  $value
+     * @return float
+     */
+    public static function setMeta($id, $key, $value)
+    {
+        $job = Job::select('*')
+        ->where('id', '=', $id )
+        ->first();
+
+        if(in_array($key,['collection', 'delivery', 'waypoints'])) {
+            $job_meta = new JobMeta(['key' => $key, 'value' => json_encode($value)]); 
+        } else {
+            $job_meta = new JobMeta(['key' => $key, 'value' => $value]);
+        }
+        $job->save();
+        $job->meta()->save($job_meta);
+
         return '';
     }
 

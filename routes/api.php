@@ -15,10 +15,12 @@ Route::group(['prefix' => 'user'],function() {
 
 //Job Customer
 Route::group(['prefix' => 'jobs'],function() {
-    Route::post('/store', 'JobController@store');
+    Route::post('/store-authenticated', 'JobController@storeAuthenticated')->middleware('auth:api');
+    Route::post('/store-unauthenticated', 'JobController@storeUnauthenticated');
     Route::get('/show', 'JobController@show')->middleware('auth:api');
     Route::get('/get-current/{id}', 'JobController@getCurrent')->middleware('auth:api');
-    Route::post('/checkout', 'CheckoutController@checkout');
+    Route::post('/checkout-credit', 'CheckoutController@checkoutCredit');
+    Route::post('/checkout-cash', 'CheckoutController@checkoutCash');
 });
 
 //Search Places

@@ -7,4 +7,6 @@
 Button Text
 @endcomponent
 
+Thanks,<br>
+{{ env('SITE_MAIN_SIGNATURE', 'Hello Vans team') }}
 @endcomponent

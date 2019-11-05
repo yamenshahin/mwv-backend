@@ -194,5 +194,5 @@ View Quote
 @endcomponent
 
 Thanks,<br>
-{{ $data->signature }}
+{{ env('SITE_MAIN_SIGNATURE', 'Hello Vans team') }}
 @endcomponent

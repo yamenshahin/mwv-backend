@@ -51,6 +51,7 @@ class JobController extends Controller
         ->first();
         
         array_push($job_meta, new JobMeta(['key' => 'fee', 'value' => $default_fee->value]));
+        array_push($job_meta, new JobMeta(['key' => 'paid', 'value' => 'no']));
 
         $job->save();
         $job->meta()->saveMany($job_meta);
@@ -95,6 +96,7 @@ class JobController extends Controller
         ->first();
         
         array_push($job_meta, new JobMeta(['key' => 'fee', 'value' => $default_fee->value]));
+        array_push($job_meta, new JobMeta(['key' => 'paid', 'value' => 'no']));
 
         $job->save();
         $job->meta()->saveMany($job_meta);

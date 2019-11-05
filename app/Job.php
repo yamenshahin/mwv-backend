@@ -11,10 +11,18 @@ class Job extends Model
      *
      * @return mixed
      */
-    public function meta() {
+    public function job_metas() {
         return $this->hasMany('App\JobMeta');
     }
 
+    /**
+     * Define and get job's meta
+     *
+     * @return mixed
+     */
+    public function meta() {
+        return $this->hasMany('App\JobMeta');
+    }
     /**
      * Define and get job's user
      *

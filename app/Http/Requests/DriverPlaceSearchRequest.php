@@ -29,7 +29,6 @@ class DriverPlaceSearchRequest extends FormRequest
             'vanSize' => 'required',
             'movingDate' => 'required',
             'helpersRequired' => 'required',
-            'description' => 'required',
             'customerInfoName' => 'required',
             'customerInfoEmail' => 'required|email',
             'customerInfoPhone' => 'required',

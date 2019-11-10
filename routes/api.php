@@ -57,6 +57,8 @@ Route::group(['prefix' => 'admin'],function() {
         'job' => 'AdminAPI\JobController',
         'meta' => 'AdminAPI\MetaController'
     ]);
+    Route::post('/pages', 'AdminAPI\PageController@index');
+    Route::post('/pages/save', 'AdminAPI\PageController@update');
 });
 //Admin email
 Route::group(['prefix' => 'admin/email'],function() {
@@ -71,3 +73,5 @@ Route::group(['prefix' => 'user/email'],function() {
 Route::group(['prefix' => 'feedback'],function() {
     Route::post('/place/store', 'DriverPlaceFeedbackController@store');
 });
+//Pages
+Route::post('/pages', 'PageController@index');

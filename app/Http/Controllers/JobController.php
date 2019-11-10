@@ -7,6 +7,7 @@ use App\User;
 use App\Job;
 Use App\JobMeta;
 use App\Meta;
+use App\DriverPlace;
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\Job as JobResource;
 use App\Http\Requests\JobStoreRequest;
@@ -240,7 +241,46 @@ class JobController extends Controller
 
     }
 
-    public function edit() 
+    public static function setMilesDriven($id)
+    {
+        $job = Job::select('*')
+        ->where('id', '=', $id )
+        ->first();
+
+        $place = DriverPlace::select('*')
+        ->where('user_id', '=', $job->user_id)
+        ->first();
+
+        $job_meta = JobMeta::select('*')
+        ->where([
+            ['job_id', '=', $id],
+            ['key', '=', 'milesDriven']
+        ])
+        ->first();
+
+        $place->miles_driven = $place->miles_driven + $job_meta->value;
+
+        $place->save();
+
+
+    }
+
+    public static function setJobsBooked($id)
+    {
+        $job = Job::select('*')
+        ->where('id', '=', $id )
+        ->first();
+
+        $place = DriverPlace::select('*')
+        ->where('user_id', '=', $job->user_id)
+        ->first();
+
+        $place->jobs_booked = $place->jobs_booked + 1;
+
+        $place->save();
+    }
+
+    public function edit($id) 
     {
 
     }

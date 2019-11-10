@@ -66,8 +66,14 @@ class CheckoutController extends Controller
 
         // save this info to your database
         JobController::setStatus($request->id, 'booked'); 
-        JobController::setMeta($request->id, 'paymentMethod', 'cash'); 
+        JobController::setMeta($request->id, 'paymentMethod', 'cash');
+
+        //Place statistic changes
+        JobController::setMilesDriven($request->id);
+        JobController::setJobsBooked($request->id);
+
         
+
         // If new user
         if($request->customerEmail)  {
             JobController::setCustomer($request->id, $request->customerEmail);

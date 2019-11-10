@@ -67,3 +67,7 @@ Route::group(['prefix' => 'user/email'],function() {
     Route::post('/send', 'EmailContactUsController@send');
     Route::post('/send-quote', 'EmailSavedQuoteController@sendQuote');
 });
+//Feedback
+Route::group(['prefix' => 'feedback'],function() {
+    Route::post('/place/store', 'DriverPlaceFeedbackController@store');
+});

@@ -4,20 +4,41 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Feedback;
+use App\Job;
 use App\DriverPlace;
 
 class DriverPlaceFeedbackController extends Controller
 {
+    
     /**
-     * Create a new controller instance.
+     * Show resources
      *
-     * @return void
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
-    public function __construct()
-    {
-        $this->middleware('auth:api');
+    public function index(Request $request) {
+        $jobs = Job::select('id')
+        ->where([
+            ['user_id', '=', $request->userId],
+            ['status', '=', 'booked']
+        ])
+        ->get();
+        
+        $allFeedbacks = [];
+        foreach($jobs as $job) {
+            $feedback = Feedback::select('*')
+            ->where([
+                ['owner_id', '=', $job->id],
+                ['status', '=', 'active']
+            ])
+            ->first();
+            if($feedback) {
+                array_push($allFeedbacks, $feedback);
+            }
+        }
+        return $allFeedbacks;
+        
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -42,6 +63,7 @@ class DriverPlaceFeedbackController extends Controller
         $feedback->comment = $request->comment;
         $feedback->stars = intval($request->stars);
         $feedback->type = 'place';
+        $feedback->status = 'active';
 
         $feedback->save();
 

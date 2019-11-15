@@ -1,5 +1,5 @@
 @component('mail::message')
-# Introduction
+# This email sent by our a user from our website page Contact Us 
 
 From: {{ $data->name }}
 

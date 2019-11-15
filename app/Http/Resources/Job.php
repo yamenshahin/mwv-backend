@@ -47,6 +47,7 @@ class Job extends JsonResource
             $driver = UserSimpleResource::make(User::find($this->user_id));
             $feedback = 0;
         }
+        
         return [
             'id' => $this->id,
             'created_at' => $this->created_at,

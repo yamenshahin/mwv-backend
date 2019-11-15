@@ -71,7 +71,8 @@ Route::group(['prefix' => 'user/email'],function() {
 });
 //Feedback
 Route::group(['prefix' => 'feedback'],function() {
-    Route::post('/place/store', 'DriverPlaceFeedbackController@store');
+    Route::post('/place/store', 'DriverPlaceFeedbackController@store')->middleware('auth:api');
+    Route::post('/place/show', 'DriverPlaceFeedbackController@index');
 });
 //Pages
 Route::post('/pages', 'PageController@index');

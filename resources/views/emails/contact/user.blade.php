@@ -1,10 +1,10 @@
 @component('mail::message')
-# Introduction
+# Hello {{ $data->name }},
 
 {{ $data->message }}
 
 @component('mail::button', ['url' => config('app.url')])
-Button Text
+Visit Hello Vans
 @endcomponent
 
 Thanks,<br>

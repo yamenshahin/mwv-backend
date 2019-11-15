@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('phone_verified_at')->nullable();
             $table->string('password');
             $table->string('role')->default('customer');
+            $table->string('level')->default('silver');
             $table->string('status')->default('inactive');
             $table->rememberToken();
             $table->timestamps();

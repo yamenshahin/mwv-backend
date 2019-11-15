@@ -49,6 +49,7 @@ class UserController extends Controller
             'phone' => $request->phone,
             'status' => $request->status,
             'role' => $request->role,
+            'level' => $request->level,
         ]);
     }
 
@@ -78,9 +79,8 @@ class UserController extends Controller
             'name' => 'required|string|max:191',
             'email' => 'required|string|email|max:191|unique:users,email,'.$user->id,
             'password' => 'sometimes|min:6',
-            'phone'  => 'required|string|max:191|min:6|unique:users,phone,'.$user->id
+            'phone'  => 'required|string|max:191|min:6|unique:users,phone,'.$user->id,
         ]);
-
         $user->update($request->all());
         return ['message' => 'Updated the user info'];
     }

@@ -61,6 +61,7 @@ let routes = [
     { path: '/admin/home-page', name: 'home-page', component: require('./components/HomePage.vue').default },
     { path: '/admin/faq-page', name: 'faq-page', component: require('./components/FAQPage.vue').default },
     { path: '/admin/privacy-page', name: 'privacy-page', component: require('./components/PrivacyPage.vue').default },
+    { path: '/admin/terms-page', name: 'terms-page', component: require('./components/TermsPage.vue').default },
 ]
 
 // Create the router instance and pass the `routes` option

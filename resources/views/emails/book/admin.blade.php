@@ -1,16 +1,39 @@
 @component('mail::message')
-# Here is your quote from Hello Vans
-<h1><b>Total £{{$data->total}}</b><br/>Includes VAT &amp; booking fee<br/>For the first <strong>{{$data->job_meta['totalTime']}} hours</strong> and then <strong>£{{$data->price['additionalTimePrice']}}</strong> per half hour</h1>
-<h2>Driver info:</h2>
-<h3>Name: {{$data->user['name']}}</h3>
-<img src="{{env('SITE_STORAGE_MAIN_URL')}}{{$data->placeFile['url']}}" alt="Driver Image" style="max-width:200px; height:auto;">
+# A new job has been booked <b>Moving Date: {{$data['job_meta']['movingDate']}}</b>
+
+<h1><b>Total £{{$data['job_meta']['total']}}</b><br/>Includes VAT &amp; booking fee<br/>For the first <strong>{{$data['job_meta']['totalTime']}} hours</strong> and then <strong>£{{$data['job_meta']['additionalTimePrice']}}</strong> per half hour</h1>
+<h4>Customer:</h4>
+<p>Name: {{$data['job_meta']['customerInfoName']}}</p>
+<p>Email: {{$data['job_meta']['customerInfoEmail']}}</p>
+<p>Phone: {{$data['job_meta']['customerInfoPhone']}}</p>
+
+<h4>Driver:</h4>
+<p>Name: {{$data['driver']->name}}</p>
+<p>Email: {{$data['driver']->email}}</p>
+<p>Phone: {{$data['driver']->phone}}</p>
+
+<h4>Job:</h4>
+<p>ID: {{$data['job']->id}}</p>
+<p>Created at: {{$data['job']->created_at}}</p>
+<p>Moving Date: {{$data['job_meta']['movingDate']}}</p>
+<p>Payment method: @switch($data['job_meta']['paymentMethod'])
+    @case('credit')
+        Credit card</p>
+        @break
+
+    @case('cash')
+        Cash on delivery</p>
+        @break
+    @default
+        </p>
+@endswitch
 
 <h4>Addresses:</h4>
 <h5>Collection:</h5> 
-<p>Postcode: {{$data->job_meta['collection']['postcode']}}</p>
-<p>Address: {{$data->job_meta['collection']['address']}}</p> 
-<p>City: {{$data->job_meta['collection']['city']}}</p>
-<p>Stairs: @switch($data->job_meta['collection']['stairs'])
+<p>Postcode: {{$data['job_meta']['collection']->postcode}}</p>
+<p>Address: {{$data['job_meta']['collection']->address}}</p> 
+<p>City: {{$data['job_meta']['collection']->city}}</p>
+<p>Stairs: @switch($data['job_meta']['collection']->stairs)
     @case(0)
         no flights of stairs</p>
         @break
@@ -50,11 +73,12 @@
         </p>
 @endswitch
 
+<h4>Addresses:</h4>
 <h5>Delivery:</h5> 
-<p>Postcode: {{$data->job_meta['delivery']['postcode']}}</p>
-<p>Address: {{$data->job_meta['delivery']['address']}}</p> 
-<p>City: {{$data->job_meta['delivery']['city']}}</p>
-<p>Stairs: @switch($data->job_meta['delivery']['stairs'])
+<p>Postcode: {{$data['job_meta']['delivery']->postcode}}</p>
+<p>Address: {{$data['job_meta']['delivery']->address}}</p> 
+<p>City: {{$data['job_meta']['delivery']->city}}</p>
+<p>Stairs: @switch($data['job_meta']['delivery']->stairs)
     @case(0)
         no flights of stairs</p>
         @break
@@ -95,11 +119,11 @@
 @endswitch
 
 <h5>Waypoints:</h5>
-@foreach ($data->job_meta['waypoints'] as $waypoint)
-<p>Postcode: {{$waypoint['postcode']}}</p>
-<p>Address: {{$waypoint['address']}}</p> 
-<p>City: {{$waypoint['city']}}</p>
-<p>Stairs: @switch($waypoint['stairs'])
+@foreach ($data['job_meta']['waypoints'] as $waypoint)
+<p>Postcode: {{$waypoint->postcode}}</p>
+<p>Address: {{$waypoint->address}}</p> 
+<p>City: {{$waypoint->city}}</p>
+<p>Stairs: @switch($waypoint->stairs)
     @case(0)
         no flights of stairs</p>
         @break
@@ -142,7 +166,7 @@
 @endforeach
 
 <h4>Others info:</h4>
-<p>Van Size: @switch($data->job_meta['vanSize'])
+<p>Van Size: @switch($data['job_meta']['vanSize'])
     @case(1)
         small</p>
         @break
@@ -161,7 +185,7 @@
         </p>
 @endswitch
 
-<p>Helpers Required: @switch($data->job_meta['helpersRequired'])
+<p>Helpers Required: @switch($data['job_meta']['helpersRequired'])
     @case(0)
         no help needed</p>
         @break
@@ -180,18 +204,12 @@
         
 @endswitch
 
-<p>Note: {{$data->job_meta['description']}}</p>
+<p>Note: {{$data['job_meta']['description']}}</p>
 
-<h4>Your info:</h4>
-<p>Name: {{$data->job_meta['customerInfoName']}}</p>
-<p>Email: {{$data->job_meta['customerInfoEmail']}}</p>
-<p>Phone: {{$data->job_meta['customerInfoPhone']}}</p>
-
-
-@component('mail::button', ['url' => config('app.url').'/my-quotes'])
-View Quote
+@component('mail::button', ['url' => config('app.url')])
+Visit Hello Vans
 @endcomponent
 
-Thank you for taking your time to request a quote on our website,<br>
+Thanks,<br>
 {{ env('SITE_MAIN_SIGNATURE', 'Hello Vans team') }}
 @endcomponent

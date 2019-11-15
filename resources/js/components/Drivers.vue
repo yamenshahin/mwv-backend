@@ -22,6 +22,7 @@
                                     <th>Email</th>
                                     <th>Phone</th>
                                     <th>Role</th>
+                                    <th>Level</th>
                                     <th>Status</th>
                                     <th>Join Date</th>
                                     <th>Edit</th>
@@ -34,11 +35,16 @@
                                     <td>{{user.email}}</td>
                                     <td>{{user.phone}}</td>
                                     <td class="text-capitalize">{{user.role}}</td>
+                                    <td class="text-capitalize">{{user.level}}</td>
                                     <td class="text-capitalize">{{user.status}}</td>
                                     <td>{{user.created_at}}</td>
                                     <td>
                                         <a href="#" @click.prevent="editUserModal(user)">
                                             <i class="fas fa-user-edit"></i>
+                                        </a>
+                                        |
+                                        <a href="#" @click.prevent="sendEmailModal(user)">
+                                            <i class="fas fa-envelope"></i>
                                         </a>
                                     </td>
                                 </tr>
@@ -51,6 +57,56 @@
             </div>
         </div>
 
+        <!-- .modal -->
+        <div class="modal fade" id="senEmailModal" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form @submit.prevent="sendEmail">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Send Email to {{emailForm.name}} | {{emailForm.email}}</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>Sender Email</label>
+                                <input v-model="emailForm.senderEmail" type="email" name="senderEmail" class="form-control"
+                                    :class="{ 'is-invalid': form.errors.has('senderEmail') }">
+                                <has-error :form="emailForm" field="senderEmail"></has-error>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Subject</label>
+                                <input v-model="emailForm.subject" type="text" name="subject" class="form-control"
+                                    :class="{ 'is-invalid': form.errors.has('subject') }">
+                                <has-error :form="emailForm" field="subject"></has-error>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Message</label>
+                                <textarea v-model="emailForm.message" type="textarea" name="message" class="form-control"
+                                    :class="{ 'is-invalid': form.errors.has('message') }" rows="3"></textarea>
+                                <has-error :form="emailForm" field="message"></has-error>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Signature</label>
+                                <textarea v-model="emailForm.signature" type="textarea" name="signature" class="form-control"
+                                    :class="{ 'is-invalid': form.errors.has('signature') }" rows="3"></textarea>
+                                <has-error :form="emailForm" field="signature"></has-error>
+                            </div>
+                            
+                            <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Send</button>
+                            </div>
+                            <alert-success :form="emailForm">Done</alert-success>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div> 
         <!-- .modal -->
         <div class="modal fade" id="userModal" style="display: none;" aria-hidden="true">
             <div class="modal-dialog">
@@ -103,18 +159,31 @@
                                 <has-error :form="form" field="role"></has-error>
                             </div>
 
+
+                            <div class="form-group">
+                                <label>Level</label>
+                                <select class="form-control" v-model="form.level" name="level"
+                                    :class="{ 'is-invalid': form.errors.has('level') }">
+                                    <option value="silver">Silver</option>
+                                    <option value="gold">Gold</option>
+                                </select>
+                                <has-error :form="form" field="level"></has-error>
+                            </div>
+
+
+
                             <input v-if="!editmode" type="hidden" name="status" v-model="form.status">
 
                             <div class="form-group" v-if="editmode">
                                 <label>Status</label>
-                                <select class="form-control" v-model="form.status" name="role"
+                                <select class="form-control" v-model="form.status" name="status"
                                     :class="{ 'is-invalid': form.errors.has('status') }">
                                     <option value="active">Active</option>
                                     <option value="unactive">Unactive</option>
                                     <option value="pending">Pending</option>
                                     <option value="banned">Banned</option>
                                 </select>
-                                <has-error :form="form" field="role"></has-error>
+                                <has-error :form="form" field="status"></has-error>
                             </div>
                         </div>
 
@@ -144,9 +213,21 @@
                     password: '',
                     email: '',
                     phone: '',
+                    level: 'silver',
                     status: 'active',
-                    role: 'driver'
-                })
+                    role: 'driver',
+                    
+                    
+                }),
+                emailForm: new Form({
+                    id: '',
+                    name: '',
+                    email: '',
+                    message: '',
+                    subject: '',
+                    senderEmail: 'info@hellovans.com',
+                    signature:''
+                }),
             }
         },
         mounted() {
@@ -156,6 +237,24 @@
             this.getDrivers()
         },
         methods: {
+            sendEmailModal(user) {
+                this.form.clear()
+                this.form.reset()
+                $('#senEmailModal').modal('show')
+                this.emailForm.fill(user)
+                this.emailForm.senderEmail = this.senderEmail;
+                this.emailForm.signature = this.signature;
+            },
+            sendEmail( ){
+                this.emailForm.post('/api/admin/email/send')
+                .then(() => {
+                    
+                })
+                .catch(() => {
+
+                })
+            },
+
             newUserModal() {
                 this.editmode =false
                 this.form.clear()

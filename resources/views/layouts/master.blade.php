@@ -305,6 +305,12 @@
                                             <p>Privacy Policy</p>
                                         </router-link>
                                     </li>
+                                    <li class="nav-item">
+                                        <router-link :to="{ name: 'terms-page' }" class="nav-link">
+                                            <i class="fas fa-file nav-icon"></i>
+                                            <p>Terms And Conditions</p>
+                                        </router-link>
+                                    </li>
                                 </ul>
                             </li>
                             <li class="nav-item">

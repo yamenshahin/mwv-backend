@@ -160,14 +160,14 @@
 
                             <div class="form-group" v-if="editMode">
                                 <label>Status</label>
-                                <select class="form-control" v-model="form.status" name="role"
+                                <select class="form-control" v-model="form.status" name="status"
                                     :class="{ 'is-invalid': form.errors.has('status') }">
                                     <option value="active">Active</option>
                                     <option value="unactive">Unactive</option>
                                     <option value="pending">Pending</option>
                                     <option value="banned">Banned</option>
                                 </select>
-                                <has-error :form="form" field="role"></has-error>
+                                <has-error :form="form" field="status"></has-error>
                             </div>
                         </div>
 

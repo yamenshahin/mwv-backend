@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\JobController;
+use App\Http\Controllers\EmailBookController;
 use Cartalyst\Stripe\Laravel\Facades\Stripe;
 
 class CheckoutController extends Controller
@@ -40,6 +41,10 @@ class CheckoutController extends Controller
             if($request->customerEmail)  {
                 JobController::setCustomer($request->id, $request->customerEmail);
             }
+
+            //send book emails
+            EmailBookController::send($request->id);
+
             // SUCCESSFUL
             return 'success';
         } catch (CardErrorException $e) {
@@ -78,6 +83,8 @@ class CheckoutController extends Controller
         if($request->customerEmail)  {
             JobController::setCustomer($request->id, $request->customerEmail);
         }
+        //send book emails
+        EmailBookController::send($request->id);
         // SUCCESSFUL
         return 'success';
 

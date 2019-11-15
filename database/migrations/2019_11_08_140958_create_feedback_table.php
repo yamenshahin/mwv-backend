@@ -20,6 +20,7 @@ class CreateFeedbackTable extends Migration
             $table->longText('comment')->nullable();
             $table->unsignedTinyInteger('stars')->default(5);
             $table->string('type')->default('place');
+            $table->string('status')->default('active');
             $table->timestamps();
         });
     }

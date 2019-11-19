@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Job;
 use App\Http\Resources\AdminAPI\Job as JobResource;
+use App\Feedback;
+
 
 class JobController extends Controller
 {
@@ -26,11 +28,11 @@ class JobController extends Controller
      */
     public function index()
     {
-        $jobs = Job::all();
+        $jobs = Job::orderBy('id', 'desc')->get();
 
         return JobResource::collection($jobs);
     }
-
+    
     /**
      * Store a newly created resource in storage.
      *

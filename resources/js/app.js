@@ -37,7 +37,10 @@ let routes = [
 
     { path: '/admin/statistics-charts', name: 'statistics-charts', component: require('./components/StatisticsCharts.vue').default },
 
-    { path: '/admin/jobs', name: 'jobs', component: require('./components/Jobs.vue').default },
+    //Jobs
+    { path: '/admin/jobs/', name: 'jobs', component: require('./components/Jobs.vue').default },
+    //ToBe
+    /* { path: '/admin/feedback-jobs', name: 'feedback-jobs', component: require('./components/FeedbackJobs.vue').default }, */
     
     // Maps
     { path: '/admin/drivers-places', name: 'drivers-places', component: require('./components/DriversPlaces.vue').default },

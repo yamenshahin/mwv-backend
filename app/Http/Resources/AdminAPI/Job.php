@@ -6,6 +6,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use App\User;
 use App\Http\Resources\AdminAPI\User as UserResource;
 use App\Http\Resources\AdminAPI\JobMeta as JobMetaResource;
+use App\Feedback;
+use App\Http\Resources\AdminAPI\FeedbackJob as FeedbackJobResource;
 
 class Job extends JsonResource
 {
@@ -18,13 +20,38 @@ class Job extends JsonResource
     public function toArray($request)
     {
         //return parent::toArray($request);
+        $customer = UserResource::make(User::find($this->customer_id));
+        if(!$customer['id']) {
+            $customer = [
+                'id' =>  '0',
+                'name' => 'anonymous',
+                'email' => 'N/A',
+                'phone' => 'N/A',
+                'role' => 'not registered',
+                'status' => 'not registered',
+            ];
+        }
+        $feedback = FeedbackJobResource::make(
+            Feedback::select('*')
+            ->where('owner_id', '=', $this->id)
+            ->first()
+        );
+        if(!$feedback['status']) {
+            $feedback = [
+                'id' =>  0,
+                'comment' => '',
+                'stars' => 5,
+                'status' => 'active',
+            ];
+        }
         return [
             'id' => $this->id,
             'created_at' => $this->created_at,
             'driver' => UserResource::make(User::find($this->user_id)),
-            'customer' => UserResource::make(User::find($this->customer_id)),
+            'customer' => $customer,
             'status' => $this->status,
-            'job_metas' => JobMetaResource::collection($this->meta)
+            'job_metas' => JobMetaResource::collection($this->meta),
+            'feedback' => $feedback,
         ];
     }
 }

@@ -3404,11 +3404,139 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      editmode: false,
+      editMode: false,
       jobs: {},
+      bookedJobsNoFeedback: {},
       form: new Form({
         id: '',
         driver: {
@@ -3424,7 +3552,12 @@ __webpack_require__.r(__webpack_exports__);
           phone: ''
         },
         job_metas: [{}],
-        status: 'booked'
+        status: 'booked',
+        feedback: {
+          'comment': '',
+          'stars': '5',
+          'status': ''
+        }
       })
     };
   },
@@ -3435,6 +3568,12 @@ __webpack_require__.r(__webpack_exports__);
     this.getJobs();
   },
   methods: {
+    viewJobModal: function viewJobModal(job) {
+      this.form.clear();
+      this.form.reset();
+      $('#jobModal').modal('show');
+      this.form.fill(job);
+    },
     newJobModal: function newJobModal() {
       this.editmode = false;
       this.form.clear();
@@ -3467,6 +3606,32 @@ __webpack_require__.r(__webpack_exports__);
 
       this.form.put('/api/admin/job/' + this.form.id).then(function () {
         _this3.getJobs();
+      })["catch"](function () {});
+    },
+    newFeedbackModal: function newFeedbackModal() {
+      this.editMode = false;
+      $('#feedbackModal').modal('show');
+    },
+    editFeedbackModal: function editFeedbackModal() {
+      this.editMode = true;
+      $('#feedbackModal').modal('show');
+    },
+    newFeedback: function newFeedback() {
+      var _this4 = this;
+
+      this.form.post('/api/admin/feedback-jobs').then(function () {
+        _this4.getJobs();
+
+        $('#jobModal').modal('hide');
+      })["catch"](function () {});
+    },
+    editFeedback: function editFeedback() {
+      var _this5 = this;
+
+      this.form.post('/api/admin/feedback-jobs').then(function () {
+        _this5.getJobs();
+
+        $('#jobModal').modal('hide');
       })["catch"](function () {});
     }
   }
@@ -45354,32 +45519,11 @@ var render = function() {
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-12 mt-5" }, [
         _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header" }, [
-            _c("h3", { staticClass: "card-title" }, [_vm._v("Jobs")]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-tools" }, [
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-app",
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      return _vm.newJobModal($event)
-                    }
-                  }
-                },
-                [
-                  _c("i", { staticClass: "fas fa-plus-square" }),
-                  _vm._v(" New Job\n                        ")
-                ]
-              )
-            ])
-          ]),
+          _vm._m(0),
           _vm._v(" "),
           _c("div", { staticClass: "card-body table-responsive p-0" }, [
             _c("table", { staticClass: "table table-hover" }, [
-              _vm._m(0),
+              _vm._m(1),
               _vm._v(" "),
               _c(
                 "tbody",
@@ -45403,7 +45547,9 @@ var render = function() {
                       _vm._v(_vm._s(job.status))
                     ]),
                     _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(job.created_at))]),
+                    _c("td", [
+                      _vm._v(_vm._s(_vm._f("isoDateToString")(job.created_at)))
+                    ]),
                     _vm._v(" "),
                     _c("td", [
                       _c(
@@ -45413,11 +45559,11 @@ var render = function() {
                           on: {
                             click: function($event) {
                               $event.preventDefault()
-                              return _vm.editJobModal(job)
+                              return _vm.viewJobModal(job)
                             }
                           }
                         },
-                        [_c("i", { staticClass: "fas fa-edit" })]
+                        [_c("i", { staticClass: "fas fa-eye" })]
                       )
                     ])
                   ])
@@ -45446,17 +45592,485 @@ var render = function() {
                 on: {
                   submit: function($event) {
                     $event.preventDefault()
-                    _vm.editmode ? _vm.editJob() : _vm.newJob()
+                    return _vm.viewJob()
+                  }
+                }
+              },
+              [
+                _vm._m(2),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-body" }, [
+                  _c(
+                    "div",
+                    { staticClass: "form-group" },
+                    [
+                      _c("h4", [
+                        _c("b", [_vm._v("ID:")]),
+                        _vm._v(" " + _vm._s(_vm.form.id) + " | "),
+                        _c("b", [_vm._v("Status:")]),
+                        _vm._v(" " + _vm._s(_vm.form.status))
+                      ]),
+                      _vm._v(" "),
+                      _c("hr"),
+                      _vm._v(" "),
+                      _vm.form.feedback.id !== 0
+                        ? _c("span", [
+                            _vm._m(3),
+                            _vm._v(" "),
+                            _c("p", [
+                              _c("b", [_vm._v("Stars:")]),
+                              _vm._v(" " + _vm._s(_vm.form.feedback.stars))
+                            ]),
+                            _vm._v(" "),
+                            _c("p", [
+                              _c("b", [_vm._v("Comment:")]),
+                              _vm._v(" " + _vm._s(_vm.form.feedback.comment))
+                            ]),
+                            _vm._v(" "),
+                            _c("p", [
+                              _c("b", [_vm._v("Status:")]),
+                              _vm._v(
+                                " " +
+                                  _vm._s(
+                                    _vm._f("unCamelCase")(
+                                      _vm.form.feedback.status
+                                    )
+                                  )
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "a",
+                              {
+                                attrs: { href: "" },
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    return _vm.editFeedbackModal()
+                                  }
+                                }
+                              },
+                              [_vm._v("Edit feedback")]
+                            )
+                          ])
+                        : _c("span", [
+                            _vm._m(4),
+                            _vm._v(" "),
+                            _vm._m(5),
+                            _vm._v(" "),
+                            _vm.form.status === "booked"
+                              ? _c("span", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: { href: "" },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.newFeedbackModal()
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("Give feedback")]
+                                  )
+                                ])
+                              : _vm._e()
+                          ]),
+                      _vm._v(" "),
+                      _c("hr"),
+                      _vm._v(" "),
+                      _vm._m(6),
+                      _vm._v(" "),
+                      _c("p", [
+                        _c("b", [_vm._v("Driver name:")]),
+                        _vm._v(" " + _vm._s(_vm.form.driver.name))
+                      ]),
+                      _vm._v(" "),
+                      _c("p", [
+                        _c("b", [_vm._v("Driver Email:")]),
+                        _vm._v(" " + _vm._s(_vm.form.driver.email))
+                      ]),
+                      _vm._v(" "),
+                      _c("p", [
+                        _c("b", [_vm._v("Driver phone:")]),
+                        _vm._v(" " + _vm._s(_vm.form.driver.phone))
+                      ]),
+                      _vm._v(" "),
+                      _c("hr"),
+                      _vm._v(" "),
+                      _vm._m(7),
+                      _vm._v(" "),
+                      _c("p", [
+                        _c("b", [_vm._v("Customer name:")]),
+                        _vm._v(" " + _vm._s(_vm.form.customer.name))
+                      ]),
+                      _vm._v(" "),
+                      _c("p", [
+                        _c("b", [_vm._v("Customer Email:")]),
+                        _vm._v(" " + _vm._s(_vm.form.customer.email))
+                      ]),
+                      _vm._v(" "),
+                      _c("p", [
+                        _c("b", [_vm._v("Customer phone:")]),
+                        _vm._v(" " + _vm._s(_vm.form.customer.phone))
+                      ]),
+                      _vm._v(" "),
+                      _c("hr"),
+                      _vm._v(" "),
+                      _vm._m(8),
+                      _vm._v(" "),
+                      _c("hr"),
+                      _vm._v(" "),
+                      _vm._l(_vm.form.job_metas, function(job_meta) {
+                        return _c("span", { key: job_meta.key }, [
+                          job_meta.key === "collection" ||
+                          job_meta.key === "delivery"
+                            ? _c(
+                                "span",
+                                [
+                                  _c("h5", [
+                                    _c("b", [
+                                      _vm._v(
+                                        _vm._s(
+                                          _vm._f("unCamelCase")(job_meta.key)
+                                        ) + ":"
+                                      )
+                                    ])
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm._l(job_meta.value, function(value, key) {
+                                    return _c("p", { key: key }, [
+                                      key === "stairs"
+                                        ? _c("span", [
+                                            _c("b", [
+                                              _vm._v(
+                                                _vm._s(
+                                                  _vm._f("unCamelCase")(key)
+                                                ) + ":"
+                                              )
+                                            ]),
+                                            _vm._v(
+                                              " " +
+                                                _vm._s(
+                                                  _vm._f("stairs")(value)
+                                                ) +
+                                                "\n                                        "
+                                            )
+                                          ])
+                                        : _c("span", [
+                                            _c("b", [
+                                              _vm._v(
+                                                _vm._s(
+                                                  _vm._f("unCamelCase")(key)
+                                                ) + ":"
+                                              )
+                                            ]),
+                                            _vm._v(
+                                              " " +
+                                                _vm._s(value) +
+                                                "\n                                        "
+                                            )
+                                          ])
+                                    ])
+                                  }),
+                                  _vm._v(" "),
+                                  _c("hr")
+                                ],
+                                2
+                              )
+                            : job_meta.key === "waypoints" &&
+                              job_meta.value.length > 0
+                            ? _c(
+                                "span",
+                                [
+                                  _c("h5", [
+                                    _c("b", [
+                                      _vm._v(
+                                        _vm._s(
+                                          _vm._f("unCamelCase")(job_meta.key)
+                                        ) + ":"
+                                      )
+                                    ])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("hr"),
+                                  _vm._v(" "),
+                                  _vm._l(job_meta.value, function(waypoint) {
+                                    return _c(
+                                      "span",
+                                      { key: waypoint.index },
+                                      [
+                                        _vm._l(waypoint, function(value, key) {
+                                          return _c("p", { key: key }, [
+                                            key === "stairs"
+                                              ? _c("span", [
+                                                  _c("b", [
+                                                    _vm._v(
+                                                      _vm._s(
+                                                        _vm._f("unCamelCase")(
+                                                          key
+                                                        )
+                                                      ) + ":"
+                                                    )
+                                                  ]),
+                                                  _vm._v(
+                                                    " " +
+                                                      _vm._s(
+                                                        _vm._f("stairs")(value)
+                                                      ) +
+                                                      "\n                                            "
+                                                  )
+                                                ])
+                                              : _c("span", [
+                                                  _c("b", [
+                                                    _vm._v(
+                                                      _vm._s(
+                                                        _vm._f("unCamelCase")(
+                                                          key
+                                                        )
+                                                      ) + ":"
+                                                    )
+                                                  ]),
+                                                  _vm._v(
+                                                    " " +
+                                                      _vm._s(value) +
+                                                      "\n                                            "
+                                                  )
+                                                ])
+                                          ])
+                                        }),
+                                        _vm._v(" "),
+                                        _c("hr")
+                                      ],
+                                      2
+                                    )
+                                  })
+                                ],
+                                2
+                              )
+                            : _vm._e()
+                        ])
+                      }),
+                      _vm._v(" "),
+                      _vm._m(9),
+                      _vm._v(" "),
+                      _c("hr"),
+                      _vm._v(" "),
+                      _vm._l(_vm.form.job_metas, function(job_meta) {
+                        return _c("span", { key: job_meta.key }, [
+                          job_meta.key === "vanSize"
+                            ? _c("span", [
+                                _c("p", [
+                                  _c("b", [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm._f("unCamelCase")(job_meta.key)
+                                      ) + ":"
+                                    )
+                                  ]),
+                                  _vm._v(
+                                    " " +
+                                      _vm._s(_vm._f("vanSize")(job_meta.value))
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("hr")
+                              ])
+                            : job_meta.key === "helpersRequired"
+                            ? _c("span", [
+                                _c("p", [
+                                  _c("b", [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm._f("unCamelCase")(job_meta.key)
+                                      ) + ":"
+                                    )
+                                  ]),
+                                  _vm._v(
+                                    " " +
+                                      _vm._s(
+                                        _vm._f("helpersRequired")(
+                                          job_meta.value
+                                        )
+                                      )
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("hr")
+                              ])
+                            : job_meta.key === "movingDate"
+                            ? _c("span", [
+                                _c("p", [
+                                  _c("b", [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm._f("unCamelCase")(job_meta.key)
+                                      ) + ":"
+                                    )
+                                  ]),
+                                  _vm._v(
+                                    " " +
+                                      _vm._s(
+                                        _vm._f("isoDateToString")(
+                                          job_meta.value
+                                        )
+                                      )
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("hr")
+                              ])
+                            : job_meta.key === "movingDate"
+                            ? _c("span", [
+                                _c("p", [
+                                  _c("b", [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm._f("unCamelCase")(job_meta.key)
+                                      ) + ":"
+                                    )
+                                  ]),
+                                  _vm._v(
+                                    " " +
+                                      _vm._s(
+                                        _vm._f("isoDateToString")(
+                                          job_meta.value
+                                        )
+                                      )
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("hr")
+                              ])
+                            : job_meta.key === "total"
+                            ? _c("span", [
+                                _c("p", [
+                                  _c("b", [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm._f("unCamelCase")(job_meta.key)
+                                      ) + ":"
+                                    )
+                                  ]),
+                                  _vm._v(
+                                    " " +
+                                      _vm._s(_vm._f("currency")(job_meta.value))
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("hr")
+                              ])
+                            : job_meta.key === "fee"
+                            ? _c("span", [
+                                _c("p", [
+                                  _c("b", [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm._f("unCamelCase")(job_meta.key)
+                                      ) + ":"
+                                    )
+                                  ]),
+                                  _vm._v(
+                                    " " +
+                                      _vm._s(
+                                        _vm._f("percentage")(job_meta.value)
+                                      )
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("hr")
+                              ])
+                            : job_meta.key === "paymentMethod"
+                            ? _c("span", [
+                                _c("p", [
+                                  _c("b", [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm._f("unCamelCase")(job_meta.key)
+                                      ) + ":"
+                                    )
+                                  ]),
+                                  _vm._v(
+                                    " " +
+                                      _vm._s(
+                                        _vm._f("unCamelCase")(job_meta.value)
+                                      )
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("hr")
+                              ])
+                            : job_meta.key === "additionalTimePrice"
+                            ? _c("span", [
+                                _c("p", [
+                                  _c("b", [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm._f("unCamelCase")(job_meta.key)
+                                      ) + ":"
+                                    )
+                                  ]),
+                                  _vm._v(
+                                    " " +
+                                      _vm._s(
+                                        _vm._f("currency")(job_meta.value)
+                                      ) +
+                                      " per hour"
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("hr")
+                              ])
+                            : _vm._e()
+                        ])
+                      })
+                    ],
+                    2
+                  )
+                ]),
+                _vm._v(" "),
+                _vm._m(10),
+                _vm._v(" "),
+                _c("alert-success", { attrs: { form: _vm.form } }, [
+                  _vm._v("Done")
+                ])
+              ],
+              1
+            )
+          ])
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        staticStyle: { display: "none" },
+        attrs: { id: "feedbackModal", "aria-hidden": "true" }
+      },
+      [
+        _c("div", { staticClass: "modal-dialog" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _c(
+              "form",
+              {
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    _vm.editMode ? _vm.editFeedback() : _vm.newFeedback()
                   }
                 }
               },
               [
                 _c("div", { staticClass: "modal-header" }, [
                   _c("h4", { staticClass: "modal-title" }, [
-                    _vm._v(" " + _vm._s(_vm.editmode ? "Edit" : "New") + " Job")
+                    _vm._v(
+                      " " + _vm._s(_vm.editMode ? "Edit" : "New") + " Feedback"
+                    )
                   ]),
                   _vm._v(" "),
-                  _vm._m(1)
+                  _vm._m(11)
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "modal-body" }, [
@@ -45464,31 +46078,37 @@ var render = function() {
                     "div",
                     { staticClass: "form-group" },
                     [
-                      _c("label", [_vm._v("Driver Email")]),
+                      _c("label", [_vm._v("Stars")]),
                       _vm._v(" "),
                       _c("input", {
                         directives: [
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.form.driver.email,
-                            expression: "form.driver.email"
+                            value: _vm.form.feedback.stars,
+                            expression: "form.feedback.stars"
                           }
                         ],
                         staticClass: "form-control",
                         class: {
-                          "is-invalid": _vm.form.errors.has("driverEmail")
+                          "is-invalid": _vm.form.errors.has("feedback.stars")
                         },
-                        attrs: { type: "email", name: "driverEmail" },
-                        domProps: { value: _vm.form.driver.email },
+                        attrs: {
+                          type: "number",
+                          min: "1",
+                          max: "5",
+                          step: "1",
+                          name: "feedback.stars"
+                        },
+                        domProps: { value: _vm.form.feedback.stars },
                         on: {
                           input: function($event) {
                             if ($event.target.composing) {
                               return
                             }
                             _vm.$set(
-                              _vm.form.driver,
-                              "email",
+                              _vm.form.feedback,
+                              "stars",
                               $event.target.value
                             )
                           }
@@ -45496,7 +46116,7 @@ var render = function() {
                       }),
                       _vm._v(" "),
                       _c("has-error", {
-                        attrs: { form: _vm.form, field: "driverEmail" }
+                        attrs: { form: _vm.form, field: "feedback.stars" }
                       })
                     ],
                     1
@@ -45506,31 +46126,35 @@ var render = function() {
                     "div",
                     { staticClass: "form-group" },
                     [
-                      _c("label", [_vm._v("Customer Email")]),
+                      _c("label", [_vm._v("Comment")]),
                       _vm._v(" "),
-                      _c("input", {
+                      _c("textarea", {
                         directives: [
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.form.customer.email,
-                            expression: "form.customer.email"
+                            value: _vm.form.feedback.comment,
+                            expression: "form.feedback.comment"
                           }
                         ],
                         staticClass: "form-control",
                         class: {
-                          "is-invalid": _vm.form.errors.has("customerEmail")
+                          "is-invalid": _vm.form.errors.has("feedback.comment")
                         },
-                        attrs: { type: "email", name: "customerEmail" },
-                        domProps: { value: _vm.form.customer.email },
+                        attrs: {
+                          type: "textarea",
+                          name: "feedback.comment",
+                          rows: "3"
+                        },
+                        domProps: { value: _vm.form.feedback.comment },
                         on: {
                           input: function($event) {
                             if ($event.target.composing) {
                               return
                             }
                             _vm.$set(
-                              _vm.form.customer,
-                              "email",
+                              _vm.form.feedback,
+                              "comment",
                               $event.target.value
                             )
                           }
@@ -45538,14 +46162,106 @@ var render = function() {
                       }),
                       _vm._v(" "),
                       _c("has-error", {
-                        attrs: { form: _vm.form, field: "customerEmail" }
+                        attrs: { form: _vm.form, field: "feedback.comment" }
                       })
                     ],
                     1
-                  )
+                  ),
+                  _vm._v(" "),
+                  !_vm.editMode
+                    ? _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.feedback.status,
+                            expression: "form.feedback.status"
+                          }
+                        ],
+                        attrs: { type: "hidden", name: "feedback.status" },
+                        domProps: { value: _vm.form.feedback.status },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.form.feedback,
+                              "status",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.editMode
+                    ? _c(
+                        "div",
+                        { staticClass: "form-group" },
+                        [
+                          _c("label", [_vm._v("Status")]),
+                          _vm._v(" "),
+                          _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.form.feedback.status,
+                                  expression: "form.feedback.status"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              class: {
+                                "is-invalid": _vm.form.errors.has(
+                                  "feedback.status"
+                                )
+                              },
+                              attrs: { name: "feedback.status" },
+                              on: {
+                                change: function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.$set(
+                                    _vm.form.feedback,
+                                    "status",
+                                    $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  )
+                                }
+                              }
+                            },
+                            [
+                              _c("option", { attrs: { value: "active" } }, [
+                                _vm._v("Active")
+                              ]),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "inactive" } }, [
+                                _vm._v("Inactive")
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c("has-error", {
+                            attrs: { form: _vm.form, field: "feedback.status" }
+                          })
+                        ],
+                        1
+                      )
+                    : _vm._e()
                 ]),
                 _vm._v(" "),
-                _vm._m(2),
+                _vm._m(12),
                 _vm._v(" "),
                 _c("alert-success", { attrs: { form: _vm.form } }, [
                   _vm._v("Done")
@@ -45560,6 +46276,14 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h3", { staticClass: "card-title" }, [_vm._v("Jobs")])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -45584,8 +46308,86 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Created Date")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Edit")])
+        _c("th", [_vm._v("View")])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c("h4", { staticClass: "modal-title" }, [_vm._v("Job")]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h5", [_c("b", [_vm._v("Feedback")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h5", [_c("b", [_vm._v("Feedback")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", [_c("b", [_vm._v("No feedback yet")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h5", [_c("b", [_vm._v("Driver:")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h5", [_c("b", [_vm._v("Customer:")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h4", [_c("b", [_vm._v("Addresses:")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h4", [_c("b", [_vm._v("Others info:")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-footer justify-content-between" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-default",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("Close")]
+      )
     ])
   },
   function() {
@@ -45609,22 +46411,26 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer justify-content-between" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-default",
-          attrs: { type: "button", "data-dismiss": "modal" }
-        },
-        [_vm._v("Close")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-        [_vm._v("Save changes")]
-      )
-    ])
+    return _c(
+      "footer",
+      { staticClass: "modal-footer justify-content-between" },
+      [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-default",
+            attrs: { type: "button", "data-dismiss": "modal" }
+          },
+          [_vm._v("Close")]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+          [_vm._v("Save changes")]
+        )
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -62440,11 +63246,15 @@ var routes = [// Admin Power
   path: '/admin/statistics-charts',
   name: 'statistics-charts',
   component: __webpack_require__(/*! ./components/StatisticsCharts.vue */ "./resources/js/components/StatisticsCharts.vue")["default"]
-}, {
-  path: '/admin/jobs',
+}, //Jobs
+{
+  path: '/admin/jobs/',
   name: 'jobs',
   component: __webpack_require__(/*! ./components/Jobs.vue */ "./resources/js/components/Jobs.vue")["default"]
-}, // Maps
+}, //ToBe
+
+/* { path: '/admin/feedback-jobs', name: 'feedback-jobs', component: require('./components/FeedbackJobs.vue').default }, */
+// Maps
 {
   path: '/admin/drivers-places',
   name: 'drivers-places',
@@ -64109,6 +64919,76 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.filter('unCamelCase', function (value
   .replace(/^./, function (str) {
     return str.toUpperCase();
   });
+});
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.filter('isoDateToString', function (isoDate) {
+  var dateString = new Date(isoDate);
+  var hours = '';
+  var minutes = '';
+
+  if (dateString.getHours() < 10) {
+    hours = '0' + dateString.getHours();
+  } else {
+    hours = dateString.getHours();
+  }
+
+  if (dateString.getMinutes() < 10) {
+    minutes = '0' + dateString.getMinutes();
+  } else {
+    minutes = dateString.getMinutes();
+  }
+
+  return dateString.getDate() + '/' + (dateString.getMonth() + 1) + '/' + dateString.getFullYear() + ' ' + hours + ':' + minutes;
+});
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.filter('percentage', function (amount) {
+  return amount + '%';
+});
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.filter('currency', function (amount) {
+  return '£' + amount;
+});
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.filter('vanSize', function (vanSize) {
+  if (vanSize === '1') {
+    return 'Small Van';
+  } else if (vanSize === '2') {
+    return 'Medium Van';
+  } else if (vanSize === '3') {
+    return 'Large Van';
+  } else {
+    return 'Giant Van';
+  }
+});
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.filter('helpersRequired', function (helpersRequired) {
+  if (helpersRequired === '0') {
+    return 'No help needed';
+  } else if (helpersRequired === '1') {
+    return 'Driver helping';
+  } else if (helpersRequired === '2') {
+    return 'Driver helping + 1 helper';
+  } else {
+    return ' Driver helping + 2 helpers';
+  }
+});
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.filter('stairs', function (stairs) {
+  if (stairs === 0 || stairs === 'null') {
+    return 'No flights of stairs';
+  } else if (stairs === 1) {
+    return '1 flights of stairs';
+  } else if (stairs === 2) {
+    return '2 flights of stairs';
+  } else if (stairs === 3) {
+    return '3 flights of stairs';
+  } else if (stairs === 4) {
+    return '4 flights of stairs';
+  } else if (stairs === 5) {
+    return '5 flights of stairs';
+  } else if (stairs === 6) {
+    return '6 flights of stairs';
+  } else if (stairs === 7) {
+    return '7 flights of stairs';
+  } else if (stairs === 8) {
+    return '8 flights of stairs';
+  } else {
+    return 'A lift';
+  }
 });
 
 /***/ }),

@@ -7,7 +7,7 @@ use App\Feedback;
 use App\Job;
 use App\DriverPlace;
 
-class DriverPlaceFeedbackController extends Controller
+class FeedbackJobController extends Controller
 {
     
     /**

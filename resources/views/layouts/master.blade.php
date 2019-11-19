@@ -239,14 +239,14 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="nav-item">
+                            <!-- <li class="nav-item">
                                 <router-link :to="{ name: 'calendar' }" class="nav-link">
                                     <i class="nav-icon fas fa-calendar-alt"></i>
                                     <p>
                                         Calendar
                                     </p>
                                 </router-link>
-                            </li>
+                            </li> -->
                             <li class="nav-item has-treeview">
                                 <a href="#" class="nav-link">
                                     <i class="nav-icon fas fa-users"></i>

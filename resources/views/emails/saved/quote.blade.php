@@ -1,5 +1,5 @@
 @component('mail::message')
-# Here is your quote from Hello Vans
+# Here is your quote from Hello Vans. Below is the quote and it's still valid and can be booked.
 <h1><b>Total £{{$data->total}}</b><br/>Includes VAT &amp; booking fee<br/>For the first <strong>{{$data->job_meta['totalTime']}} hours</strong> and then <strong>£{{$data->price['additionalTimePrice']}}</strong> per half hour</h1>
 <h2>Driver info:</h2>
 <h3>Name: {{$data->user['name']}}</h3>

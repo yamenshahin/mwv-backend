@@ -50,7 +50,7 @@ class FeedbackJobController extends Controller
         $feedback = Feedback::select('*')
         ->where([
             ['owner_id', '=', $request->job['id']],
-            ['type', '=', 'place'],
+            ['type', '=', 'job'],
         ])
         ->first();
         if($feedback) {
@@ -62,7 +62,7 @@ class FeedbackJobController extends Controller
         $feedback->giver_id = auth()->user()->id;
         $feedback->comment = $request->comment;
         $feedback->stars = intval($request->stars);
-        $feedback->type = 'place';
+        $feedback->type = 'job';
         $feedback->status = 'active';
 
         $feedback->save();

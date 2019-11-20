@@ -3948,9 +3948,178 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    console.log('Component mounted.');
+  data: function data() {
+    return {
+      user: {
+        userAll: 0,
+        customer: 0,
+        driver: 0
+      },
+      job: {
+        jobAll: 0,
+        booked: 0,
+        unbooked: 0
+      }
+    };
+  },
+  mounted: function mounted() {},
+  created: function created() {
+    this.getUserStatistics();
+    this.getJobStatistics();
+  },
+  methods: {
+    getUserStatistics: function getUserStatistics() {
+      var _this = this;
+
+      axios.post('/api/admin/statistic', {
+        type: 'user'
+      }).then(function (_ref) {
+        var data = _ref.data;
+        return _this.user = data;
+      } //
+      );
+    },
+    getJobStatistics: function getJobStatistics() {
+      var _this2 = this;
+
+      axios.post('/api/admin/statistic', {
+        type: 'job'
+      }).then(function (_ref2) {
+        var data = _ref2.data;
+        return _this2.job = data;
+      } //
+      );
+    }
   }
 });
 
@@ -42424,9 +42593,7 @@ var staticRenderFns = [
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    I'm an example component.\n                "
-              )
+              _vm._v("\n                    Coming soon!\n                ")
             ])
           ])
         ])
@@ -42471,9 +42638,7 @@ var staticRenderFns = [
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    I'm an example component.\n                "
-              )
+              _vm._v("\n                    Coming soon!\n                ")
             ])
           ])
         ])
@@ -43313,9 +43478,7 @@ var staticRenderFns = [
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    I'm an example component.\n                "
-              )
+              _vm._v("\n                    Coming soon!\n                ")
             ])
           ])
         ])
@@ -44262,9 +44425,7 @@ var staticRenderFns = [
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    I'm an example component.\n                "
-              )
+              _vm._v("\n                    Coming soon!\n                ")
             ])
           ])
         ])
@@ -46734,9 +46895,7 @@ var staticRenderFns = [
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    I'm an example component.\n                "
-              )
+              _vm._v("\n                    Coming soon!\n                ")
             ])
           ])
         ])
@@ -46917,29 +47076,327 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "container-fluid" }, [
+    _c("div", { staticClass: "row " }, [
+      _c("div", { staticClass: "col" }, [
+        _c("div", { staticClass: "card mt-3" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-12 col-lg-6" }, [
+                _c("div", { staticClass: "card mt-3" }, [
+                  _vm._m(1),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-body" }, [
+                    _c("table", { staticClass: "table table-striped" }, [
+                      _vm._m(2),
+                      _vm._v(" "),
+                      _c("tbody", [
+                        _c("tr", [
+                          _c("td", [_vm._v("Users (All)")]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c("span", { staticClass: "badge bg-success" }, [
+                              _vm._v(_vm._s(_vm.user.userAll))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _vm._m(3),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c("div", { staticClass: "progress progress-xs" }, [
+                              _c("div", {
+                                staticClass: "progress-bar progress-bar-danger",
+                                style: {
+                                  width:
+                                    (_vm.user.userAll / _vm.user.userAll) *
+                                      100 +
+                                    "%"
+                                }
+                              })
+                            ])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("tr", [
+                          _c("td", [
+                            _vm._v("Customers (without counting drivers)")
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c("span", { staticClass: "badge bg-success" }, [
+                              _vm._v(_vm._s(_vm.user.customer))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c("span", { staticClass: "badge bg-success" }, [
+                              _vm._v(
+                                _vm._s(
+                                  _vm._f("percentage")(
+                                    _vm._f("intToFloatString")(
+                                      (_vm.user.customer / _vm.user.userAll) *
+                                        100
+                                    )
+                                  )
+                                )
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c("div", { staticClass: "progress progress-xs" }, [
+                              _c("div", {
+                                staticClass: "progress-bar progress-bar-danger",
+                                style: {
+                                  width:
+                                    (_vm.user.customer / _vm.user.userAll) *
+                                      100 +
+                                    "%"
+                                }
+                              })
+                            ])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("tr", [
+                          _c("td", [_vm._v("Drivers")]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c("span", { staticClass: "badge bg-success" }, [
+                              _vm._v(_vm._s(_vm.user.driver))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c("span", { staticClass: "badge bg-success" }, [
+                              _vm._v(
+                                _vm._s(
+                                  _vm._f("percentage")(
+                                    _vm._f("intToFloatString")(
+                                      (_vm.user.driver / _vm.user.userAll) * 100
+                                    )
+                                  )
+                                )
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c("div", { staticClass: "progress progress-xs" }, [
+                              _c("div", {
+                                staticClass: "progress-bar progress-bar-danger",
+                                style: {
+                                  width:
+                                    (_vm.user.driver / _vm.user.userAll) * 100 +
+                                    "%"
+                                }
+                              })
+                            ])
+                          ])
+                        ])
+                      ])
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-12 col-lg-6" }, [
+                _c("div", { staticClass: "card mt-3" }, [
+                  _vm._m(4),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-body" }, [
+                    _c("table", { staticClass: "table table-striped" }, [
+                      _vm._m(5),
+                      _vm._v(" "),
+                      _c("tbody", [
+                        _c("tr", [
+                          _c("td", [_vm._v("Jobs (All)")]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c("span", { staticClass: "badge bg-success" }, [
+                              _vm._v(_vm._s(_vm.job.jobAll))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _vm._m(6),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c("div", { staticClass: "progress progress-xs" }, [
+                              _c("div", {
+                                staticClass: "progress-bar progress-bar-danger",
+                                style: {
+                                  width:
+                                    (_vm.job.jobAll / _vm.job.jobAll) * 100 +
+                                    "%"
+                                }
+                              })
+                            ])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("tr", [
+                          _c("td", [_vm._v("Booked")]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c("span", { staticClass: "badge bg-success" }, [
+                              _vm._v(_vm._s(_vm.job.booked))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c("span", { staticClass: "badge bg-success" }, [
+                              _vm._v(
+                                _vm._s(
+                                  _vm._f("percentage")(
+                                    _vm._f("intToFloatString")(
+                                      (_vm.job.booked / _vm.job.jobAll) * 100
+                                    )
+                                  )
+                                )
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c("div", { staticClass: "progress progress-xs" }, [
+                              _c("div", {
+                                staticClass: "progress-bar progress-bar-danger",
+                                style: {
+                                  width:
+                                    (_vm.job.booked / _vm.job.jobAll) * 100 +
+                                    "%"
+                                }
+                              })
+                            ])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("tr", [
+                          _c("td", [_vm._v("Not Booked")]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c("span", { staticClass: "badge bg-success" }, [
+                              _vm._v(_vm._s(_vm.job.unbooked))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c("span", { staticClass: "badge bg-success" }, [
+                              _vm._v(
+                                _vm._s(
+                                  _vm._f("percentage")(
+                                    _vm._f("intToFloatString")(
+                                      (_vm.job.unbooked / _vm.job.jobAll) * 100
+                                    )
+                                  )
+                                )
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c("div", { staticClass: "progress progress-xs" }, [
+                              _c("div", {
+                                staticClass: "progress-bar progress-bar-danger",
+                                style: {
+                                  width:
+                                    (_vm.job.unbooked / _vm.job.jobAll) * 100 +
+                                    "%"
+                                }
+                              })
+                            ])
+                          ])
+                        ])
+                      ])
+                    ])
+                  ])
+                ])
+              ])
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container-fluid" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("Statistics And charts Component")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    I'm an example component.\n                "
-              )
-            ])
-          ])
-        ])
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h4", [
+        _c("i", { staticClass: "fas fa-chart-pie mr-1" }),
+        _vm._v("Statistics And charts Component")
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("i", { staticClass: "fas fa-user mr-1" }),
+      _vm._v(" Users\n                                ")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Type")]),
+        _vm._v(" "),
+        _c("th", { staticStyle: { width: "40px" } }, [_vm._v("Number")]),
+        _vm._v(" "),
+        _c("th", { staticStyle: { width: "40px" } }, [_vm._v("%")]),
+        _vm._v(" "),
+        _c("th", { staticStyle: { width: "100px" } }, [_vm._v("%")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [
+      _c("span", { staticClass: "badge bg-success" }, [_vm._v("100%")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("i", { staticClass: "fas fa-truck-loading mr-1" }),
+      _vm._v(" Jobs\n                                ")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Type")]),
+        _vm._v(" "),
+        _c("th", { staticStyle: { width: "40px" } }, [_vm._v("Number")]),
+        _vm._v(" "),
+        _c("th", { staticStyle: { width: "40px" } }, [_vm._v("%")]),
+        _vm._v(" "),
+        _c("th", { staticStyle: { width: "100px" } }, [_vm._v("%")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [
+      _c("span", { staticClass: "badge bg-success" }, [_vm._v("100%")])
     ])
   }
 ]
@@ -64989,6 +65446,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.filter('stairs', function (stairs) {
   } else {
     return 'A lift';
   }
+});
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.filter('intToFloatString', function (value) {
+  return value.toFixed(2);
 });
 
 /***/ }),

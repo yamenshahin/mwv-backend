@@ -6,7 +6,7 @@
                     <div class="card-header">Calendar Component</div>
 
                     <div class="card-body">
-                        I'm an example component.
+                        Coming soon!
                     </div>
                 </div>
             </div>

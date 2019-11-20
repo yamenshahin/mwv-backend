@@ -96,3 +96,7 @@ Vue.filter('stairs', function (stairs) {
         return 'A lift'
       }
 })
+
+Vue.filter('intToFloatString', function (value) {
+  return value.toFixed(2)
+})

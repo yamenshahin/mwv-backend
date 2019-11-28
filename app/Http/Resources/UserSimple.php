@@ -19,6 +19,7 @@ class UserSimple extends JsonResource
             'name' => $this->name,
             'role' => $this->role,
             'status' => $this->status,
+            'level' => $this->level,
         ];
     }
 }

@@ -164,6 +164,7 @@
                                 <label>Level</label>
                                 <select class="form-control" v-model="form.level" name="level"
                                     :class="{ 'is-invalid': form.errors.has('level') }">
+                                    <option value="none">None</option>
                                     <option value="silver">Silver</option>
                                     <option value="gold">Gold</option>
                                 </select>
@@ -179,9 +180,7 @@
                                 <select class="form-control" v-model="form.status" name="status"
                                     :class="{ 'is-invalid': form.errors.has('status') }">
                                     <option value="active">Active</option>
-                                    <option value="unactive">Unactive</option>
-                                    <option value="pending">Pending</option>
-                                    <option value="banned">Banned</option>
+                                    <option value="inactive">Inactive</option>
                                 </select>
                                 <has-error :form="form" field="status"></has-error>
                             </div>
@@ -213,7 +212,7 @@
                     password: '',
                     email: '',
                     phone: '',
-                    level: 'silver',
+                    level: 'none',
                     status: 'active',
                     role: 'driver',
                     

@@ -57,6 +57,8 @@ class UserFileController extends Controller
         $userFile->user()->associate(auth()->user()->id);
         
         $userFile->url = Storage::disk('s3')->putFile('user-files/'.$request->key.'/'. date('Y').'/'.date('m'), $request->file, 'public');
+        //fix no slash bug
+        $userFile->url = '/' . $userFile->url;
         $userFile->key = $request->key;
 
         $userFile->save();
@@ -89,6 +91,28 @@ class UserFileController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  string  $key
+     * @return \Illuminate\Http\Response
+     */
+    public function getFile(Request $request)
+    {
+        $userFile = UserFile::select('*')
+        ->where([
+            ['user_id', '=', auth()->user()->id],
+            ['key', '=', $request->key],
+        ])
+        ->first();
+        if($userFile) {
+            return new UserFileResource($userFile);
+        }
+        return response()->json([
+            'data' => ['url' => '' ]           
+            ], 200);
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -106,7 +130,8 @@ class UserFileController extends Controller
         ->first();
         
         $userFile->url = Storage::disk('s3')->putFile('user-files/'.$key.'/'. date('Y').'/'.date('m'), $request->file, 'public');
-
+        //fix no slash bug
+        $userFile->url = '/' . $userFile->url;    
         $userFile->save();
 
         return new UserFileResource($userFile);

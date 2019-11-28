@@ -117,7 +117,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-
+                            <input type="hidden" name="level" v-model="form.level">    
                             <div class="form-group">
                                 <label>Name</label>
                                 <input v-model="form.name" type="text" name="name" class="form-control"
@@ -163,9 +163,7 @@
                                 <select class="form-control" v-model="form.status" name="status"
                                     :class="{ 'is-invalid': form.errors.has('status') }">
                                     <option value="active">Active</option>
-                                    <option value="unactive">Unactive</option>
-                                    <option value="pending">Pending</option>
-                                    <option value="banned">Banned</option>
+                                    <option value="inactive">Inactive</option>
                                 </select>
                                 <has-error :form="form" field="status"></has-error>
                             </div>
@@ -200,7 +198,8 @@
                     email: '',
                     phone: '',
                     status: 'active',
-                    role: 'customer'
+                    role: 'customer',
+                    level: 'none'
                 }),
                 emailForm: new Form({
                     id: '',

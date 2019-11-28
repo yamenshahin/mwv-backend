@@ -188,7 +188,7 @@
 <p>Phone: {{$data->job_meta['customerInfoPhone']}}</p>
 
 
-@component('mail::button', ['url' => config('app.url').'/my-quotes'])
+@component('mail::button', ['url' => config('app.url').'my-quotes'])
 View Quote
 @endcomponent
 

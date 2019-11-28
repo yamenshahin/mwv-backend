@@ -42,10 +42,11 @@ class UserController extends Controller
             'phone'  => 'required|string|max:191|min:6|unique:users'
         ]);
 
+        
         return User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password),
+            'password' =>  bcrypt($request->password),
             'phone' => $request->phone,
             'status' => $request->status,
             'role' => $request->role,
@@ -81,7 +82,14 @@ class UserController extends Controller
             'password' => 'sometimes|min:6',
             'phone'  => 'required|string|max:191|min:6|unique:users,phone,'.$user->id,
         ]);
-        $user->update($request->all());
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password);
+        $user->phone = $request->phone;
+        $user->role = $request->role;
+        $user->level = $request->level;
+        $user->status = $request->status;
+        $user->save();
         return ['message' => 'Updated the user info'];
     }
 

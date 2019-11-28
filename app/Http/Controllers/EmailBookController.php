@@ -49,8 +49,8 @@ class EmailBookController extends Controller
         ];
                 
         EmailBookController::sendToAdmin($job_object);
-        //EmailBookController::sendToCustomer($job_object);
-        //EmailBookController::sendToDriver($job_object);
+        EmailBookController::sendToCustomer($job_object);
+        EmailBookController::sendToDriver($job_object);
 
     }
 

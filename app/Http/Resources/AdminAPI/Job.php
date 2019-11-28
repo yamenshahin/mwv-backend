@@ -8,6 +8,7 @@ use App\Http\Resources\AdminAPI\User as UserResource;
 use App\Http\Resources\AdminAPI\JobMeta as JobMetaResource;
 use App\Feedback;
 use App\Http\Resources\AdminAPI\FeedbackJob as FeedbackJobResource;
+use App\JobMeta;
 
 class Job extends JsonResource
 {
@@ -22,11 +23,30 @@ class Job extends JsonResource
         //return parent::toArray($request);
         $customer = UserResource::make(User::find($this->customer_id));
         if(!$customer['id']) {
+            $customerInfoName = JobMeta::select('*')
+            ->where([
+                ['job_id', '=', $this->id],
+                ['key', '=', 'customerInfoName']
+            ])
+            ->first();
+            $customerInfoEmail = JobMeta::select('*')
+            ->where([
+                ['job_id', '=', $this->id],
+                ['key', '=', 'customerInfoEmail']
+            ])
+            ->first();
+            $customerInfoPhone = JobMeta::select('*')
+            ->where([
+                ['job_id', '=', $this->id],
+                ['key', '=', 'customerInfoPhone']
+            ])
+            ->first();
+
             $customer = [
                 'id' =>  '0',
-                'name' => 'anonymous',
-                'email' => 'N/A',
-                'phone' => 'N/A',
+                'name' => $customerInfoName->value,
+                'email' => $customerInfoEmail->value,
+                'phone' => $customerInfoPhone->value,
                 'role' => 'not registered',
                 'status' => 'not registered',
             ];

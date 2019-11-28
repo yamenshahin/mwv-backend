@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\DriverPlaceSearchRequest;
 use App\Http\Requests\DriverPlaceRequest;
 Use App\DriverPlace;
+Use App\User;
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\DriverPlaceSearch as DriverPlaceSearchResource;
 use App\Http\Resources\DriverPlacePrice as DriverPlacePriceResource;
@@ -26,6 +27,9 @@ class DriverPlaceController extends Controller
         //Haversine formula https://en.wikipedia.org/wiki/Haversine_formula
         //http://www.movable-type.co.uk/scripts/latlong.html
         //https://developers.google.com/maps/solutions/store-locator/clothing-store-locator
+
+        // Select only active driver
+        $active_drivers = User::where('status', '=', 'active')->pluck('id')->all();
         
         $haversineFormula= '*, (`distance` - (3959 * acos(cos(radians('.$request->collection['lat'].')) * cos(radians(lat)) * cos(radians(lng) - radians('.$request->collection['lng'].')) + sin(radians('.$request->collection['lat'].')) * sin(radians(lat))))) AS center_distance';
         
@@ -34,6 +38,7 @@ class DriverPlaceController extends Controller
 
 
         $driverPlace = DriverPlace::select(DB::raw($haversineFormula))
+        ->whereIn('user_id', $active_drivers)
         ->where($vanSizeWeekdayHelpersOption, '>', '0')
         ->having('center_distance', '>=', 0)
         ->get();
@@ -298,15 +303,16 @@ class DriverPlaceController extends Controller
 
         
             $driverPlace->vehicle_registration = $request->vehicleRegistration;
-            $driverPlace->national_insurance_number = $request->nationalInsuranceNumber;
-            $driverPlace->driving_licence_number = $request->disc;
+            $driverPlace->national_insurance_number = 'Not provided';
+            $driverPlace->driving_licence_number = $request->drivingLicenceNumber;
+            $driverPlace->disc = $request->disc;
             
             $driverPlace->save();
             
             return new DriverPlaceLegalResource($driverPlace);
         } else {
             $existingDriverPlace->vehicle_registration = $request->vehicleRegistration;
-            $existingDriverPlace->national_insurance_number = $request->nationalInsuranceNumber;
+            $existingDriverPlace->national_insurance_number = 'Not provided';
             $existingDriverPlace->driving_licence_number = $request->drivingLicenceNumber;
             $existingDriverPlace->disc = $request->disc;
             

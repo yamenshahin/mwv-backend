@@ -77,4 +77,15 @@ class User extends Authenticatable implements JWTSubject
     public function driverPlace() {
         return $this->hasOne('App\DriverPlace');
     }
+
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPasswordNotification($token));
+    }
 }

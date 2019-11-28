@@ -5,6 +5,8 @@ Route::post('/register', 'AuthController@register');
 Route::post('/login', 'AuthController@login');
 Route::get('/user', 'AuthController@user');
 Route::post('/logout', 'AuthController@logout');
+Route::post('/forget', 'ForgotPasswordController@sendResetLinkEmail');
+Route::post('/reset', 'ResetPasswordController@reset');
 
 //User
 Route::group(['prefix' => 'user'],function() {
@@ -45,10 +47,12 @@ Route::group(['prefix' => 'driver'],function() {
 
 //User's files
 Route::group(['prefix' => 'files'],function() {
+    Route::post('/file-get', 'UserFileController@getFile');
     Route::apiResources([
         'user-file' => 'UserFileController'
-    ]);
+    ]); 
 });
+
 //Admin
 Route::group(['prefix' => 'admin'],function() {
     Route::apiResources([

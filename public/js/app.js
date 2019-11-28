@@ -2309,8 +2309,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2325,7 +2323,8 @@ __webpack_require__.r(__webpack_exports__);
         email: '',
         phone: '',
         status: 'active',
-        role: 'customer'
+        role: 'customer',
+        level: 'none'
       }),
       emailForm: new Form({
         id: '',
@@ -2639,7 +2638,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2651,7 +2649,7 @@ __webpack_require__.r(__webpack_exports__);
         password: '',
         email: '',
         phone: '',
-        level: 'silver',
+        level: 'none',
         status: 'active',
         role: 'driver'
       }),
@@ -43022,6 +43020,27 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "modal-body" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.form.level,
+                        expression: "form.level"
+                      }
+                    ],
+                    attrs: { type: "hidden", name: "level" },
+                    domProps: { value: _vm.form.level },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.form, "level", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
                   _c(
                     "div",
                     { staticClass: "form-group" },
@@ -43298,16 +43317,8 @@ var render = function() {
                                 _vm._v("Active")
                               ]),
                               _vm._v(" "),
-                              _c("option", { attrs: { value: "unactive" } }, [
-                                _vm._v("Unactive")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "pending" } }, [
-                                _vm._v("Pending")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "banned" } }, [
-                                _vm._v("Banned")
+                              _c("option", { attrs: { value: "inactive" } }, [
+                                _vm._v("Inactive")
                               ])
                             ]
                           ),
@@ -44111,6 +44122,10 @@ var render = function() {
                           }
                         },
                         [
+                          _c("option", { attrs: { value: "none" } }, [
+                            _vm._v("None")
+                          ]),
+                          _vm._v(" "),
                           _c("option", { attrs: { value: "silver" } }, [
                             _vm._v("Silver")
                           ]),
@@ -44200,16 +44215,8 @@ var render = function() {
                                 _vm._v("Active")
                               ]),
                               _vm._v(" "),
-                              _c("option", { attrs: { value: "unactive" } }, [
-                                _vm._v("Unactive")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "pending" } }, [
-                                _vm._v("Pending")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "banned" } }, [
-                                _vm._v("Banned")
+                              _c("option", { attrs: { value: "inactive" } }, [
+                                _vm._v("Inactive")
                               ])
                             ]
                           ),

@@ -19,10 +19,10 @@ class CreateDriverPlacesTable extends Migration
             $table->string('level')->default('none');
             $table->string('disc')->default('');
             $table->string('vehicle_registration')->default('');
-            $table->string('national_insurance_number')->default('');
+            $table->string('national_insurance_number')->default('')->nullable();
             $table->string('driving_licence_number')->default('');
-            $table->unsignedBigInteger('stars')->default(5);
-            $table->unsignedBigInteger('votes')->default(1);
+            $table->unsignedBigInteger('stars')->default(0);
+            $table->unsignedBigInteger('votes')->default(0);
             $table->float('miles_driven')->default(5.00);
             $table->unsignedBigInteger('jobs_booked')->default(1);
 

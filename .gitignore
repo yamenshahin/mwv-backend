@@ -12,3 +12,4 @@ npm-debug.log
 yarn-error.log
 .envlocal.txt
 back-end*.zip
+.*.env

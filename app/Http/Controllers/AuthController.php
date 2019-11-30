@@ -135,25 +135,25 @@ class AuthController extends Controller
             if($user->email === $request->email && $user->phone === $request->phone) {
                 $validatedData = $request->validate([
                     'name' => 'required|string|max:191',
-                    'password'  => 'string|max:191|min:6|confirmed',
+                    'password'  => 'string|max:191|min:8|confirmed',
                 ]);
             } elseif($user->email === $request->email) {
                 $validatedData = $request->validate([
                     'name' => 'required|string|max:191',
                     'phone'  => 'required|string|max:191|min:6|unique:users',
-                    'password'  => 'string|max:191|min:6|confirmed',
+                    'password'  => 'string|max:191|min:8|confirmed',
                 ]);
             } elseif($user->phone === $request->phone) {
                 $validatedData = $request->validate([
                     'name' => 'required|string|max:191',
                     'email' => 'required|max:191|email|unique:users',
-                    'password'  => 'string|max:191|min:6|confirmed',
+                    'password'  => 'string|max:191|min:8|confirmed',
                 ]);
             } else {
                 $validatedData = $request->validate([
                     'name' => 'required|string|max:191',
                     'email' => 'required|max:191|email|unique:users',
-                    'password'  => 'string|max:191|min:6|confirmed',
+                    'password'  => 'string|max:191|min:8|confirmed',
                     'phone'  => 'required|string|max:191|min:6|unique:users'
                 ]);
             }

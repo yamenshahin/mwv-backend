@@ -206,7 +206,7 @@
 
 <p>Note: {{$data['job_meta']['description']}}</p>
 
-@component('mail::button', ['url' => config('app.url')])
+@component('mail::button', ['url' => env('APP_URL', 'https://hellovans.com/')])
 Visit Hello Vans
 @endcomponent
 

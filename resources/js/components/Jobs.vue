@@ -150,8 +150,8 @@
                                         <p><b>{{job_meta.key | unCamelCase}}:</b> {{job_meta.value | isoDateToString}}</p>
                                         <hr>
                                     </span>
-                                    <span v-else-if="job_meta.key === 'movingDate'">
-                                        <p><b>{{job_meta.key | unCamelCase}}:</b> {{job_meta.value | isoDateToString}}</p>
+                                    <span v-else-if="job_meta.key === 'totalTime'">
+                                        <p><b>{{job_meta.key | unCamelCase}}:</b> {{job_meta.value | timeInFloatToSec | timeInHoursMinutes}}</p>
                                         <hr>
                                     </span>
                                     <span v-else-if="job_meta.key === 'total'">
@@ -167,7 +167,7 @@
                                         <hr>
                                     </span>
                                     <span v-else-if="job_meta.key === 'additionalTimePrice'">
-                                        <p><b>{{job_meta.key | unCamelCase}}:</b> {{job_meta.value | currency}} per hour</p>
+                                        <p><b>{{job_meta.key | unCamelCase}}:</b> {{job_meta.value | currency}} per half hour </p>
                                         <hr>
                                     </span>
                                 </span>

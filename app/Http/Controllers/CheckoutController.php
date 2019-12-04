@@ -24,10 +24,10 @@ class CheckoutController extends Controller
                 
         try {
             $charge = Stripe::charges()->create([
-                'currency' => 'USD',
+                'currency' => 'GBP',
                 'amount'   => $request->amount,
                 'source' => $request->stripeToken,
-                'receipt_email' => 'yamenhshain@gmail.com',
+                'receipt_email' => env('RECEIPT_EMAIL', 'info@hellovans.com'),
                 'metadata' => [
                     'job_id' => $request->id,
                 ], 

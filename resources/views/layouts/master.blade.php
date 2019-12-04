@@ -311,6 +311,12 @@
                                             <p>Terms And Conditions</p>
                                         </router-link>
                                     </li>
+                                    <li class="nav-item">
+                                        <router-link :to="{ name: 'drivers-terms-page' }" class="nav-link">
+                                            <i class="fas fa-file nav-icon"></i>
+                                            <p>Drivers Terms And Conditions</p>
+                                        </router-link>
+                                    </li>
                                 </ul>
                             </li>
                             <li class="nav-item">

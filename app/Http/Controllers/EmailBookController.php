@@ -47,10 +47,15 @@ class EmailBookController extends Controller
             'job_meta' => $job_meta_array,
             'driver' => $driver,
         ];
-                
-        EmailBookController::sendToAdmin($job_object);
-        EmailBookController::sendToCustomer($job_object);
-        EmailBookController::sendToDriver($job_object);
+        
+        if (App::environment('production')) {
+            EmailBookController::sendToAdmin($job_object);
+            EmailBookController::sendToCustomer($job_object);
+            EmailBookController::sendToDriver($job_object);
+        } else {
+            EmailBookController::sendToAdmin($job_object);
+        }
+        
 
     }
 

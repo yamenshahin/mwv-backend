@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\EmailBookController;
 use Cartalyst\Stripe\Laravel\Facades\Stripe;
+use App\Job;
 
 class CheckoutController extends Controller
 {
@@ -21,7 +22,11 @@ class CheckoutController extends Controller
             'id' => 'required',
             'amount' => 'required',
         ]);
-                
+        $job = Job::find($request->id);
+        if($job->status === 'booked')  {
+            return 'success';
+        } 
+
         try {
             $charge = Stripe::charges()->create([
                 'currency' => 'GBP',
@@ -68,7 +73,11 @@ class CheckoutController extends Controller
         $this->validate($request,[
             'id' => 'required',
         ]);
-
+        
+        $job = Job::find($request->id);
+        if($job->status === 'booked')  {
+            return 'success';
+        } 
         // save this info to your database
         JobController::setStatus($request->id, 'booked'); 
         JobController::setMeta($request->id, 'paymentMethod', 'cash');

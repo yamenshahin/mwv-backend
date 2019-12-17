@@ -20,13 +20,24 @@ class AuthController extends Controller
     public function register(UserRegisterRequest $request) 
     {
         if($request->role) {
-            $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => bcrypt($request->password),
-                'phone' => $request->phone,
-                'role' => $request->role
-            ]);
+            if($request->role === 'driver') {
+                $user = User::create([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'password' => bcrypt($request->password),
+                    'phone' => $request->phone,
+                    'role' => $request->role,
+                    'status' => 'inactive'
+                ]);
+            } else {
+                $user = User::create([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'password' => bcrypt($request->password),
+                    'phone' => $request->phone,
+                    'role' => $request->role,
+                ]);
+            }
         } else {
             $user = User::create([
                 'name' => $request->name,
@@ -115,6 +126,9 @@ class AuthController extends Controller
     public function setRole(Request $request)
     {
         $user = auth()->user('api');
+        if($request->role === 'driver') {
+            $user->status = 'inactive';
+        }
         $user->role = $request->role;
         $user->save();
 

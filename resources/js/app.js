@@ -39,6 +39,9 @@ let routes = [
 
     //Jobs
     { path: '/admin/jobs/', name: 'jobs', component: require('./components/Jobs.vue').default },
+
+    //Quotes
+    { path: '/admin/quotes/', name: 'quotes', component: require('./components/Quotes.vue').default },
     //ToBe
     /* { path: '/admin/feedback-jobs', name: 'feedback-jobs', component: require('./components/FeedbackJobs.vue').default }, */
     

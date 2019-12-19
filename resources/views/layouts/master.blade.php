@@ -215,6 +215,12 @@
                                     <p>Jobs</p>
                                 </router-link>
                             </li>
+                            <li class="nav-item">
+                                <router-link :to="{ name: 'quotes' }" class="nav-link">
+                                    <i class="nav-icon fas fa-search-location"></i>
+                                    <p>Quotes</p>
+                                </router-link>
+                            </li>
                             
                             <li class="nav-item has-treeview">
                                 <a href="#" class="nav-link">

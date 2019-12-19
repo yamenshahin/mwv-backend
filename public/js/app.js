@@ -4004,6 +4004,196 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Quotes.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Quotes.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      editMode: false,
+      quotes: {},
+      form: new Form({
+        id: '',
+        customer: {
+          name: '',
+          email: '',
+          phone: ''
+        },
+        quote_metas: [{}]
+      })
+    };
+  },
+  mounted: function mounted() {
+    console.log('Component mounted.');
+  },
+  created: function created() {
+    this.getQuotes();
+  },
+  methods: {
+    viewQuoteModal: function viewQuoteModal(quote) {
+      this.form.clear();
+      this.form.reset();
+      $('#quoteModal').modal('show');
+      this.form.fill(quote);
+    },
+    getQuotes: function getQuotes() {
+      var _this = this;
+
+      axios.get('/api/admin/quote').then(function (_ref) {
+        var data = _ref.data;
+        return _this.quotes = data.data;
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/StatisticsCharts.vue?vue&type=script&lang=js&":
 /*!***************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/StatisticsCharts.vue?vue&type=script&lang=js& ***!
@@ -47269,6 +47459,496 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Quotes.vue?vue&type=template&id=7006a7bc&":
+/*!*********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Quotes.vue?vue&type=template&id=7006a7bc& ***!
+  \*********************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container-fluid" }, [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-12 mt-5" }, [
+        _c("div", { staticClass: "card" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body table-responsive p-0" }, [
+            _c("table", { staticClass: "table table-hover" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.quotes, function(quote) {
+                  return _c("tr", { key: quote.id }, [
+                    _c("td", [_vm._v(_vm._s(quote.id))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(quote.customer.name))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(quote.customer.email))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(quote.customer.phone))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _vm._v(
+                        _vm._s(_vm._f("isoDateToString")(quote.created_at))
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "a",
+                        {
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.viewQuoteModal(quote)
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "fas fa-eye" })]
+                      )
+                    ])
+                  ])
+                }),
+                0
+              )
+            ])
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        staticStyle: { display: "none" },
+        attrs: { id: "quoteModal", "aria-hidden": "true" }
+      },
+      [
+        _c("div", { staticClass: "modal-dialog" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _c(
+              "form",
+              {
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.viewQuote()
+                  }
+                }
+              },
+              [
+                _vm._m(2),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-body" }, [
+                  _c(
+                    "div",
+                    { staticClass: "form-group" },
+                    [
+                      _c("h4", [
+                        _c("b", [_vm._v("ID:")]),
+                        _vm._v(" " + _vm._s(_vm.form.id) + " | "),
+                        _c("b", [_vm._v("Status:")]),
+                        _vm._v(" " + _vm._s(_vm.form.status))
+                      ]),
+                      _vm._v(" "),
+                      _c("hr"),
+                      _vm._v(" "),
+                      _vm._m(3),
+                      _vm._v(" "),
+                      _c("p", [
+                        _c("b", [_vm._v("Customer name:")]),
+                        _vm._v(" " + _vm._s(_vm.form.customer.name))
+                      ]),
+                      _vm._v(" "),
+                      _c("p", [
+                        _c("b", [_vm._v("Customer Email:")]),
+                        _vm._v(" " + _vm._s(_vm.form.customer.email))
+                      ]),
+                      _vm._v(" "),
+                      _c("p", [
+                        _c("b", [_vm._v("Customer phone:")]),
+                        _vm._v(" " + _vm._s(_vm.form.customer.phone))
+                      ]),
+                      _vm._v(" "),
+                      _c("hr"),
+                      _vm._v(" "),
+                      _vm._m(4),
+                      _vm._v(" "),
+                      _c("hr"),
+                      _vm._v(" "),
+                      _vm._l(_vm.form.quote_metas, function(quote_meta) {
+                        return _c("span", { key: quote_meta.key }, [
+                          quote_meta.key === "collection" ||
+                          quote_meta.key === "delivery"
+                            ? _c(
+                                "span",
+                                [
+                                  _c("h5", [
+                                    _c("b", [
+                                      _vm._v(
+                                        _vm._s(
+                                          _vm._f("unCamelCase")(quote_meta.key)
+                                        ) + ":"
+                                      )
+                                    ])
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm._l(quote_meta.value, function(
+                                    value,
+                                    key
+                                  ) {
+                                    return _c("p", { key: key }, [
+                                      key === "stairs"
+                                        ? _c("span", [
+                                            _c("b", [
+                                              _vm._v(
+                                                _vm._s(
+                                                  _vm._f("unCamelCase")(key)
+                                                ) + ":"
+                                              )
+                                            ]),
+                                            _vm._v(
+                                              " " +
+                                                _vm._s(
+                                                  _vm._f("stairs")(value)
+                                                ) +
+                                                "\n                                        "
+                                            )
+                                          ])
+                                        : _c("span", [
+                                            _c("b", [
+                                              _vm._v(
+                                                _vm._s(
+                                                  _vm._f("unCamelCase")(key)
+                                                ) + ":"
+                                              )
+                                            ]),
+                                            _vm._v(
+                                              " " +
+                                                _vm._s(value) +
+                                                "\n                                        "
+                                            )
+                                          ])
+                                    ])
+                                  }),
+                                  _vm._v(" "),
+                                  _c("hr")
+                                ],
+                                2
+                              )
+                            : quote_meta.key === "waypoints" &&
+                              quote_meta.value.length > 0
+                            ? _c(
+                                "span",
+                                [
+                                  _c("h5", [
+                                    _c("b", [
+                                      _vm._v(
+                                        _vm._s(
+                                          _vm._f("unCamelCase")(quote_meta.key)
+                                        ) + ":"
+                                      )
+                                    ])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("hr"),
+                                  _vm._v(" "),
+                                  _vm._l(quote_meta.value, function(waypoint) {
+                                    return _c(
+                                      "span",
+                                      { key: waypoint.index },
+                                      [
+                                        _vm._l(waypoint, function(value, key) {
+                                          return _c("p", { key: key }, [
+                                            key === "stairs"
+                                              ? _c("span", [
+                                                  _c("b", [
+                                                    _vm._v(
+                                                      _vm._s(
+                                                        _vm._f("unCamelCase")(
+                                                          key
+                                                        )
+                                                      ) + ":"
+                                                    )
+                                                  ]),
+                                                  _vm._v(
+                                                    " " +
+                                                      _vm._s(
+                                                        _vm._f("stairs")(value)
+                                                      ) +
+                                                      "\n                                            "
+                                                  )
+                                                ])
+                                              : _c("span", [
+                                                  _c("b", [
+                                                    _vm._v(
+                                                      _vm._s(
+                                                        _vm._f("unCamelCase")(
+                                                          key
+                                                        )
+                                                      ) + ":"
+                                                    )
+                                                  ]),
+                                                  _vm._v(
+                                                    " " +
+                                                      _vm._s(value) +
+                                                      "\n                                            "
+                                                  )
+                                                ])
+                                          ])
+                                        }),
+                                        _vm._v(" "),
+                                        _c("hr")
+                                      ],
+                                      2
+                                    )
+                                  })
+                                ],
+                                2
+                              )
+                            : _vm._e()
+                        ])
+                      }),
+                      _vm._v(" "),
+                      _vm._m(5),
+                      _vm._v(" "),
+                      _c("hr"),
+                      _vm._v(" "),
+                      _vm._l(_vm.form.quote_metas, function(quote_meta) {
+                        return _c("span", { key: quote_meta.key }, [
+                          quote_meta.key === "vanSize"
+                            ? _c("span", [
+                                _c("p", [
+                                  _c("b", [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm._f("unCamelCase")(quote_meta.key)
+                                      ) + ":"
+                                    )
+                                  ]),
+                                  _vm._v(
+                                    " " +
+                                      _vm._s(
+                                        _vm._f("vanSize")(quote_meta.value)
+                                      )
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("hr")
+                              ])
+                            : quote_meta.key === "helpersRequired"
+                            ? _c("span", [
+                                _c("p", [
+                                  _c("b", [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm._f("unCamelCase")(quote_meta.key)
+                                      ) + ":"
+                                    )
+                                  ]),
+                                  _vm._v(
+                                    " " +
+                                      _vm._s(
+                                        _vm._f("helpersRequired")(
+                                          quote_meta.value
+                                        )
+                                      )
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("hr")
+                              ])
+                            : quote_meta.key === "movingDate"
+                            ? _c("span", [
+                                _c("p", [
+                                  _c("b", [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm._f("unCamelCase")(quote_meta.key)
+                                      ) + ":"
+                                    )
+                                  ]),
+                                  _vm._v(
+                                    " " +
+                                      _vm._s(
+                                        _vm._f("isoDateToString")(
+                                          quote_meta.value
+                                        )
+                                      )
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("hr")
+                              ])
+                            : quote_meta.key === "totalTime"
+                            ? _c("span", [
+                                _c("p", [
+                                  _c("b", [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm._f("unCamelCase")(quote_meta.key)
+                                      ) + ":"
+                                    )
+                                  ]),
+                                  _vm._v(
+                                    " " +
+                                      _vm._s(
+                                        _vm._f("timeInHoursMinutes")(
+                                          _vm._f("timeInFloatToSec")(
+                                            quote_meta.value
+                                          )
+                                        )
+                                      )
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("hr")
+                              ])
+                            : quote_meta.key === "estimatedTotalTime"
+                            ? _c("span", [
+                                _c("p", [
+                                  _c("b", [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm._f("unCamelCase")(quote_meta.key)
+                                      ) + ":"
+                                    )
+                                  ]),
+                                  _vm._v(
+                                    " " +
+                                      _vm._s(
+                                        _vm._f("timeInHoursMinutes")(
+                                          quote_meta.value
+                                        )
+                                      )
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("hr")
+                              ])
+                            : _vm._e()
+                        ])
+                      })
+                    ],
+                    2
+                  )
+                ]),
+                _vm._v(" "),
+                _vm._m(6),
+                _vm._v(" "),
+                _c("alert-success", { attrs: { form: _vm.form } }, [
+                  _vm._v("Done")
+                ])
+              ],
+              1
+            )
+          ])
+        ])
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h3", { staticClass: "card-title" }, [_vm._v("Quotes")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("ID")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Customer")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Customer Email")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Customer Phone")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Created Date")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("View")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c("h4", { staticClass: "modal-title" }, [_vm._v("Quote")]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h5", [_c("b", [_vm._v("Customer:")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h4", [_c("b", [_vm._v("Addresses:")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h4", [_c("b", [_vm._v("Others info:")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-footer justify-content-between" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-default",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("Close")]
+      )
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/StatisticsCharts.vue?vue&type=template&id=559941c3&":
 /*!*******************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/StatisticsCharts.vue?vue&type=template&id=559941c3& ***!
@@ -63916,6 +64596,11 @@ var routes = [// Admin Power
   path: '/admin/jobs/',
   name: 'jobs',
   component: __webpack_require__(/*! ./components/Jobs.vue */ "./resources/js/components/Jobs.vue")["default"]
+}, //Quotes
+{
+  path: '/admin/quotes/',
+  name: 'quotes',
+  component: __webpack_require__(/*! ./components/Quotes.vue */ "./resources/js/components/Quotes.vue")["default"]
 }, //ToBe
 
 /* { path: '/admin/feedback-jobs', name: 'feedback-jobs', component: require('./components/FeedbackJobs.vue').default }, */
@@ -65163,6 +65848,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PrivacyPage_vue_vue_type_template_id_5d78fd9c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PrivacyPage_vue_vue_type_template_id_5d78fd9c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Quotes.vue":
+/*!********************************************!*\
+  !*** ./resources/js/components/Quotes.vue ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Quotes_vue_vue_type_template_id_7006a7bc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Quotes.vue?vue&type=template&id=7006a7bc& */ "./resources/js/components/Quotes.vue?vue&type=template&id=7006a7bc&");
+/* harmony import */ var _Quotes_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Quotes.vue?vue&type=script&lang=js& */ "./resources/js/components/Quotes.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Quotes_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Quotes_vue_vue_type_template_id_7006a7bc___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Quotes_vue_vue_type_template_id_7006a7bc___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Quotes.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Quotes.vue?vue&type=script&lang=js&":
+/*!*********************************************************************!*\
+  !*** ./resources/js/components/Quotes.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Quotes_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Quotes.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Quotes.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Quotes_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Quotes.vue?vue&type=template&id=7006a7bc&":
+/*!***************************************************************************!*\
+  !*** ./resources/js/components/Quotes.vue?vue&type=template&id=7006a7bc& ***!
+  \***************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Quotes_vue_vue_type_template_id_7006a7bc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Quotes.vue?vue&type=template&id=7006a7bc& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Quotes.vue?vue&type=template&id=7006a7bc&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Quotes_vue_vue_type_template_id_7006a7bc___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Quotes_vue_vue_type_template_id_7006a7bc___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

@@ -30,6 +30,10 @@ Route::group(['prefix' => 'places'],function() {
     Route::post('/', 'DriverPlaceController@search');
     Route::get('/all', 'DriverPlaceController@getAllPlaces');
 });
+//Search Quotes
+Route::group(['prefix' => 'quotes'],function() {
+    Route::post('/', 'QuoteController@store');
+});
 //Driver
 Route::group(['prefix' => 'driver'],function() {
     Route::post('/create-update-price', 'DriverPlaceController@createOrUpdatePrice')->middleware('auth:api');
@@ -59,6 +63,7 @@ Route::group(['prefix' => 'admin'],function() {
         'user' => 'AdminAPI\UserController',
         'admin' => 'AdminAPI\AdminController',
         'job' => 'AdminAPI\JobController',
+        'quote' => 'AdminAPI\QuoteController',
         'meta' => 'AdminAPI\MetaController',
         'feedback-jobs' => 'AdminAPI\FeedbackJobController',
     ]);

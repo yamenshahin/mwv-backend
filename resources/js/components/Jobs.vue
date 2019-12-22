@@ -113,7 +113,7 @@
                                             <span v-if="key === 'stairs'">
                                                 <b>{{key | unCamelCase}}:</b> {{value | stairs}}
                                             </span>
-                                            <span v-else>
+                                            <span v-else-if="key !== 'lat' && key !== 'lng'">
                                                 <b>{{key | unCamelCase}}:</b> {{value}}
                                             </span>
                                         </p>
@@ -127,7 +127,7 @@
                                                <span v-if="key === 'stairs'">
                                                     <b>{{key | unCamelCase}}:</b> {{value | stairs}}
                                                 </span>
-                                                <span v-else>
+                                                <span v-else-if="key !== 'lat' && key !== 'lng'">
                                                     <b>{{key | unCamelCase}}:</b> {{value}}
                                                 </span>
                                             </p>

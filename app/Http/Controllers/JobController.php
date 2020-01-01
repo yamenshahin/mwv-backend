@@ -32,10 +32,25 @@ class JobController extends Controller
         }
         
         $job_meta = [];
+        //get totalTime
+        foreach ($request->job_meta as $key => $value) {
+            if($key === 'totalTime') {
+                $total_time = $value;
+            }
+        }
         foreach ($request->job_meta as $key => $value) {
 
             if(in_array($key,['collection', 'delivery', 'waypoints'])) {
                 array_push($job_meta, new JobMeta(['key' => $key, 'value' => json_encode($value)])); 
+            } else if($key === 'movingDate') {
+                array_push($job_meta, new JobMeta(['key' => $key, 'value' => $value]));
+                $date_in = strtotime($value) - 7200;
+                $date_in = date("Y-m-d H:i:s", $date_in);
+                $date_out = strtotime($value) + 7200 + $total_time * 3600;
+                $date_out = date("Y-m-d H:i:s", $date_out);
+                array_push($job_meta, new JobMeta(['key' => 'dateIn', 'value' => $date_in]));
+                array_push($job_meta, new JobMeta(['key' => 'dateOut', 'value' => $date_out]));
+
             } else {
                 array_push($job_meta, new JobMeta(['key' => $key, 'value' => $value]));
             }
@@ -53,6 +68,8 @@ class JobController extends Controller
         
         array_push($job_meta, new JobMeta(['key' => 'fee', 'value' => $default_fee->value]));
         array_push($job_meta, new JobMeta(['key' => 'paid', 'value' => 'no']));
+
+        array_push($job_meta, new JobMeta(['key' => 'placeId', 'value' => $request->driver['placeId']]));
 
         $job->save();
         $job->meta()->saveMany($job_meta);
@@ -78,10 +95,25 @@ class JobController extends Controller
         }
         
         $job_meta = [];
+        //get totalTime
+        foreach ($request->job_meta as $key => $value) {
+            if($key === 'totalTime') {
+                $total_time = $value;
+            }
+        }
         foreach ($request->job_meta as $key => $value) {
 
             if(in_array($key,['collection', 'delivery', 'waypoints'])) {
                 array_push($job_meta, new JobMeta(['key' => $key, 'value' => json_encode($value)])); 
+            } else if($key === 'movingDate') {
+                array_push($job_meta, new JobMeta(['key' => $key, 'value' => $value]));
+                $date_in = strtotime($value) - 7200;
+                $date_in = date("Y-m-d H:i:s", $date_in);
+                $date_out = strtotime($value) + 7200 + $total_time * 3600;
+                $date_out = date("Y-m-d H:i:s", $date_out);
+                array_push($job_meta, new JobMeta(['key' => 'dateIn', 'value' => $date_in]));
+                array_push($job_meta, new JobMeta(['key' => 'dateOut', 'value' => $date_out]));
+
             } else {
                 array_push($job_meta, new JobMeta(['key' => $key, 'value' => $value]));
             }
@@ -90,7 +122,9 @@ class JobController extends Controller
         foreach ($request->driver['price'] as $key => $value) {
             array_push($job_meta, new JobMeta(['key' => $key, 'value' => $value]));
         }
-        
+
+        array_push($job_meta, new JobMeta(['key' => 'placeId', 'value' => $request->driver['placeId']]));
+
         //get current fee
         $default_fee = Meta::select('*')
         ->where('key', '=', 'defaultFee')

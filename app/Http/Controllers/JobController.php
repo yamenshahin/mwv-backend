@@ -14,14 +14,14 @@ use App\Http\Requests\JobStoreRequest;
 
 class JobController extends Controller
 {
+
     /**
-     * Insert new Job with job metas (authenticated/logged in user)
+     * Insert new Job with job metas (authenticated/logged in user && un-authenticated/non-logged in user)
      *
      * @param JobStoreRequest $request
      * @return JSON
      */
-    public function storeAuthenticated(JobStoreRequest $request)
-    {
+    public function store(JobStoreRequest $request) {
         $job = new Job;
         $job->user()->associate($request->driver['user']['id']);
 
@@ -67,7 +67,6 @@ class JobController extends Controller
         ->first();
         
         array_push($job_meta, new JobMeta(['key' => 'fee', 'value' => $default_fee->value]));
-        array_push($job_meta, new JobMeta(['key' => 'paid', 'value' => 'no']));
 
         array_push($job_meta, new JobMeta(['key' => 'placeId', 'value' => $request->driver['placeId']]));
 
@@ -76,67 +75,27 @@ class JobController extends Controller
 
         return new JobResource($job);
     }
-
     /**
      * Insert new Job with job metas (authenticated/logged in user)
      *
      * @param JobStoreRequest $request
      * @return JSON
      */
+    public function storeAuthenticated(JobStoreRequest $request)
+    {
+        return $this->store($request);
+    }
+
+    /**
+     * Insert new Job with job metas (un-authenticated/non-logged in user)
+     *
+     * @param JobStoreRequest $request
+     * @return JSON
+     */
     public function storeUnauthenticated(JobStoreRequest $request)
     {
-        $job = new Job;
-        $job->user()->associate($request->driver['user']['id']);
 
-        if($request->user()) {
-            $job->customer_id = $request->user()->id;
-        } else {
-            $job->customer_id = 0;
-        }
-        
-        $job_meta = [];
-        //get totalTime
-        foreach ($request->job_meta as $key => $value) {
-            if($key === 'totalTime') {
-                $total_time = $value;
-            }
-        }
-        foreach ($request->job_meta as $key => $value) {
-
-            if(in_array($key,['collection', 'delivery', 'waypoints'])) {
-                array_push($job_meta, new JobMeta(['key' => $key, 'value' => json_encode($value)])); 
-            } else if($key === 'movingDate') {
-                array_push($job_meta, new JobMeta(['key' => $key, 'value' => $value]));
-                $date_in = strtotime($value) - 7200;
-                $date_in = date("Y-m-d H:i:s", $date_in);
-                $date_out = strtotime($value) + 7200 + $total_time * 3600;
-                $date_out = date("Y-m-d H:i:s", $date_out);
-                array_push($job_meta, new JobMeta(['key' => 'dateIn', 'value' => $date_in]));
-                array_push($job_meta, new JobMeta(['key' => 'dateOut', 'value' => $date_out]));
-
-            } else {
-                array_push($job_meta, new JobMeta(['key' => $key, 'value' => $value]));
-            }
-        }
-
-        foreach ($request->driver['price'] as $key => $value) {
-            array_push($job_meta, new JobMeta(['key' => $key, 'value' => $value]));
-        }
-
-        array_push($job_meta, new JobMeta(['key' => 'placeId', 'value' => $request->driver['placeId']]));
-
-        //get current fee
-        $default_fee = Meta::select('*')
-        ->where('key', '=', 'defaultFee')
-        ->first();
-        
-        array_push($job_meta, new JobMeta(['key' => 'fee', 'value' => $default_fee->value]));
-        array_push($job_meta, new JobMeta(['key' => 'paid', 'value' => 'no']));
-
-        $job->save();
-        $job->meta()->saveMany($job_meta);
-
-        return new JobResource($job);
+        return $this->store($request);
     }
 
     public function show(Request $request) 

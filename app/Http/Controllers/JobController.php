@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Job;
-Use App\JobMeta;
+use App\JobMeta;
 use App\Meta;
 use App\DriverPlace;
 use Illuminate\Support\Facades\DB;
@@ -42,15 +42,6 @@ class JobController extends Controller
 
             if(in_array($key,['collection', 'delivery', 'waypoints'])) {
                 array_push($job_meta, new JobMeta(['key' => $key, 'value' => json_encode($value)])); 
-            } else if($key === 'movingDate') {
-                array_push($job_meta, new JobMeta(['key' => $key, 'value' => $value]));
-                $date_in = strtotime($value) - 7200;
-                $date_in = date("Y-m-d H:i:s", $date_in);
-                $date_out = strtotime($value) + 7200 + $total_time * 3600;
-                $date_out = date("Y-m-d H:i:s", $date_out);
-                array_push($job_meta, new JobMeta(['key' => 'dateIn', 'value' => $date_in]));
-                array_push($job_meta, new JobMeta(['key' => 'dateOut', 'value' => $date_out]));
-
             } else {
                 array_push($job_meta, new JobMeta(['key' => $key, 'value' => $value]));
             }
@@ -171,6 +162,25 @@ class JobController extends Controller
         return '';
     }
 
+
+    /**
+     * Get Single Meta.
+     *
+     * @param  int  $id
+     * @return string
+     */
+    public static function getSingleMeta($id, $key)
+    {
+        $meta_value = JobMeta::select('value')
+        ->where([
+            ['job_id', '=', $id],
+            ['key', '=', $key]
+        ])
+        ->first();
+
+        return $meta_value->value;
+    }
+
     /**
      * Set Meta.
      *
@@ -271,6 +281,25 @@ class JobController extends Controller
         $place->jobs_booked = $place->jobs_booked + 1;
 
         $place->save();
+    }
+
+    /**
+     * Get Driver Place ID
+     *
+     * @param int $id
+     * @return int
+     */
+    public static function getPlaceId($id)
+    {
+        $job = Job::select('*')
+        ->where('id', '=', $id )
+        ->first();
+
+        $place = DriverPlace::select('*')
+        ->where('user_id', '=', $job->user_id)
+        ->first();
+
+        return $place->id;
     }
 
     public function edit($id) 

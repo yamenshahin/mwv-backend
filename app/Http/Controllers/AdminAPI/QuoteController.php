@@ -26,7 +26,7 @@ class QuoteController extends Controller
      */
     public function index()
     {
-        $quotes = Quote::orderBy('id', 'desc')->get();
+        $quotes = Quote::orderBy('id', 'desc')->paginate(50);
 
         return QuoteResource::collection($quotes);
     }

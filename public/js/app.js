@@ -3142,21 +3142,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3168,6 +3153,8 @@ __webpack_require__.r(__webpack_exports__);
         category: 'uk',
         slug: '',
         meta: {
+          pageTitle: '',
+          pageDescription: '',
           driverSliderTitle: '',
           driverSliderText: '',
           mainSliderTitle: '',
@@ -4088,6 +4075,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -4125,6 +4117,15 @@ __webpack_require__.r(__webpack_exports__);
     this.getJobs();
   },
   methods: {
+    // Our method to GET results from a Laravel endpoint
+    getResults: function getResults() {
+      var _this = this;
+
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      axios.get('/api/admin/job/?page=' + page).then(function (response) {
+        _this.jobs = response.data;
+      });
+    },
     viewJobModal: function viewJobModal(job) {
       this.form.clear();
       this.form.reset();
@@ -4144,25 +4145,25 @@ __webpack_require__.r(__webpack_exports__);
       this.form.fill(job);
     },
     getJobs: function getJobs() {
-      var _this = this;
+      var _this2 = this;
 
       axios.get('/api/admin/job').then(function (_ref) {
         var data = _ref.data;
-        return _this.jobs = data.data;
+        return _this2.jobs = data;
       });
     },
     newJob: function newJob() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.form.post('/api/admin/job').then(function () {
-        _this2.getJobs();
+        _this3.getJobs();
       })["catch"](function () {});
     },
     editJob: function editJob() {
-      var _this3 = this;
+      var _this4 = this;
 
       this.form.put('/api/admin/job/' + this.form.id).then(function () {
-        _this3.getJobs();
+        _this4.getJobs();
       })["catch"](function () {});
     },
     newFeedbackModal: function newFeedbackModal() {
@@ -4174,19 +4175,19 @@ __webpack_require__.r(__webpack_exports__);
       $('#feedbackModal').modal('show');
     },
     newFeedback: function newFeedback() {
-      var _this4 = this;
+      var _this5 = this;
 
       this.form.post('/api/admin/feedback-jobs').then(function () {
-        _this4.getJobs();
+        _this5.getJobs();
 
         $('#jobModal').modal('hide');
       })["catch"](function () {});
     },
     editFeedback: function editFeedback() {
-      var _this5 = this;
+      var _this6 = this;
 
       this.form.post('/api/admin/feedback-jobs').then(function () {
-        _this5.getJobs();
+        _this6.getJobs();
 
         $('#jobModal').modal('hide');
       })["catch"](function () {});
@@ -45986,6 +45987,90 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "modal-body" }, [
+                  _c(
+                    "div",
+                    { staticClass: "form-group" },
+                    [
+                      _c("label", [_vm._v("Page title")]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.meta.pageTitle,
+                            expression: "form.meta.pageTitle"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid": _vm.form.errors.has("pageTitle")
+                        },
+                        attrs: { type: "text", name: "pageTitle" },
+                        domProps: { value: _vm.form.meta.pageTitle },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.form.meta,
+                              "pageTitle",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("has-error", {
+                        attrs: { form: _vm.form, field: "pageTitle" }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "form-group" },
+                    [
+                      _c("label", [_vm._v("Page description")]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.meta.pageDescription,
+                            expression: "form.meta.pageDescription"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid": _vm.form.errors.has("pageDescription")
+                        },
+                        attrs: { type: "text", name: "pageDescription" },
+                        domProps: { value: _vm.form.meta.pageDescription },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.form.meta,
+                              "pageDescription",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("has-error", {
+                        attrs: { form: _vm.form, field: "pageDescription" }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
                   _vm.editMode
                     ? _c("span", [
                         _c("input", {
@@ -48873,7 +48958,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "tbody",
-                _vm._l(_vm.jobs, function(job) {
+                _vm._l(_vm.jobs.data, function(job) {
                   return _c("tr", { key: job.id }, [
                     _c("td", [_vm._v(_vm._s(job.id))]),
                     _vm._v(" "),
@@ -48917,7 +49002,19 @@ var render = function() {
                 0
               )
             ])
-          ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "card-footer" },
+            [
+              _c("pagination", {
+                attrs: { data: _vm.jobs },
+                on: { "pagination-change-page": _vm.getResults }
+              })
+            ],
+            1
+          )
         ])
       ])
     ]),

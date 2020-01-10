@@ -31,7 +31,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="job in jobs" :key="job.id">
+                                <tr v-for="job in jobs.data" :key="job.id">
                                     <td>{{job.id}}</td>
                                     <td>{{job.driver.name}}</td>
                                     <td>{{job.driver.email}}</td>
@@ -57,6 +57,11 @@
                         </table>
                     </div>
                     <!-- /.card-body -->
+                    <div class="card-footer">
+                        <pagination :data="jobs" @pagination-change-page="getResults">
+
+                        </pagination>
+                    </div>
                 </div>
                 <!-- /.card -->
             </div>
@@ -280,6 +285,13 @@
             this.getJobs()
         },
         methods: {
+            // Our method to GET results from a Laravel endpoint
+            getResults(page = 1) {
+                axios.get('/api/admin/job/?page=' + page)
+                    .then(response => {
+                        this.jobs= response.data;
+                    });
+            },
             viewJobModal(job) {
                 this.form.clear()
                 this.form.reset()
@@ -301,7 +313,7 @@
             getJobs(){
                 axios.get('/api/admin/job')
                 .then(
-                    ({ data }) => (this.jobs= data.data),
+                    ({ data }) => (this.jobs= data),
                     
                 )
                 

@@ -28,7 +28,7 @@ class JobController extends Controller
      */
     public function index()
     {
-        $jobs = Job::orderBy('id', 'desc')->get();
+        $jobs = Job::orderBy('id', 'desc')->paginate(50);
 
         return JobResource::collection($jobs);
     }

@@ -8,6 +8,8 @@ use App\DynamicPage;
 use App\DynamicPageMeta;
 use App\Http\Resources\AdminAPI\DynamicPage as DynamicPageResource;
 
+use App\Http\Controllers\AdminAPI\SiteMapDynamicPageController;
+
 class DynamicPageController extends Controller
 {
     /**
@@ -80,9 +82,6 @@ class DynamicPageController extends Controller
             $dynamic_page->meta()->saveMany($dynamic_page_metas);
         }
 
-
-        
-
-        
+        SiteMapDynamicPageController::generateSitemap();
     }
 }

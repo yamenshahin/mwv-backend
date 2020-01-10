@@ -47,6 +47,7 @@
 
                 <div class="modal-content">
                     <form @submit.prevent="editMode ? editPage() : newPage()">
+
                         <div class="modal-header">
                             <h4 class="modal-title"> {{editMode ? 'Edit' : 'New'}} Page</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -54,14 +55,26 @@
                             </button>
                         </div>
                         <div class="modal-body">
+                            <div class="form-group">
+                                <label>Page title</label>
+                                <input v-model="form.meta.pageTitle" type="text" name="pageTitle" class="form-control"
+                                    :class="{ 'is-invalid': form.errors.has('pageTitle') }">
+                                <has-error :form="form" field="pageTitle"></has-error>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Page description</label>
+                                <input v-model="form.meta.pageDescription" type="text" name="pageDescription"
+                                    class="form-control" :class="{ 'is-invalid': form.errors.has('pageDescription') }">
+                                <has-error :form="form" field="pageDescription"></has-error>
+                            </div>
                             <span v-if="editMode">
                                 <input type="hidden" name="id" v-model="form.id">
                             </span>
                             <input type="hidden" name="category" v-model="form.category">
                             <div class="form-group">
                                 <label>URL Slug</label>
-                                <input v-model="form.slug" type="text" name="slug"
-                                    class="form-control"
+                                <input v-model="form.slug" type="text" name="slug" class="form-control"
                                     :class="{ 'is-invalid': form.errors.has('slug') }">
                                 <has-error :form="form" field="slug"></has-error>
                             </div>
@@ -75,24 +88,20 @@
 
                             <div class="form-group">
                                 <label>Driver slider text</label>
-                                <textarea
-                                 v-model="form.meta.driverSliderText" name="driverSliderText"
-                                    class="form-control"
-                                    :class="{ 'is-invalid': form.errors.has('driverSliderText') }"    
-                                rows="3"></textarea>
+                                <textarea v-model="form.meta.driverSliderText" name="driverSliderText"
+                                    class="form-control" :class="{ 'is-invalid': form.errors.has('driverSliderText') }"
+                                    rows="3"></textarea>
                                 <has-error :form="form" field="driverSliderText"></has-error>
                             </div>
 
                             <div class="form-group">
                                 <label>Main slider title</label>
-                                <textarea
-                                 v-model="form.meta.mainSliderTitle" name="mainSliderTitle"
-                                    class="form-control"
-                                    :class="{ 'is-invalid': form.errors.has('mainSliderTitle') }"    
-                                rows="3"></textarea>
+                                <textarea v-model="form.meta.mainSliderTitle" name="mainSliderTitle"
+                                    class="form-control" :class="{ 'is-invalid': form.errors.has('mainSliderTitle') }"
+                                    rows="3"></textarea>
                                 <has-error :form="form" field="mainSliderTitle"></has-error>
                             </div>
-                            
+
 
                             <div class="form-group">
                                 <label>Work steps sub title</label>
@@ -105,39 +114,34 @@
                             <div class="form-group">
                                 <label>Work steps title</label>
                                 <input v-model="form.meta.workStepsTitle" type="text" name="workStepsTitle"
-                                    class="form-control"
-                                    :class="{ 'is-invalid': form.errors.has('workStepsTitle') }">
+                                    class="form-control" :class="{ 'is-invalid': form.errors.has('workStepsTitle') }">
                                 <has-error :form="form" field="workStepsTitle"></has-error>
                             </div>
 
                             <div class="form-group">
                                 <label>Work step 1</label>
-                                <input v-model="form.meta.workStep1" type="text" name="workStep1"
-                                    class="form-control"
+                                <input v-model="form.meta.workStep1" type="text" name="workStep1" class="form-control"
                                     :class="{ 'is-invalid': form.errors.has('workStep1') }">
                                 <has-error :form="form" field="workStep1"></has-error>
                             </div>
 
                             <div class="form-group">
                                 <label>Work step 2</label>
-                                <input v-model="form.meta.workStep2" type="text" name="workStep2"
-                                    class="form-control"
+                                <input v-model="form.meta.workStep2" type="text" name="workStep2" class="form-control"
                                     :class="{ 'is-invalid': form.errors.has('workStep2') }">
                                 <has-error :form="form" field="workStep2"></has-error>
                             </div>
 
                             <div class="form-group">
                                 <label>Work step 3</label>
-                                <input v-model="form.meta.workStep3" type="text" name="workStep3"
-                                    class="form-control"
+                                <input v-model="form.meta.workStep3" type="text" name="workStep3" class="form-control"
                                     :class="{ 'is-invalid': form.errors.has('workStep3') }">
                                 <has-error :form="form" field="workStep3"></has-error>
                             </div>
 
                             <div class="form-group">
                                 <label>Work step 4</label>
-                                <input v-model="form.meta.workStep4" type="text" name="workStep4"
-                                    class="form-control"
+                                <input v-model="form.meta.workStep4" type="text" name="workStep4" class="form-control"
                                     :class="{ 'is-invalid': form.errors.has('workStep4') }">
                                 <has-error :form="form" field="workStep4"></has-error>
                             </div>
@@ -145,96 +149,84 @@
                             <div class="form-group">
                                 <label>Trust box title</label>
                                 <input v-model="form.meta.trustBoxTitle" type="text" name="trustBoxTitle"
-                                    class="form-control"
-                                    :class="{ 'is-invalid': form.errors.has('trustBoxTitle') }">
+                                    class="form-control" :class="{ 'is-invalid': form.errors.has('trustBoxTitle') }">
                                 <has-error :form="form" field="trustBoxTitle"></has-error>
                             </div>
 
                             <div class="form-group">
                                 <label>Statistic title</label>
                                 <input v-model="form.meta.statisticTitle" type="text" name="statisticTitle"
-                                    class="form-control"
-                                    :class="{ 'is-invalid': form.errors.has('statisticTitle') }">
+                                    class="form-control" :class="{ 'is-invalid': form.errors.has('statisticTitle') }">
                                 <has-error :form="form" field="statisticTitle"></has-error>
                             </div>
 
                             <div class="form-group">
                                 <label>Statistic number 1</label>
                                 <input v-model="form.meta.statisticNumber1" type="text" name="statisticNumber1"
-                                    class="form-control"
-                                    :class="{ 'is-invalid': form.errors.has('statisticNumber1') }">
+                                    class="form-control" :class="{ 'is-invalid': form.errors.has('statisticNumber1') }">
                                 <has-error :form="form" field="statisticNumber1"></has-error>
                             </div>
 
                             <div class="form-group">
                                 <label>Statistic number 2</label>
                                 <input v-model="form.meta.statisticNumber2" type="text" name="statisticNumber2"
-                                    class="form-control"
-                                    :class="{ 'is-invalid': form.errors.has('statisticNumber2') }">
+                                    class="form-control" :class="{ 'is-invalid': form.errors.has('statisticNumber2') }">
                                 <has-error :form="form" field="statisticNumber2"></has-error>
                             </div>
 
                             <div class="form-group">
                                 <label>Statistic number 3</label>
                                 <input v-model="form.meta.statisticNumber3" type="text" name="statisticNumber3"
-                                    class="form-control"
-                                    :class="{ 'is-invalid': form.errors.has('statisticNumber3') }">
+                                    class="form-control" :class="{ 'is-invalid': form.errors.has('statisticNumber3') }">
                                 <has-error :form="form" field="statisticNumber3"></has-error>
                             </div>
 
                             <div class="form-group">
                                 <label>Statistic number 4</label>
                                 <input v-model="form.meta.statisticNumber4" type="text" name="statisticNumber4"
-                                    class="form-control"
-                                    :class="{ 'is-invalid': form.errors.has('statisticNumber4') }">
+                                    class="form-control" :class="{ 'is-invalid': form.errors.has('statisticNumber4') }">
                                 <has-error :form="form" field="statisticNumber4"></has-error>
                             </div>
 
                             <div class="form-group">
                                 <label>Statistic number 5</label>
                                 <input v-model="form.meta.statisticNumber5" type="text" name="statisticNumber5"
-                                    class="form-control"
-                                    :class="{ 'is-invalid': form.errors.has('statisticNumber5') }">
+                                    class="form-control" :class="{ 'is-invalid': form.errors.has('statisticNumber5') }">
                                 <has-error :form="form" field="statisticNumber5"></has-error>
                             </div>
 
                             <div class="form-group">
                                 <label>Statistic Text 1</label>
                                 <input v-model="form.meta.statisticText1" type="text" name="statisticText1"
-                                    class="form-control"
-                                    :class="{ 'is-invalid': form.errors.has('statisticText1') }">
+                                    class="form-control" :class="{ 'is-invalid': form.errors.has('statisticText1') }">
                                 <has-error :form="form" field="statisticText1"></has-error>
                             </div>
 
                             <div class="form-group">
                                 <label>Statistic Text 2</label>
                                 <input v-model="form.meta.statisticText2" type="text" name="statisticText2"
-                                    class="form-control"
-                                    :class="{ 'is-invalid': form.errors.has('statisticText2') }">
+                                    class="form-control" :class="{ 'is-invalid': form.errors.has('statisticText2') }">
                                 <has-error :form="form" field="statisticText2"></has-error>
                             </div>
 
                             <div class="form-group">
                                 <label>Statistic Text 3</label>
                                 <input v-model="form.meta.statisticText3" type="text" name="statisticText3"
-                                    class="form-control"
-                                    :class="{ 'is-invalid': form.errors.has('statisticText3') }">
+                                    class="form-control" :class="{ 'is-invalid': form.errors.has('statisticText3') }">
                                 <has-error :form="form" field="statisticText3"></has-error>
                             </div>
 
                             <div class="form-group">
                                 <label>Statistic Text 4</label>
                                 <input v-model="form.meta.statisticText4" type="text" name="statisticText4"
-                                    class="form-control"
-                                    :class="{ 'is-invalid': form.errors.has('statisticText4') }">
+                                    class="form-control" :class="{ 'is-invalid': form.errors.has('statisticText4') }">
                                 <has-error :form="form" field="statisticText4"></has-error>
                             </div>
 
                             <div class="form-group">
                                 <label>Statistic Text 5</label>
                                 <input v-model="form.meta.statisticText5" type="text" name="statisticText5"
-                                    class="form-control"
-                                    :class="{ 'is-invalid': form.errors.has('statisticText5') }">
+                                    class="form-control" :class="{ 'is-invalid': form.errors.has('statisticText5') }">
                                 <has-error :form="form" field="statisticText5"></has-error>
                             </div>
 
@@ -248,11 +240,10 @@
 
                             <div class="form-group">
                                 <label>Under statistics text</label>
-                                <textarea
-                                 v-model="form.meta.underStatisticsText" name="underStatisticsText"
+                                <textarea v-model="form.meta.underStatisticsText" name="underStatisticsText"
                                     class="form-control"
-                                    :class="{ 'is-invalid': form.errors.has('underStatisticsText') }"    
-                                rows="3"></textarea>
+                                    :class="{ 'is-invalid': form.errors.has('underStatisticsText') }"
+                                    rows="3"></textarea>
                                 <has-error :form="form" field="underStatisticsText"></has-error>
                             </div>
 
@@ -266,29 +257,23 @@
 
                             <div class="form-group">
                                 <label>Driver banner text</label>
-                                <textarea
-                                 v-model="form.meta.driverBannerText" name="driverBannerText"
-                                    class="form-control"
-                                    :class="{ 'is-invalid': form.errors.has('driverBannerText') }"    
-                                rows="3"></textarea>
+                                <textarea v-model="form.meta.driverBannerText" name="driverBannerText"
+                                    class="form-control" :class="{ 'is-invalid': form.errors.has('driverBannerText') }"
+                                    rows="3"></textarea>
                                 <has-error :form="form" field="driverBannerText"></has-error>
                             </div>
 
                             <div class="form-group">
                                 <label>About title</label>
-                                <input v-model="form.meta.aboutTitle" type="text" name="aboutTitle"
-                                    class="form-control"
+                                <input v-model="form.meta.aboutTitle" type="text" name="aboutTitle" class="form-control"
                                     :class="{ 'is-invalid': form.errors.has('aboutTitle') }">
                                 <has-error :form="form" field="aboutTitle"></has-error>
                             </div>
 
                             <div class="form-group">
                                 <label>About text</label>
-                                <textarea
-                                 v-model="form.meta.aboutText" name="aboutText"
-                                    class="form-control"
-                                    :class="{ 'is-invalid': form.errors.has('aboutText') }"    
-                                rows="3"></textarea>
+                                <textarea v-model="form.meta.aboutText" name="aboutText" class="form-control"
+                                    :class="{ 'is-invalid': form.errors.has('aboutText') }" rows="3"></textarea>
                                 <has-error :form="form" field="aboutText"></has-error>
                             </div>
                         </div>
@@ -319,8 +304,10 @@
                     category: 'uk',
                     slug: '',
                     meta: {
+                        pageTitle: '',
+                        pageDescription: '',
                         driverSliderTitle: '',
-                        driverSliderText: '', 
+                        driverSliderText: '',
                         mainSliderTitle: '',
                         workStepsSubTitle: '',
                         workStepsTitle: '',
@@ -350,49 +337,52 @@
                 }),
             }
         },
-        mounted() {
-        },
+        mounted() {},
         created() {
             this.getPages()
         },
         methods: {
             getPages() {
-                axios.post('/api/admin/dynamic-pages', {category: this.category })
+                axios.post('/api/admin/dynamic-pages', {
+                        category: this.category
+                    })
                     .then(
-                        ({ data }) => (this.pages= data.data)
+                        ({
+                            data
+                        }) => (this.pages = data.data)
                     )
             },
             newPageModal() {
-                this.editMode =false
+                this.editMode = false
                 this.form.clear()
                 this.form.reset()
                 $('#pageModal').modal('show')
             },
             editPageModal(page) {
-                this.editMode =true
+                this.editMode = true
                 this.form.clear()
                 $('#pageModal').modal('show')
                 this.form.fill(page)
             },
             newPage() {
                 this.form.post('/api/admin/dynamic-pages/save')
-                .then(() => {
-                    this.getPages()
-                })
-                .catch(() => {
+                    .then(() => {
+                        this.getPages()
+                    })
+                    .catch(() => {
 
-                })
+                    })
             },
             editPage() {
                 this.form.post('/api/admin/dynamic-pages/save')
-                .then(() => {
-                    this.getPages()
-                })
-                .catch(() => {
+                    .then(() => {
+                        this.getPages()
+                    })
+                    .catch(() => {
 
-                })
+                    })
             },
-            
+
         }
     }
 

@@ -20,7 +20,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="quote in quotes" :key="quote.id">
+                                <tr v-for="quote in quotes.data" :key="quote.id">
                                     <td>{{quote.id}}</td>
                                     <td>{{quote.customer.name}}</td> 
                                     <td>{{quote.customer.email}}</td>
@@ -36,6 +36,11 @@
                         </table>
                     </div>
                     <!-- /.card-body -->
+                    <div class="card-footer">
+                        <pagination :data="quotes" @pagination-change-page="getResults">
+
+                        </pagination>
+                    </div>
                 </div>
                 <!-- /.card -->
             </div>
@@ -161,6 +166,14 @@
             this.getQuotes()
         },
         methods: {
+            // Our method to GET results from a Laravel endpoint
+            getResults(page = 1) {
+                axios.get('/api/admin/quote?page=' + page)
+                    .then(response => {
+                        this.quotes= response.data;
+                    });
+            },
+
             viewQuoteModal(quote) {
                 this.form.clear()
                 this.form.reset()
@@ -171,7 +184,7 @@
             getQuotes(){
                 axios.get('/api/admin/quote')
                 .then(
-                    ({ data }) => (this.quotes= data.data),
+                    ({ data }) => (this.quotes= data),
                     
                 )
                 

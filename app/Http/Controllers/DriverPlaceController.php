@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\DriverPlaceSearchRequest;
 use App\Http\Requests\DriverPlaceRequest;
 Use App\DriverPlace;
+Use App\PlaceReservation;
 Use App\User;
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\DriverPlaceSearch as DriverPlaceSearchResource;
@@ -27,7 +28,7 @@ class DriverPlaceController extends Controller
         //Haversine formula https://en.wikipedia.org/wiki/Haversine_formula
         //http://www.movable-type.co.uk/scripts/latlong.html
         //https://developers.google.com/maps/solutions/store-locator/clothing-store-locator
-
+        
         // Select only active driver
         $active_drivers = User::where('status', '=', 'active')->pluck('id')->all();
         
@@ -35,10 +36,25 @@ class DriverPlaceController extends Controller
         
         //Get the Van Size, Weekday, Helpers, db columns name for specific (day, van size and number of helpers)
         $vanSizeWeekdayHelpersOption = $this->vanSizeWeekdayHelpersOption($request);
+        
+        // Get date_in and date_out
+        $date_in = strtotime($request->movingDate) - 7200;
+        $date_in = date("Y-m-d H:i:s", $date_in);
+        $date_out = strtotime($request->movingDate) + 7200 + $request->totalTime * 3600;
+        $date_out = date("Y-m-d H:i:s", $date_out);
+        
+        //Select occupied/reserved driver places at specific Date In and Date Out
+        $reservedDriverPlaceId = PlaceReservation::select('place_id')
+        ->where(function($query) use ($date_in, $date_out){
+            $query->whereBetween('date_in', [$date_in, $date_out])
+            ->orWhereBetween('date_out', [$date_in, $date_out]); 
+        })
+        ->pluck('place_id')->all();
 
 
         $driverPlace = DriverPlace::select(DB::raw($haversineFormula))
         ->whereIn('user_id', $active_drivers)
+        ->whereNotIn('id', $reservedDriverPlaceId)
         ->where($vanSizeWeekdayHelpersOption, '>', '0')
         ->having('center_distance', '>=', 0)
         ->get();
@@ -50,6 +66,8 @@ class DriverPlaceController extends Controller
                 'delivery' => $request->delivery,
                 'waypoints' => $request->waypoints,
                 'movingDate' => $request->movingDate,
+                'dateIn' => $date_in,
+                'dateOut' => $date_out,
                 'vanSize' => $request->vanSize,
                 'helpersRequired' => $request->helpersRequired,
                 'description' => $request->description,
@@ -63,7 +81,6 @@ class DriverPlaceController extends Controller
                 'milesDriven' => round($request->milesDriven,2),
                 'stairsTime' => $request->stairsTime,
                 'estimatedTotalTime' => $request->estimatedTotalTime,
-                'booked' => 'No'
             ],
         ]);
     }

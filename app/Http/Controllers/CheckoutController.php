@@ -41,6 +41,12 @@ class CheckoutController extends Controller
             // save this info to your database
             JobController::setStatus($request->id, 'booked');
             JobController::setMeta($request->id, 'paymentMethod', 'credit'); 
+            
+            // save reservation 
+            $place_id = JobController::getSingleMeta($request->id, 'placeId');
+            $date_in = JobController::getSingleMeta($request->id, 'dateIn');
+            $date_out = JobController::getSingleMeta($request->id, 'dateOut');
+            PlaceReservationController::store($place_id, $date_in, $date_out);
 
             // If new user
             if($request->customerEmail)  {
@@ -81,12 +87,17 @@ class CheckoutController extends Controller
         // save this info to your database
         JobController::setStatus($request->id, 'booked'); 
         JobController::setMeta($request->id, 'paymentMethod', 'cash');
+        
 
         //Place statistic changes
         JobController::setMilesDriven($request->id);
         JobController::setJobsBooked($request->id);
 
-        
+        // save reservation 
+        $place_id = JobController::getSingleMeta($request->id, 'placeId');
+        $date_in = JobController::getSingleMeta($request->id, 'dateIn');
+        $date_out = JobController::getSingleMeta($request->id, 'dateOut');
+        PlaceReservationController::store($place_id, $date_in, $date_out);
 
         // If new user
         if($request->customerEmail)  {

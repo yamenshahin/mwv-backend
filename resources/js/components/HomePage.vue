@@ -16,7 +16,37 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body p-3">
+
+
+                            <div class="form-group">
+                                <label>Driver slider title</label>
+                                <input v-model="form.driverSliderTitle" type="text" name="driverSliderTitle"
+                                    class="form-control"
+                                    :class="{ 'is-invalid': form.errors.has('driverSliderTitle') }">
+                                <has-error :form="form" field="driverSliderTitle"></has-error>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Driver slider text</label>
+                                <textarea
+                                 v-model="form.driverSliderText" name="driverSliderText"
+                                    class="form-control"
+                                    :class="{ 'is-invalid': form.errors.has('driverSliderText') }"    
+                                rows="3"></textarea>
+                                <has-error :form="form" field="driverSliderText"></has-error>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Main slider title</label>
+                                <textarea
+                                 v-model="form.mainSliderTitle" name="mainSliderTitle"
+                                    class="form-control"
+                                    :class="{ 'is-invalid': form.errors.has('mainSliderTitle') }"    
+                                rows="3"></textarea>
+                                <has-error :form="form" field="mainSliderTitle"></has-error>
+                            </div>
                             
+
                             <div class="form-group">
                                 <label>Work steps sub title</label>
                                 <input v-model="form.workStepsSubTitle" type="text" name="workStepsSubTitle"
@@ -63,6 +93,22 @@
                                     class="form-control"
                                     :class="{ 'is-invalid': form.errors.has('workStep4') }">
                                 <has-error :form="form" field="workStep4"></has-error>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Trust box title</label>
+                                <input v-model="form.trustBoxTitle" type="text" name="trustBoxTitle"
+                                    class="form-control"
+                                    :class="{ 'is-invalid': form.errors.has('trustBoxTitle') }">
+                                <has-error :form="form" field="trustBoxTitle"></has-error>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Statistic title</label>
+                                <input v-model="form.statisticTitle" type="text" name="statisticTitle"
+                                    class="form-control"
+                                    :class="{ 'is-invalid': form.errors.has('statisticTitle') }">
+                                <has-error :form="form" field="statisticTitle"></has-error>
                             </div>
 
                             <div class="form-group">
@@ -163,6 +209,23 @@
                                 <has-error :form="form" field="underStatisticsText"></has-error>
                             </div>
 
+                            <div class="form-group">
+                                <label>Driver banner title</label>
+                                <input v-model="form.driverBannerTitle" type="text" name="driverBannerTitle"
+                                    class="form-control"
+                                    :class="{ 'is-invalid': form.errors.has('driverBannerTitle') }">
+                                <has-error :form="form" field="driverBannerTitle"></has-error>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Driver banner text</label>
+                                <textarea
+                                 v-model="form.driverBannerText" name="driverBannerText"
+                                    class="form-control"
+                                    :class="{ 'is-invalid': form.errors.has('driverBannerText') }"    
+                                rows="3"></textarea>
+                                <has-error :form="form" field="driverBannerText"></has-error>
+                            </div>
 
                             <div class="form-group">
                                 <label>About title</label>
@@ -198,12 +261,17 @@
             return {
                 form: new Form({
                     page: 'home',
+                    driverSliderTitle: '',
+                    driverSliderText: '', 
+                    mainSliderTitle: '',
                     workStepsSubTitle: '',
                     workStepsTitle: '',
                     workStep1: '',
                     workStep2: '',
                     workStep3: '',
                     workStep4: '',
+                    trustBoxTitle: '',
+                    statisticTitle: '',
                     statisticNumber1: '',
                     statisticNumber2: '',
                     statisticNumber3: '',
@@ -216,6 +284,8 @@
                     statisticText5: '',
                     underStatisticsTitle: '',
                     underStatisticsText: '',
+                    driverBannerTitle: '',
+                    driverBannerText: '',
                     aboutTitle: '',
                     aboutText: '',
                 }),

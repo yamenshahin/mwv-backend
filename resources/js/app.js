@@ -69,6 +69,9 @@ let routes = [
     { path: '/admin/privacy-page', name: 'privacy-page', component: require('./components/PrivacyPage.vue').default },
     { path: '/admin/terms-page', name: 'terms-page', component: require('./components/TermsPage.vue').default },
     { path: '/admin/drivers-terms-page', name: 'drivers-terms-page', component: require('./components/DriversTermsPage.vue').default },
+
+    //Dynamic Pages UK
+    { path: '/admin/dynamic-page-uk', name: 'dynamic-page-uk', component: require('./components/DynamicPageUK.vue').default },
 ]
 
 // Create the router instance and pass the `routes` option
@@ -93,6 +96,9 @@ Vue.component(
     'passport-personal-access-tokens',
     require('./components/passport/PersonalAccessTokens.vue').default
 );
+
+//https://github.com/gilbitron/laravel-vue-pagination
+Vue.component('pagination', require('laravel-vue-pagination'));
 
 /**
  * The following block of code may be used to automatically register your

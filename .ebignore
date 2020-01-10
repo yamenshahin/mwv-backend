@@ -1,0 +1,25 @@
+.ebextensions
+.ebextensions/
+/.ebextensions
+/node_modules/
+jspm_packages/
+/vendor/
+.npm
+.node_repl_history
+*.tgz
+.yarn-integrity
+.editorconfig
+.env.backup
+.local.env
+.production.env
+.stage.env
+back-end-mwv.code-workspace
+*.zip
+.vscode
+
+# Mac OSX
+.DS_Store
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

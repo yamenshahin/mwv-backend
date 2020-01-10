@@ -69,6 +69,8 @@ Route::group(['prefix' => 'admin'],function() {
     ]);
     Route::post('/pages', 'AdminAPI\PageController@index');
     Route::post('/pages/save', 'AdminAPI\PageController@update');
+    Route::post('/dynamic-pages', 'AdminAPI\DynamicPageController@index');
+    Route::post('/dynamic-pages/save', 'AdminAPI\DynamicPageController@store');
     Route::post('/statistic', 'AdminAPI\StatisticController@index');
 });
 //Admin email
@@ -87,3 +89,6 @@ Route::group(['prefix' => 'feedback'],function() {
 });
 //Pages
 Route::post('/pages', 'PageController@index');
+
+//Dynamic Pages
+Route::post('/dynamic-pages', 'DynamicPageController@index');

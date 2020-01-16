@@ -5,6 +5,7 @@
 jspm_packages/
 /vendor/
 .npm
+sitemap.xml
 .node_repl_history
 *.tgz
 .yarn-integrity

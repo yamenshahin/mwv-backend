@@ -3142,6 +3142,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3178,6 +3186,7 @@ __webpack_require__.r(__webpack_exports__);
           statisticText5: '',
           underStatisticsTitle: '',
           underStatisticsText: '',
+          underStatisticsVideoTitle: '',
           driverBannerTitle: '',
           driverBannerText: '',
           aboutTitle: '',
@@ -3760,6 +3769,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3788,6 +3805,7 @@ __webpack_require__.r(__webpack_exports__);
         statisticText5: '',
         underStatisticsTitle: '',
         underStatisticsText: '',
+        underStatisticsVideoTitle: '',
         driverBannerTitle: '',
         driverBannerText: '',
         aboutTitle: '',
@@ -47127,6 +47145,58 @@ var render = function() {
                     "div",
                     { staticClass: "form-group" },
                     [
+                      _c("label", [_vm._v("Under statistics video title")]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.meta.underStatisticsVideoTitle,
+                            expression: "form.meta.underStatisticsVideoTitle"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid": _vm.form.errors.has(
+                            "underStatisticsVideoTitle"
+                          )
+                        },
+                        attrs: {
+                          type: "text",
+                          name: "underStatisticsVideoTitle"
+                        },
+                        domProps: {
+                          value: _vm.form.meta.underStatisticsVideoTitle
+                        },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.form.meta,
+                              "underStatisticsVideoTitle",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("has-error", {
+                        attrs: {
+                          form: _vm.form,
+                          field: "underStatisticsVideoTitle"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "form-group" },
+                    [
                       _c("label", [_vm._v("Driver banner title")]),
                       _vm._v(" "),
                       _c("input", {
@@ -48733,6 +48803,56 @@ var render = function() {
                     _vm._v(" "),
                     _c("has-error", {
                       attrs: { form: _vm.form, field: "underStatisticsText" }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c("label", [_vm._v("Under statistics video title")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.underStatisticsVideoTitle,
+                          expression: "form.underStatisticsVideoTitle"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      class: {
+                        "is-invalid": _vm.form.errors.has(
+                          "underStatisticsVideoTitle"
+                        )
+                      },
+                      attrs: {
+                        type: "text",
+                        name: "underStatisticsVideoTitle"
+                      },
+                      domProps: { value: _vm.form.underStatisticsVideoTitle },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.form,
+                            "underStatisticsVideoTitle",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("has-error", {
+                      attrs: {
+                        form: _vm.form,
+                        field: "underStatisticsVideoTitle"
+                      }
                     })
                   ],
                   1

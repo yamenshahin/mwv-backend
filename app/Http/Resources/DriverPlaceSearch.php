@@ -28,16 +28,44 @@ class DriverPlaceSearch extends JsonResource
             } else {
                 $score = $this->stars / $this->votes;
             }
+
+            $place_file = UserFileResource::make( UserFile::select('*')
+            ->where([
+                ['user_id', '=', $this->user_id],
+                ['key', '=', 'places'],
+            ])
+            ->first());
+
+            
+            if ($place_file['user_id']) {
+                return [
+                    'placeId' => $this->id,
+                    'disc' => $this->disc,
+                    'user' => UserSimpleResource::make(User::find($this->user_id)),
+                    'placeFile' => $place_file,
+                    'milesDriven' => $this->miles_driven,
+                    'jobsBooked' => $this->jobs_booked,
+                    
+                    'score' => $score,
+                    'votes' => $this->votes,
+    
+                    'total' => $priceBreakdownDetails['total'],
+                    
+                    'price' => $priceBreakdownDetails
+                    
+                ];
+            }
+
+            $default_place_file = ['id' => 0,
+            'user_id' => 0,
+            'key' => 'places',
+            'url' => '/user-files/places/default/logo.jpg'];
+
             return [
                 'placeId' => $this->id,
                 'disc' => $this->disc,
                 'user' => UserSimpleResource::make(User::find($this->user_id)),
-                'placeFile' => UserFileResource::make( UserFile::select('*')
-                ->where([
-                    ['user_id', '=', $this->user_id],
-                    ['key', '=', 'places'],
-                ])
-                ->first()),
+                'placeFile' => $default_place_file,
                 'milesDriven' => $this->miles_driven,
                 'jobsBooked' => $this->jobs_booked,
                 
@@ -49,6 +77,7 @@ class DriverPlaceSearch extends JsonResource
                 'price' => $priceBreakdownDetails
                 
             ];
+            
         }
     }
 }

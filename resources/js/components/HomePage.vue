@@ -210,6 +210,14 @@
                             </div>
 
                             <div class="form-group">
+                                <label>Under statistics video title</label>
+                                <input v-model="form.underStatisticsVideoTitle" type="text" name="underStatisticsVideoTitle"
+                                    class="form-control"
+                                    :class="{ 'is-invalid': form.errors.has('underStatisticsVideoTitle') }">
+                                <has-error :form="form" field="underStatisticsVideoTitle"></has-error>
+                            </div>
+
+                            <div class="form-group">
                                 <label>Driver banner title</label>
                                 <input v-model="form.driverBannerTitle" type="text" name="driverBannerTitle"
                                     class="form-control"
@@ -284,6 +292,7 @@
                     statisticText5: '',
                     underStatisticsTitle: '',
                     underStatisticsText: '',
+                    underStatisticsVideoTitle: '',
                     driverBannerTitle: '',
                     driverBannerText: '',
                     aboutTitle: '',

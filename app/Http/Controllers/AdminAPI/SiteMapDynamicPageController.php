@@ -22,7 +22,12 @@ class SiteMapDynamicPageController extends Controller
         foreach($dynamic_pages as $dynamic_page) {
             $xml_string .= '<url>';
 
-            $xml_string .= '<loc>https://hellovans.com/' . $dynamic_page['page'] . '/' . $dynamic_page['slug'] . '</loc>';
+            if ($dynamic_page['parent_slug'] === 'index') {
+                $xml_string .= '<loc>https://hellovans.com/' . $dynamic_page['slug'] . '/</loc>';
+            } else {
+                $xml_string .= '<loc>https://hellovans.com/' . $dynamic_page['parent_slug'] . '/' . $dynamic_page['slug'] . '/' . '</loc>';
+            }
+            
 
             $xml_string .= '<lastmod>' . $dynamic_page['updated_at'] . '</lastmod>';
 

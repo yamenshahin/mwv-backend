@@ -7,8 +7,7 @@ use App\Http\Controllers\Controller;
 use App\DynamicPage;
 use App\DynamicPageMeta;
 use App\Http\Resources\AdminAPI\DynamicPage as DynamicPageResource;
-
-use App\Http\Controllers\AdminAPI\SiteMapDynamicPageController;
+use App\Http\Controllers\AdminAPI\DynamicPageFileController;
 
 class DynamicPageController extends Controller
 {
@@ -28,11 +27,9 @@ class DynamicPageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
         $dynamic_pages = DynamicPage::select('*')
-        ->where('page', '=', $request->category)
-        ->orderBy('id', 'desc')
         ->get();
         return DynamicPageResource::collection($dynamic_pages);
     }
@@ -46,8 +43,16 @@ class DynamicPageController extends Controller
      */
     public function store(Request $request)
     {
-
-        $existing_dynamic_page = DynamicPage::find($request->id);
+        if($request->id) {
+            $existing_dynamic_page = DynamicPage::find($request->id);
+        } else {
+            $existing_dynamic_page = DynamicPage::select('*')
+            ->where([
+                ['parent_slug', '=', $request->parentSlug],
+                ['slug', '=', $request->slug]
+            ])
+            ->first();
+        }
 
         if($existing_dynamic_page) {
             $dynamic_page_metas = [];
@@ -66,12 +71,24 @@ class DynamicPageController extends Controller
                 }
             }
             $existing_dynamic_page->slug = $request->slug;
+            $existing_dynamic_page->parent_slug = $request->parentSlug;
             $existing_dynamic_page->save();
-            $existing_dynamic_page->meta()->saveMany($dynamic_page_metas);            
+            $existing_dynamic_page->meta()->saveMany($dynamic_page_metas); 
+
+            //save file
+            if($request->file) {
+                $file_request = new Request([
+                    'pageId' => $existing_dynamic_page->id,
+                    'file' => $request->file,
+                    'key' => 'mainSliderBackground'
+                ]);
+                $file = new DynamicPageFileController();
+                $file->store($file_request);
+            }
         } else {
             $dynamic_page = new DynamicPage();
-            $dynamic_page->page = $request->category;
             $dynamic_page->slug = $request->slug;
+            $dynamic_page->parent_slug = $request->parentSlug;
 
             $dynamic_page_metas = [];
             foreach($request->meta as $key => $value) {
@@ -80,8 +97,19 @@ class DynamicPageController extends Controller
 
             $dynamic_page->save();
             $dynamic_page->meta()->saveMany($dynamic_page_metas);
+            //save file
+            if($request->file) {
+                $file_request = new Request([
+                    'pageId' => $dynamic_page->id,
+                    'file' => $request->file,
+                    'key' => 'mainSliderBackground'
+                ]);
+                $file = new DynamicPageFileController();
+                $file->store($file_request);
+            }
         }
 
+        //Update site map
         SiteMapDynamicPageController::generateSitemap();
     }
 }

@@ -69,7 +69,7 @@ Route::group(['prefix' => 'admin'],function() {
     ]);
     Route::post('/pages', 'AdminAPI\PageController@index');
     Route::post('/pages/save', 'AdminAPI\PageController@update');
-    Route::post('/dynamic-pages', 'AdminAPI\DynamicPageController@index');
+    Route::get('/dynamic-pages', 'AdminAPI\DynamicPageController@index');
     Route::post('/dynamic-pages/save', 'AdminAPI\DynamicPageController@store');
     Route::post('/statistic', 'AdminAPI\StatisticController@index');
 });

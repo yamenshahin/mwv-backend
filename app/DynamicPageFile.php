@@ -4,12 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class DynamicPageMeta extends Model
+class DynamicPageFile extends Model
 {
-    protected $fillable = ['page_id', 'key', 'value'];
+    protected $fillable = ['page_id', 'key', 'url'];
     public $timestamps = false;
+    
     /**
-     * Define and get meta's Dynamic Page 
+     * Define and get file's dynamic page
      *
      * @return mixed
      */

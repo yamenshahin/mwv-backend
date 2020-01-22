@@ -39,6 +39,9 @@ class Kernel extends HttpKernel
             \Laravel\Passport\Http\Middleware\CreateFreshApiToken::class,
         ],
 
+        //Fixing local bug too many requests
+        'throttle' => ['throttle:99,1'], //No idea why, but this works!
+
         'api' => [
             'throttle:60,1',
             'bindings',

@@ -11,15 +11,17 @@ class DynamicPageController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
+        if($request->slug === 'socket.io') {
+            return;
+        }
         $dynamic_pages = DynamicPage::select('*')
         ->where([
-            ['page', '=', $request->category],
-            ['slug', '=', $request->slug]
+            ['slug', '=', $request->slug],
+            ['parent_slug', '=', $request->parentSlug]
         ])
         ->first();
         return new DynamicPageResource($dynamic_pages);

@@ -28,6 +28,9 @@ Vue.component(AlertError.name, AlertError)
 Vue.component(AlertErrors.name, AlertErrors)
 Vue.component(AlertSuccess.name, AlertSuccess)
 
+import objectToFormData from 'object-to-formdata'
+window.objectToFormData = objectToFormData
+
 // Define routes
 let routes = [
     // Admin Power
@@ -70,8 +73,8 @@ let routes = [
     { path: '/admin/terms-page', name: 'terms-page', component: require('./components/TermsPage.vue').default },
     { path: '/admin/drivers-terms-page', name: 'drivers-terms-page', component: require('./components/DriversTermsPage.vue').default },
 
-    //Dynamic Pages UK
-    { path: '/admin/dynamic-page-uk', name: 'dynamic-page-uk', component: require('./components/DynamicPageUK.vue').default },
+    //Dynamic Pages
+    { path: '/admin/dynamic-page', name: 'dynamic-page', component: require('./components/DynamicPage.vue').default },
 ]
 
 // Create the router instance and pass the `routes` option

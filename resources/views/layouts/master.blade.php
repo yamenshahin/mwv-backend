@@ -285,23 +285,14 @@
                                 </router-link>
                             </li>
 
-                            <li class="nav-item has-treeview">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon fas fa-copy"></i>
-                                    <p>
-                                        Dynamic Pages
-                                        <i class="right fas fa-angle-left"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <router-link :to="{ name: 'dynamic-page-uk' }" class="nav-link">
-                                            <i class="fas fa-file nav-icon"></i>
-                                            <p>UK</p>
-                                        </router-link>
-                                    </li>
-                                </ul>
+                            <li class="nav-item">
+                                <router-link :to="{ name: 'dynamic-page' }" class="nav-link">
+                                    <i class="fas fa-file nav-icon"></i>
+                                    <p>Dynamic Pages</p>
+                                </router-link>
                             </li>
+
+                            
 
                             <li class="nav-item has-treeview">
                                 <a href="#" class="nav-link">

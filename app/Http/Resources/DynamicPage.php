@@ -24,11 +24,18 @@ class DynamicPage extends JsonResource
             $metas[$meta->key] = $meta->value;
         }
 
+        $dynamicPageFile = DynamicPageFile::select('*')
+        ->where([
+            ['page_id', '=', $this->id],
+            ['key', '=', 'mainSliderBackground'],
+        ])
+        ->first();
+
         return [
             'id' =>  $this->id,
-            'category' => $this->page,
             'slug' => $this->slug,
-            'created_at' => $this->created_at,
+            'parentSlug' => $this->parent_slug,
+            'url' => $dynamicPageFile['url'],
             'meta' =>  $metas ,
         ];
     }

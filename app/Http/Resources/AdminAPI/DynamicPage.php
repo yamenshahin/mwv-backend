@@ -4,6 +4,7 @@ namespace App\Http\Resources\AdminAPI;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\DynamicPageMeta;
+Use App\DynamicPageFile;
 
 class DynamicPage extends JsonResource
 {
@@ -19,6 +20,13 @@ class DynamicPage extends JsonResource
         ->where('dynamic_page_id', '=', $this->id)
         ->get();
 
+        $dynamicPageFile = DynamicPageFile::select('*')
+        ->where([
+            ['page_id', '=', $this->id],
+            ['key', '=', 'mainSliderBackground'],
+        ])
+        ->first();
+
         $metas = [];
         foreach($dynamic_page_metas as $meta) {
             $metas[$meta->key] = $meta->value;
@@ -26,9 +34,10 @@ class DynamicPage extends JsonResource
 
         return [
             'id' =>  $this->id,
-            'category' => $this->page,
             'slug' => $this->slug,
-            'created_at' => $this->created_at,
+            'parentSlug' => $this->parent_slug,
+            'file' => null,
+            'url' => $dynamicPageFile['url'],
             'meta' =>  $metas ,
         ];
     }

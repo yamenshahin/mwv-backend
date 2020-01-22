@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDynamicPageMetasTable extends Migration
+class CreateDynamicPageFilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class CreateDynamicPageMetasTable extends Migration
      */
     public function up()
     {
-        Schema::create('dynamic_page_metas', function (Blueprint $table) {
+        Schema::create('dynamic_page_files', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('dynamic_page_id');
+            $table->unsignedBigInteger('page_id');
             $table->string('key');
-            $table->longText('value')->nullable();
+            $table->text('url')->nullable();
+            $table->timestamps();
 
-            $table->foreign('dynamic_page_id')->references('id')->on('dynamic_pages');
+            $table->foreign('page_id')->references('id')->on('dynamic_pages');
         });
     }
 
@@ -30,6 +31,6 @@ class CreateDynamicPageMetasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dynamic_page_metas');
+        Schema::dropIfExists('dynamic_page_files');
     }
 }

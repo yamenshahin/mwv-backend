@@ -15,8 +15,8 @@ class CreateDynamicPagesTable extends Migration
     {
         Schema::create('dynamic_pages', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('page');
-            $table->string('slug')->unique();
+            $table->string('slug');
+            $table->string('parent_slug');
             $table->timestamps();
         });
     }

@@ -69,6 +69,14 @@
                                     class="form-control" :class="{ 'is-invalid': form.errors.has('pageDescription') }">
                                 <has-error :form="form" field="pageDescription"></has-error>
                             </div>
+
+                            <div class="form-group">
+                                <label>Canonical URL</label>
+                                <input v-model="form.meta.canonical" type="text" name="canonical"
+                                    class="form-control" :class="{ 'is-invalid': form.errors.has('canonical') }">
+                                <has-error :form="form" field="canonical"></has-error>
+                            </div>
+
                             <span v-if="editMode">
                                 <input type="hidden" name="id" v-model="form.id">
                                 <input type="hidden" name="url" v-model="form.url">
@@ -332,6 +340,7 @@
                     meta: {
                         pageTitle: '',
                         pageDescription: '',
+                        canonical: '',
                         driverSliderTitle: '',
                         driverSliderText: '',
                         mainSliderTitle: '',

@@ -3165,6 +3165,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3181,6 +3189,7 @@ __webpack_require__.r(__webpack_exports__);
         meta: {
           pageTitle: '',
           pageDescription: '',
+          canonical: '',
           driverSliderTitle: '',
           driverSliderText: '',
           mainSliderTitle: '',
@@ -46135,6 +46144,48 @@ var render = function() {
                       _vm._v(" "),
                       _c("has-error", {
                         attrs: { form: _vm.form, field: "pageDescription" }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "form-group" },
+                    [
+                      _c("label", [_vm._v("Canonical URL")]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.meta.canonical,
+                            expression: "form.meta.canonical"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid": _vm.form.errors.has("canonical")
+                        },
+                        attrs: { type: "text", name: "canonical" },
+                        domProps: { value: _vm.form.meta.canonical },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.form.meta,
+                              "canonical",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("has-error", {
+                        attrs: { form: _vm.form, field: "canonical" }
                       })
                     ],
                     1

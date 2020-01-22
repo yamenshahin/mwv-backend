@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\DynamicPageMeta;
+Use App\DynamicPageFile;
 
 class DynamicPage extends JsonResource
 {

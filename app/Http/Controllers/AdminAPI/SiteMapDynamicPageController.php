@@ -29,7 +29,7 @@ class SiteMapDynamicPageController extends Controller
             }
             
 
-            $xml_string .= '<lastmod>' . $dynamic_page['updated_at'] . '</lastmod>';
+            $xml_string .= '<lastmod>' . date('c',strtotime($dynamic_page['updated_at'])) . '</lastmod>';
 
             $xml_string .= '<changefreq>daily</changefreq>';
 

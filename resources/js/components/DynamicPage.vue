@@ -18,8 +18,8 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
+                                    <th>Parent Slug</th>
                                     <th>Slug</th>
-                                    <th>View</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -327,7 +327,7 @@
     export default {
         data() {
             return {
-                s3Url: 'https://hellovans-assets.s3.eu-west-2.amazonaws.com',
+                s3Url: 'https://hellovans-files.s3.eu-west-2.amazonaws.com',
                 editMode: false,
                 pages: {},
                 category: '',
@@ -377,7 +377,7 @@
         created() {
             this.getPages()
             if(window.location.hostname === 'hellovansapi.com') {
-                this.s3Url = 'https://hellovans-files.s3.eu-west-2.amazonaws.com'
+                this.s3Url = 'https://hellovans-assets.s3.eu-west-2.amazonaws.com'
             } 
         },
         methods: {

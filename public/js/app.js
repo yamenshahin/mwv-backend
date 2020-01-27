@@ -3176,7 +3176,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      s3Url: 'https://hellovans-assets.s3.eu-west-2.amazonaws.com',
+      s3Url: 'https://hellovans-files.s3.eu-west-2.amazonaws.com',
       editMode: false,
       pages: {},
       category: '',
@@ -3227,7 +3227,7 @@ __webpack_require__.r(__webpack_exports__);
     this.getPages();
 
     if (window.location.hostname === 'hellovansapi.com') {
-      this.s3Url = 'https://hellovans-files.s3.eu-west-2.amazonaws.com';
+      this.s3Url = 'https://hellovans-assets.s3.eu-west-2.amazonaws.com';
     }
   },
   methods: {
@@ -47569,9 +47569,9 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", [_vm._v("ID")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Slug")]),
+        _c("th", [_vm._v("Parent Slug")]),
         _vm._v(" "),
-        _c("th", [_vm._v("View")])
+        _c("th", [_vm._v("Slug")])
       ])
     ])
   },

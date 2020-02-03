@@ -3821,11 +3821,36 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      s3Url: 'https://hellovans-assets.s3.eu-west-2.amazonaws.com/',
       form: new Form({
+        file: null,
+        url: '',
         page: 'home',
+        pageTitle: '',
+        pageDescription: '',
         driverSliderTitle: '',
         driverSliderText: '',
         mainSliderTitle: '',
@@ -3860,8 +3885,17 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {},
   created: function created() {
     this.getPage();
+
+    if (window.location.hostname === 'hellovansapi.com') {
+      this.s3Url = 'https://hellovans-assets.s3.eu-west-2.amazonaws.com/';
+    }
   },
   methods: {
+    selectFile: function selectFile(e) {
+      var file = e.target.files[0];
+      this.form.file = file;
+      console.log(file);
+    },
     getPage: function getPage() {
       var _this = this;
 
@@ -3874,9 +3908,15 @@ __webpack_require__.r(__webpack_exports__);
       );
     },
     save: function save() {
-      this.form.post('/api/admin/pages/save').then(function (_ref2) {
-        var data = _ref2.data;
-        return console.log(data);
+      var _this2 = this;
+
+      this.form.post('/api/admin/pages/save', {
+        // Transform form data to FormData
+        transformRequest: [function (data, headers) {
+          return objectToFormData(data);
+        }]
+      }).then(function () {
+        _this2.getPage();
       })["catch"](function () {});
     }
   }
@@ -48052,6 +48092,90 @@ var render = function() {
                   "div",
                   { staticClass: "form-group" },
                   [
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("label", [_vm._v("Page title")]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.pageTitle,
+                              expression: "form.pageTitle"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("pageTitle")
+                          },
+                          attrs: { type: "text", name: "pageTitle" },
+                          domProps: { value: _vm.form.pageTitle },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.form,
+                                "pageTitle",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "pageTitle" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("label", [_vm._v("Page description")]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.pageDescription,
+                              expression: "form.pageDescription"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("pageDescription")
+                          },
+                          attrs: { type: "text", name: "pageDescription" },
+                          domProps: { value: _vm.form.pageDescription },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.form,
+                                "pageDescription",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "pageDescription" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
                     _c("label", [_vm._v("Driver slider title")]),
                     _vm._v(" "),
                     _c("input", {
@@ -48131,6 +48255,25 @@ var render = function() {
                   ],
                   1
                 ),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", [_vm._v("Main slider background image")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    staticClass: "form-control",
+                    attrs: { type: "file" },
+                    on: { change: _vm.selectFile }
+                  })
+                ]),
+                _vm._v(" "),
+                this.form.url !== null
+                  ? _c("span", [
+                      _c("img", {
+                        staticClass: "img-fluid",
+                        attrs: { src: this.s3Url + this.form.url, alt: "" }
+                      })
+                    ])
+                  : _vm._e(),
                 _vm._v(" "),
                 _c(
                   "div",

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\AdminAPI;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Page;
+use Illuminate\Support\Facades\Storage;
 
 class PageController extends Controller
 {
@@ -51,18 +52,35 @@ class PageController extends Controller
             if($key !== 'page') {
                 $page = Page::select('*')->where('key', '=', $key)->first();
                 if($page) {
-                    $page->key = $key;
-                    $page->value = $value;
+                    if($key === 'file' && $value) {
+                        $url = $this->saveFile($request);
+                    } else {
+                        $page->key = $key;
+                        $page->value = $value;
+                    }
+                    
                 } else {
                     $page = new Page;
                     $page->page = $request->page;
-                    $page->key = $key;
-                    $page->value = $value;
+                    if($key === 'file' && $value) {
+                        $url = $this->saveFile($request);
+                        $page->key = 'url';
+                        $page->value = $url;
+                    } else {
+                        $page->key = $key;
+                        $page->value = $value;
+                    }
                 }
 
                 $page->save();
             }
         }
         return ['message' => 'Updated the page info'];
-    }    
+    } 
+    
+    public function saveFile(Request $request)
+    {
+        $url = Storage::disk('s3')->putFile('/pages-files/home/'. date('Y').'/'.date('m'), $request->file, 'public');
+        return $url;
+    }
 }

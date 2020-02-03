@@ -19,6 +19,18 @@
 
 
                             <div class="form-group">
+                                <div class="form-group">
+                                    <label>Page title</label>
+                                    <input v-model="form.pageTitle" type="text" name="pageTitle" class="form-control"
+                                        :class="{ 'is-invalid': form.errors.has('pageTitle') }">
+                                    <has-error :form="form" field="pageTitle"></has-error>
+                                </div>
+                                <div class="form-group">
+                                    <label>Page description</label>
+                                    <input v-model="form.pageDescription" type="text" name="pageDescription"
+                                        class="form-control" :class="{ 'is-invalid': form.errors.has('pageDescription') }">
+                                    <has-error :form="form" field="pageDescription"></has-error>
+                                </div>
                                 <label>Driver slider title</label>
                                 <input v-model="form.driverSliderTitle" type="text" name="driverSliderTitle"
                                     class="form-control"
@@ -35,6 +47,14 @@
                                 rows="3"></textarea>
                                 <has-error :form="form" field="driverSliderText"></has-error>
                             </div>
+
+                            <div class="form-group">
+                                <label>Main slider background image</label>
+                                <input type="file" @change="selectFile" class="form-control">
+                            </div>
+                            <span v-if="this.form.url !== null"> 
+                                <img :src="this.s3Url + this.form.url" alt="" class="img-fluid">
+                            </span>
 
                             <div class="form-group">
                                 <label>Main slider title</label>
@@ -267,8 +287,13 @@
     export default {
         data() {
             return {
+                s3Url: 'https://hellovans-assets.s3.eu-west-2.amazonaws.com/',
                 form: new Form({
+                    file: null,
+                    url:'',
                     page: 'home',
+                    pageTitle: '',
+                    pageDescription: '',
                     driverSliderTitle: '',
                     driverSliderText: '', 
                     mainSliderTitle: '',
@@ -304,8 +329,16 @@
         },
         created() {
             this.getPage()
+            if(window.location.hostname === 'hellovansapi.com') {
+                this.s3Url = 'https://hellovans-assets.s3.eu-west-2.amazonaws.com/'
+            } 
         },
         methods: {
+            selectFile(e) {
+                const file = e.target.files[0]
+                this.form.file = file
+                console.log(file)
+            },
             getPage() {
                 axios.post('/api/admin/pages', {page: this.form.page})
                     .then(
@@ -316,12 +349,15 @@
                     )
             },
             save() {
-                this.form.post('/api/admin/pages/save')
-                    .then(
-                        ({
-                            data
-                        }) => (console.log(data))
-                    )
+                this.form.post('/api/admin/pages/save', {
+                        // Transform form data to FormData
+                        transformRequest: [function (data, headers) {
+                            return objectToFormData(data)
+                        }]
+                    })
+                    .then(() => {
+                        this.getPage()
+                    })
                     .catch(() => {
 
                     })
